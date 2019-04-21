@@ -5,18 +5,29 @@
         <Head
           :userInfo="userInfo"></Head>
       </el-header>
-      <el-main>
-        <img src="./assets/scutLOGO.png">
-        <router-view/>
-      </el-main>
+      <el-container style="margin-top:1px;">
+        <el-aside
+          width="200px">
+          <Side></Side>
+        </el-aside>
+        <el-main>
+          <img src="./assets/scutLOGO.png">
+          <router-view/>
+        </el-main>
+      </el-container>
+      
     </el-container>
   </div>
 </template>
 
 <script>
 import Head from '@/layouts/Head'
+import Side from '@/layouts/Sidebar'
 import Cookies from 'js-cookie'
 // import {mapState} from 'vuex'
+import HelloWorld from '@/components/HelloWorld'
+// import utils from '@/tools/utils'
+
 export default {
   name: 'App',
   data() {
@@ -25,7 +36,8 @@ export default {
     }
   },
   components: {
-    Head
+    Head,
+    Side
   },
   computed:{
     userInfo() {
@@ -37,15 +49,8 @@ export default {
     if(token!='') {
       this.$store.commit('setToken', token)
       this.$store.dispatch('currentAction')
-        .then(res => {
-          this.$store.commit('setUserInfo',res.data)
-          this.$store.commit('altStatus')
-          this.$store.dispatch('getRoleAction',{
-            id: this.userInfo.id
-          })
-            .then(res => {
-              this.$store.commit('setRoles',res.data.data)
-            })
+        .catch(err => {
+          this.$store.commit('resetToken')
         })
     }
   },

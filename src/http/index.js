@@ -56,6 +56,9 @@ const Current = (token) => {
 // 获取用户权限
 const Role = (id) => {
   return new Promise((resolve,reject) => {
+    if(id==""||id==null) {
+      reject('暂无用户信息，无法获取权限表')
+    }
     axios.get('users/role?id='+id)
       .then(res => {
         resolve(res)

@@ -65,10 +65,9 @@ export default {
                 .then(res => {
                   if (res.status==200&&res.data.success) {
                     Cookies.set('login-token',res.data.token,{ expires:7 })
-                    this.$store.dispatch('currentAction')
-                      .then(res => {
-                        this.$store.commit('setUserInfo',res.data)
-                      })
+                      // .then(res => {
+                      //   this.$store.commit('setUserInfo',res.data)
+                      // })
                     // TODO 登录成功，发生页面跳转
                     this.$router.push('/')
                   } else {

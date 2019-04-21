@@ -21,10 +21,8 @@ export default {
   ],
   methods: {
     logout: function() {
+      this.$store.dispatch('logoutAction')
       Cookies.remove('login-token')
-      this.$store.commit('altStatus')
-      this.$store.commit('resetToken')
-      this.$store.commit('resetUserInfo')
     },
     login: function() {
       this.$router.push('/login')
