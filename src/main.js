@@ -18,7 +18,6 @@ if(process.env.NODE_ENV == 'development'){
   // 线上环境的后台请求URL
   axios.defaults.baseURL = ''
 }
-console.log(keys.devHost)
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 // 引入全局配置(请求地址)
@@ -28,6 +27,7 @@ Vue.config.productionTip = false
 
 // 引入vuex store
 import store from './vuex'
+
 
 /* eslint-disable no-new */
 new Vue({

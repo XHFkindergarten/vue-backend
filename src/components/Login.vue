@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Login</h1>
     <el-form
       :model="loginForm"
       ref="loginForm"
@@ -29,6 +30,7 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 export default {
     name: 'Login',
     data () {
@@ -60,7 +62,22 @@ export default {
                 email: this.loginForm.email,
                 password: this.loginForm.password
               })
-              console.log(this.$store.state.token)
+                .then(res => {
+                  if (res.status==200&&res.data.success) {
+                    Cookies.set('login-token',res.data.token,{ expires:7 })
+                    this.$store.dispatch('currentAction')
+                      .then(res => {
+                        this.$store.commit('setUserInfo',res.data)
+                      })
+                    // TODO 登录成功，发生页面跳转
+                    this.$router.push('/')
+                  } else {
+                    console.log(res)
+                  }
+                })
+                .catch(err => {
+                  throw new Error(err)
+                })
             }else {
               // TODO 未通过校验
               console.log('invalid')
