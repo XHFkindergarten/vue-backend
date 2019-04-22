@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Hello from '@/components/HelloWorld'
 import NotFound from '@/layouts/404'
+import NoPermission from '@/layouts/403'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -18,7 +19,7 @@ export const constantRouterMap =  [
     hidden: true
   },
   {
-    path: '/login',
+    path: '/Login',
     name: 'Login',
     component: Login,
     hidden: true
@@ -36,6 +37,12 @@ export const constantRouterMap =  [
     hidden: true
   },
   {
+    path: '/403',
+    name: '403',
+    component: NoPermission,
+    hidden: true
+  },
+  {
     path: '/test1',
     name: 'Test1',
     label: '一级路由1',  // 显示的按钮名称
@@ -44,19 +51,19 @@ export const constantRouterMap =  [
     hidden: false,
     children: [
       {
-        path: 'test1',
-        name: 'Test1',
+        path: '/test1/test1-1',
+        name: 'Test1-1',
         hidden: false,
         label: '二级路由',
         icon: 'refresh',
         children: [
           {
-            path: 'test1-1',
-            name: 'Test1-1',
+            path: '/test1/test1-1/test1-1-1',
+            name: 'Test1-1-1',
             label: '三级路由',
             icon: 'setting',
             hidden: false,
-            component: Hello
+            component: Test
           }
         ]
       }
@@ -71,8 +78,8 @@ export const constantRouterMap =  [
     hidden: false,
     children: [
       {
-        path: 'test2',
-        name: 'Test2',
+        path: '/test2/test2',
+        name: 'Test2-2',
         hidden: false,
         label: '二级路由2',
         icon: 'refresh'
@@ -82,20 +89,33 @@ export const constantRouterMap =  [
 ]
 
 
-const router =  new Router({
+let router =  new Router({
   routes: constantRouterMap
 })
 
+import store from '@/vuex'
 // 挂载全局前置钩子函数
 router.beforeEach((to,from,next) => {
-  // if (store.state.token) {
-  //   if (to.path=="/login") {
-  //     next('login')
-  //   } else {
-  //   }
-  // }
-  // store.dispatch('getRoleAction')
-  next()
+  if (to.path=="/403" || to.path=="/404"){
+    next()
+  }
+  if (store.state.token) {
+    if (to.path=="/login" || to.path=="/register") {
+      next('/403')
+    } else {
+      if(store.getters.getRoutesPath.indexOf(to.path)>=0) {
+        if(store.state.routesPaths.indexOf(to.path)<0) {
+          next('/403')
+        } else {
+          next()
+        }
+      } else {
+        next('/404')
+      }
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
@@ -114,16 +134,16 @@ export const asyncRouterMap = [
     hidden: false,
     children: [
       {
-        path: '/permission1',
+        path: '/permission/permission1',
         meta: { role: [0] },
         label: 'permission1',
         children: [
           {
-            path: '/permission1-1',
+            path: '/permission/permission1/permission1-1',
             label: 'permission1-1',
             meta: { role: [0] }
           },{
-            path: '/permission1-2',
+            path: '/permission/permission1/permission1-2',
             label: 'permission1-2',
             meta: { role: [1] }
           }
@@ -131,21 +151,23 @@ export const asyncRouterMap = [
       },{
         path: '/permission2',
         label: 'permission2',
-        meta: { role: [1]}
+        meta: { role: [0]}
       }
     ]
   },
   {
     path: '/superPermission',
     component: Hello,
+    label: '管理员权限',
+    icon: 'refresh',
     name: 'super',
     meta: { role: [2] }, //页面需要的权限，这也是vue-router文档推荐的做法
     hidden: false
   },
   // 404必须最后加载
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  }
+  // {
+  //   path: '*',
+  //   redirect: '/404',
+  //   hidden: true
+  // }
 ]

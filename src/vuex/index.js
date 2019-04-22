@@ -5,6 +5,7 @@ import http from '../http'
 import keys from '../common'
 // 引入同步路由和根据权限加载的异步路由
 import {constantRouterMap,asyncRouterMap} from '@/router'
+import router from '@/router'
 import utils from '@/tools/utils'
 Vue.use(Vuex)
 
@@ -16,6 +17,8 @@ let state = {
   token: '',  // 登录token
   userInfo: {}, // 用户信息
   Roles: [], // 用户权限
+  routes: [], // 允许显示的路由表
+  routesPaths: [], // 允许显示的路由表paths数组
 }
 // mutations
 let mutations = {
@@ -40,22 +43,24 @@ let mutations = {
   },
   resetRoles: (state) => {
     state.Roles = []
+  },
+  resetLoginAccess: (state, getters) => {
+    const index = getters.getRoutesPath.indexOf('/login')
+    getters.getRoutesPath.splice(index, 1)
   }
 }
 // getters
 let getters = {
-  getRouterMenu: (state) => {
-    const routes = constantRouterMap
-    asyncRouterMap.forEach(route => {
-      // utils.asyncAddRoutes(routes,route,state.Roles[0])
-      if(route.meta && route.meta.role.indexOf(state.Roles[0])>-1){
-        routes.push(route)
-        if(route.children&&route.children.length>0) {
-          utils.ClearAsyncRoutes(route.children, state.Roles[0])
-        }
-      }
-    })
-    return routes
+  // getAllPaths: (state) => {
+  //   const array = []
+  //   utils.getPaths(state.routes, array)
+  //   return array
+  // },
+  getRoutesPath: (state) => {
+    const array = []
+    utils.getPaths(constantRouterMap, array)
+    utils.getPaths(asyncRouterMap, array)
+    return array
   },
   getRole: (state) => {
     return state.Roles[0]
@@ -100,11 +105,11 @@ let actions = {
   },
   // 根据token获取用户信息
   currentAction ({dispatch,commit,state}) {
+    console.log(router)
     return new Promise((resolve,reject) => {
       http.Current(state.token)
         .then(res => {
           commit('setUserInfo',res.data)
-          console.log('current')
           commit('altStatus')
           dispatch('getRoleAction',{
             id:state.userInfo.id
@@ -114,12 +119,14 @@ let actions = {
             })
         })
         .catch(err => {
+          commit('resetToken')
+          dispatch('addRoutes')
           console.log(err)
         })
     })
   },
   // 获取用户权限
-  getRoleAction: ({commit,state}, info) => {
+  getRoleAction: ({commit,dispatch}, info) => {
     return new Promise((resolve,reject) => {
       if(info==null) {
         reject('暂无用户信息，无法获取权限表')
@@ -127,6 +134,7 @@ let actions = {
       http.Role(info.id)
       .then(res => {
         commit('setRoles',res.data.data)
+        dispatch('addRoutes')
       })
       .catch(err => {
         reject(err)
@@ -140,6 +148,21 @@ let actions = {
     commit('resetToken')
     commit('resetUserInfo')
     commit('resetRoles')
+  },
+  // 挂载动态权限路由
+  addRoutes: ({commit,state,getters}) => {
+    let constantRoute = Array.from(constantRouterMap)
+    if(state.Roles.length==0) {
+      state.routes = constantRoute
+      return
+    }
+    let asyncRoute = Array.from(asyncRouterMap)
+    utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
+    state.routes = constantRoute.concat(asyncRoute)
+    router.addRoutes(asyncRoute)
+    let routesPaths = []
+    utils.getPaths(state.routes, routesPaths)
+    state.routesPaths = routesPaths
   }
 }
 const store = new Vuex.Store({

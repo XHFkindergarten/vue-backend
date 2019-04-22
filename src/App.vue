@@ -15,7 +15,7 @@
           <router-view/>
         </el-main>
       </el-container>
-      
+      <el-footer></el-footer>
     </el-container>
   </div>
 </template>
@@ -53,6 +53,7 @@ export default {
           this.$store.commit('resetToken')
         })
     }
+
   },
   methods: {
 

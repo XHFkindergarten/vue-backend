@@ -27,9 +27,12 @@ export default {
     SidebarItem
   },
   computed: {
-    ...mapGetters([
-      "getRouterMenu"
-    ]),
+    // ...mapGetters([
+    //   "getRouterMenu"
+    // ]),
+    getRouterMenu() {
+      return this.$store.state.routes
+    }
   },
   methods: {
     handleOpen() {
