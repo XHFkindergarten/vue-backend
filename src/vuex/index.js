@@ -51,26 +51,18 @@ let mutations = {
 }
 // getters
 let getters = {
-  // getAllPaths: (state) => {
-  //   const array = []
-  //   utils.getPaths(state.routes, array)
-  //   return array
-  // },
+  
+  // 所有合法的路由path数组
   getRoutesPath: (state) => {
     const array = []
     utils.getPaths(constantRouterMap, array)
     utils.getPaths(asyncRouterMap, array)
     return array
   },
+  // 获取用户的第一个身份权限(一般一个用户只有一个身份，为了防止特殊情况权限是个数组)
   getRole: (state) => {
     return state.Roles[0]
   }
-  // getId: state => {
-  //   return state.userInfo.id
-  // }
-  // getRoutes: () => {
-  //   return route.options
-  // }
 }
 // actions
 let actions = {
@@ -103,9 +95,23 @@ let actions = {
         })
     })
   },
+  // // 注册-邮箱验证
+  // mailValidator: ({commit},email) => {
+  //   const mailOptions = {
+  //     ...keys.emailInfo,
+  //     to: email
+  //   }
+  //   transporter.sendMail(mailOptions, (err, info) => {
+  //     if (err) {
+  //       console.log(err)
+  //       return
+  //     }
+  //     console.log('email发送成功!')
+  //   })
+  // },
+
   // 根据token获取用户信息
   currentAction ({dispatch,commit,state}) {
-    console.log(router)
     return new Promise((resolve,reject) => {
       http.Current(state.token)
         .then(res => {
@@ -160,10 +166,12 @@ let actions = {
     utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
     state.routes = constantRoute.concat(asyncRoute)
     router.addRoutes(asyncRoute)
+    // 生成一个允许访问的路由path表
     let routesPaths = []
     utils.getPaths(state.routes, routesPaths)
     state.routesPaths = routesPaths
   }
+  
 }
 const store = new Vuex.Store({
   state,

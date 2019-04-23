@@ -2,26 +2,32 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+
+// 引入路由实例
 import router from './router'
-import HelloWorld from '@/components/HelloWorld'
+
 // 引入element-ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
-// 引入axios
-import axios from 'axios'
-import qs from 'qs'
-import keys from './common'
-if(process.env.NODE_ENV == 'development'){
-  // 开发环境的后台请求URL
-  axios.defaults.baseURL = keys.devHost
-}else {
-  // 线上环境的后台请求URL
-  axios.defaults.baseURL = ''
-}
-Vue.prototype.$axios = axios
-Vue.prototype.$qs = qs
+
 // 引入全局配置(请求地址)
+import keys from './common'
+
+// 引入axios
+// import axios from 'axios'
+import qs from 'qs'
+// if(process.env.NODE_ENV == 'development'){
+//   // 开发环境的后台请求URL
+//   axios.defaults.baseURL = keys.devHost
+// }else {
+//   // 线上环境的后台请求URL
+//   axios.defaults.baseURL = keys.prdHost
+// }
+// axios.defaults.timeout = 5000 // 请求超时时间
+import service from '@/axios'
+Vue.prototype.$axios = service
+Vue.prototype.$qs = qs
 
 
 Vue.config.productionTip = false

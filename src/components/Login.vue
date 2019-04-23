@@ -64,7 +64,7 @@ export default {
               })
                 .then(res => {
                   if (res.status==200&&res.data.success) {
-                    Cookies.set('login-token',res.data.token,{ expires:7 })
+                    Cookies.set('login-token',res.data.token,{ expires:1 })
                       // .then(res => {
                       //   this.$store.commit('setUserInfo',res.data)
                       // })

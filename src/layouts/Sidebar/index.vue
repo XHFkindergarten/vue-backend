@@ -1,14 +1,23 @@
 <template>
   <!-- <div> -->
     <el-menu
+      class="menu"
       :default-active="$route.path"
-      @open="handleOpen"
-      @close="handleClose"
       :collapse="isCollapse"
       mode="vertical"
       router
       >
-      <SidebarItem v-for="route in this.getRouterMenu" :item=route :key="route.path" />
+      <el-menu-item @click="altCollapse">
+        <template>
+          <i v-if="!isCollapse" class="el-icon-d-arrow-left"></i>
+          <i v-else class="el-icon-d-arrow-right"></i>
+        </template>
+      </el-menu-item>
+      <!-- <div class="altCollapse">
+        <i v-if="!isCollapse" class="el-icon-d-arrow-left"></i>
+        <i v-else class="el-icon-d-arrow-right"></i>
+      </div> -->
+      <SidebarItem :menuList="getRouterMenu.filter(list=>list.hidden==false)" />
     </el-menu>
   <!-- </div> -->
 </template>
@@ -20,16 +29,13 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
     }
   },
   components: {
     SidebarItem
   },
   computed: {
-    // ...mapGetters([
-    //   "getRouterMenu"
-    // ]),
     getRouterMenu() {
       return this.$store.state.routes
     }
@@ -41,6 +47,10 @@ export default {
     handleClose() {
 
     },
+    altCollapse() {
+      this.isCollapse = !this.isCollapse
+      this.$emit('altCollapse')
+    }
     // mouseover() {
     //   this.isCollapse = false
     // }
@@ -48,5 +58,20 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.altCollapse{
+  height: 56px;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.menu{
+  width:64px;
+  min-height: 400px;
+}
+.menu:not(.el-menu--collapse){
+  width:200px;
+  min-height: 400px;
+}
 </style>

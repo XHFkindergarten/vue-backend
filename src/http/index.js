@@ -1,5 +1,5 @@
 // 对http请求方法进行封装
-import axios from 'axios'
+import axios from '@/axios'
 import qs from 'qs'
 
 // 用户注册

@@ -7,8 +7,8 @@
       </el-header>
       <el-container style="margin-top:1px;">
         <el-aside
-          width="200px">
-          <Side></Side>
+          :width="(collapse?'201':'65'+'px')">
+          <Side @altCollapse="altCollapse"></Side>
         </el-aside>
         <el-main>
           <img src="./assets/scutLOGO.png">
@@ -32,7 +32,7 @@ export default {
   name: 'App',
   data() {
     return {
-      
+      collapse: true
     }
   },
   components: {
@@ -56,7 +56,9 @@ export default {
 
   },
   methods: {
-
+    altCollapse() {
+      !this.sideWidth
+    }
   }
 }
 </script>
@@ -68,5 +70,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.el-menu--collapse span
+{
+  display: none!important;
+}
+
+.el-menu--collapse i.el-submenu__icon-arrow{
+  display:none;
 }
 </style>
