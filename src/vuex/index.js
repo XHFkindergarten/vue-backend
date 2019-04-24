@@ -47,6 +47,13 @@ let mutations = {
   resetLoginAccess: (state, getters) => {
     const index = getters.getRoutesPath.indexOf('/login')
     getters.getRoutesPath.splice(index, 1)
+  },
+  resetRoutes: (state) => {
+    state.routes = []
+  },
+  // 将邮箱验证码储存到localStorage
+  setEmailCode: (state, code) => {
+    localStorage.setItem('email-code', code)
   }
 }
 // getters
@@ -67,20 +74,13 @@ let getters = {
 // actions
 let actions = {
   // 登录
-  async loginAction ({dispatch,commit}, loginForm) {
+  loginAction: async ({dispatch,commit}, loginForm) => {
     const email = loginForm.email.trim()
-    return await new Promise((resolve,reject) => {
-      http.Login(email,loginForm.password)
-      .then(res => {
-        commit('setToken',res.data.token)
-        dispatch('currentAction')
-        resolve(res)
-      })
-      .catch(error => {
-        reject(error)
-        console.log(error)
-      })
-    })
+    const login = await http.Login(email, loginForm.password)
+    commit('setToken', login.data.token)
+    const getUserInfo = await dispatch('currentAction')
+    console.log(getUserInfo)
+    return login
   },
   // 注册
   registerAction: ({commit}, registerForm) => {
@@ -95,58 +95,35 @@ let actions = {
         })
     })
   },
-  // // 注册-邮箱验证
-  // mailValidator: ({commit},email) => {
-  //   const mailOptions = {
-  //     ...keys.emailInfo,
-  //     to: email
-  //   }
-  //   transporter.sendMail(mailOptions, (err, info) => {
-  //     if (err) {
-  //       console.log(err)
-  //       return
-  //     }
-  //     console.log('email发送成功!')
-  //   })
-  // },
 
   // 根据token获取用户信息
-  currentAction ({dispatch,commit,state}) {
-    return new Promise((resolve,reject) => {
-      http.Current(state.token)
-        .then(res => {
-          commit('setUserInfo',res.data)
-          commit('altStatus')
-          dispatch('getRoleAction',{
-            id:state.userInfo.id
-          })
-            .catch(err => {
-              console.log(err)
-            })
-        })
-        .catch(err => {
-          commit('resetToken')
-          dispatch('addRoutes')
-          console.log(err)
-        })
-    })
+  currentAction: async ({dispatch,commit,state}) => {
+    const res = await http.Current(state.token)
+    if (res) {
+      commit('setUserInfo', res.data)
+      if(!state.status){
+        commit('altStatus')
+      }
+      const getRole = await dispatch('getRoleAction', {
+        id: state.userInfo.id
+      })
+    } else {
+      commit('resetToken')
+      dispatch('addRoutes')
+      console.log(res)
+    }
   },
   // 获取用户权限
-  getRoleAction: ({commit,dispatch}, info) => {
-    return new Promise((resolve,reject) => {
-      if(info==null) {
-        reject('暂无用户信息，无法获取权限表')
-      }
-      http.Role(info.id)
-      .then(res => {
-        commit('setRoles',res.data.data)
-        dispatch('addRoutes')
-      })
-      .catch(err => {
-        reject(err)
-      })
-    })
-    
+  getRoleAction: async ({commit,dispatch}, info) => {
+    if (info==null) {
+      throw new Error('暂无用户信息，无法获取权限表')
+    }
+    const res = await http.Role(info.id)
+    if (res) {
+      commit('setRoles', res.data.data)
+      await dispatch('addRoutes')
+      return res
+    }
   },
   // 登出
   logoutAction: ({commit}) => {
@@ -157,19 +134,33 @@ let actions = {
   },
   // 挂载动态权限路由
   addRoutes: ({commit,state,getters}) => {
+    console.log('add')
     let constantRoute = Array.from(constantRouterMap)
     if(state.Roles.length==0) {
       state.routes = constantRoute
-      return
+    } else {
+      let asyncRoute = Array.from(asyncRouterMap)
+      utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
+      state.routes = constantRoute.concat(asyncRoute)
+      router.addRoutes(asyncRoute)
     }
-    let asyncRoute = Array.from(asyncRouterMap)
-    utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
-    state.routes = constantRoute.concat(asyncRoute)
-    router.addRoutes(asyncRoute)
+    
     // 生成一个允许访问的路由path表
     let routesPaths = []
     utils.getPaths(state.routes, routesPaths)
     state.routesPaths = routesPaths
+  },
+  // 发送验证邮箱
+  sendemailAction: ({commit}, email) => {
+    if (email==""||email==null) {
+      throw new Error('暂无邮箱信息，无法发送')
+    }
+    const res = http.Email(email)
+    if (res) {
+      return res
+    } else {
+      throw new Error('发送邮箱操作失败!')
+    }
   }
   
 }

@@ -7,6 +7,7 @@ import Hello from '@/components/HelloWorld'
 import NotFound from '@/layouts/404'
 import NoPermission from '@/layouts/403'
 import Test from '@/components/Test'
+import Cookies from 'js-cookie'
 
 Vue.use(Router)
 
@@ -74,7 +75,6 @@ export const constantRouterMap =  [
     name: 'Test2',
     label: '一级路由2',  // 显示的按钮名称
     icon: 'edit', // 显示的图标
-    component:Test,
     hidden: false,
     children: [
       {
@@ -82,7 +82,8 @@ export const constantRouterMap =  [
         name: 'Test2-2',
         hidden: false,
         label: '二级路由2',
-        icon: 'refresh'
+        icon: 'refresh',
+        component: Hello
       }
     ]
   }
@@ -94,27 +95,64 @@ let router =  new Router({
 })
 
 import store from '@/vuex'
+import keys from '@/common';
 // 挂载全局前置钩子函数
-router.beforeEach((to,from,next) => {
-  if (to.path=="/403" || to.path=="/404"){
+router.beforeEach( async (to,from,next) => {
+  console.log(from.path, to.path)
+  // 如果没有加载路由菜单，那么加载路由菜单
+  if (store.state.routes.length==0) {
+    store.dispatch('addRoutes')
+    next(to.path)
+  }
+  if (to.path=='/403' || to.path=='/404') {
     next()
   }
-  if (store.state.token) {
-    if (to.path=="/login" || to.path=="/register") {
-      next('/403')
+  if (store.state.Roles.length==0) {
+    const token = Cookies.get('login-token')
+    if (token!=''&&token!=undefined) {
+      store.commit('setToken', token)
+      console.log('alt1')
+      await store.dispatch('currentAction')
+        .then(() => {
+          next(to.path)
+        })
+        .catch(() => {
+          if (to.path=='/login' || to.path=='/register' || whiteList.indexOf(to.path)>=0) {
+            next()
+          }
+        })
+      
     } else {
-      if(store.getters.getRoutesPath.indexOf(to.path)>=0) {
-        if(store.state.routesPaths.indexOf(to.path)<0) {
-          next('/403')
-        } else {
-          next()
-        }
+      if (to.path=="/login" || to.path=="/register" || keys.whiteList.indexOf(to.path)>=0) {
+        next()
       } else {
-        next('/404')
+        if (store.getters.getRoutesPath.indexOf(to.path)>=0) {
+          if(store.state.routesPaths.indexOf(to.path)<0) {
+            next('/403')
+          } else {
+            next()
+          }
+        } else {
+          next('/404')
+        }
       }
     }
   } else {
-    next()
+    if (to.path=='/login' || to.path=='/register') {
+      next('/',{replace:true})  //TODO 始终无法跳转到/路由
+    }
+    if (to.path=='/') {
+      next()
+    }
+    if (store.getters.getRoutesPath.indexOf(to.path)>=0) {
+      if(store.state.routesPaths.indexOf(to.path)<0) {
+        next('/403')
+      } else {
+        next()
+      }
+    } else {
+      next('/404')
+    }
   }
 })
 
@@ -151,6 +189,7 @@ export const asyncRouterMap = [
       },{
         path: '/permission2',
         label: 'permission2',
+        component: Hello,
         meta: { role: [0]}
       }
     ]

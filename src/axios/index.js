@@ -54,8 +54,8 @@ service.interceptors.response.use(
     //     } else {
     //       return response.data;
     //     }
-    error => {
-    if (error.indexOf('401')<0) {
+  error => {
+    if (error.message.indexOf('401')<0) {
       Message({
         message: error.message,
         type: 'error',

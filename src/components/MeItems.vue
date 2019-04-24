@@ -23,6 +23,8 @@ export default {
     logout: function() {
       this.$store.dispatch('logoutAction')
       Cookies.remove('login-token')
+      this.$store.commit('resetRoutes')
+      this.$store.dispatch('addRoutes')
     },
     login: function() {
       this.$router.push('/login')

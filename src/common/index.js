@@ -7,9 +7,19 @@ const status = {
   NOT_LOGIN: false,
   LOGIN: true
 }
+
+const whiteList = [
+  '/',
+]
+// 发送邮件的间隔时间
+const sendEmailWaitTime = 60
+
 const keys = {
   devHost,
   prdHost,
-  status
+  status,
+  whiteList,
+  sendEmailWaitTime
 }
+
 export default keys

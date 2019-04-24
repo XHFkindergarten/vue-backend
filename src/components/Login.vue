@@ -56,27 +56,66 @@ export default {
         // Login按钮 @click
         login: function() {
           const app = this
-          this.$refs['loginForm'].validate(valid => {
-            if(valid) {
-              app.$store.dispatch('loginAction',{
-                email: this.loginForm.email,
-                password: this.loginForm.password
+
+          // TODO 复原
+          app.$store.dispatch('loginAction', {
+                email: '1131911308@qq.com',
+                password: '123123'
               })
-                .then(res => {
+                .then (res => {
+                  console.log(res)
                   if (res.status==200&&res.data.success) {
-                    Cookies.set('login-token',res.data.token,{ expires:1 })
-                      // .then(res => {
-                      //   this.$store.commit('setUserInfo',res.data)
-                      // })
-                    // TODO 登录成功，发生页面跳转
+                    Cookies.set('login-token', res.data.token, { expires: 1 })
                     this.$router.push('/')
                   } else {
                     console.log(res)
+                    this.$message.error(res.data.msg)
                   }
                 })
-                .catch(err => {
+                .catch (err => {
                   throw new Error(err)
                 })
+
+          return
+          this.$refs['loginForm'].validate(valid => {
+            if(valid) {
+              app.$store.dispatch('loginAction', {
+                email: this.loginForm.email,
+                password: this.loginForm.password
+              })
+                .then (res => {
+                  if (res.status==200&&res.data.success) {
+                    Cookies.set('login-token', res.data.token, { expires: 1 })
+                    this.$router.push('/')
+                  } else {
+                    console.log(res)
+                    this.$message.error(res.data.msg)
+                  }
+                })
+                .catch (err => {
+                  throw new Error(err)
+                })
+              // app.$store.dispatch('loginAction',{
+              //   email: this.loginForm.email,
+              //   password: this.loginForm.password
+              // })
+              //   .then(res => {
+              //     console.log(res)
+              //     if (res.status==200&&res.data.success) {
+              //       Cookies.set('login-token',res.data.token,{ expires:1 })
+              //         // .then(res => {
+              //         //   this.$store.commit('setUserInfo',res.data)
+              //         // })
+              //       // TODO 登录成功，发生页面跳转
+              //       this.$router.push('/')
+              //     } else {
+              //       console.log(res)
+              //       this.$message.error(res.data.msg)
+              //     }
+              //   })
+              //   .catch(err => {
+              //     throw new Error(err)
+              //   })
             }else {
               // TODO 未通过校验
               console.log('invalid')

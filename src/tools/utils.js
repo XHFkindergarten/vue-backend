@@ -14,19 +14,6 @@ const ClearAsyncRoutes = (routes,role) => {
   });
 }
 
-// // 取出静态路由中hidden=true的路由
-// const ClearConstantRoutes = (routes) => {
-//   console.log(routes)
-//   routes.forEach((route, index) => {
-//     console.log(route.path)
-//     if (route.hidden) {
-//       console.log('delete',route.path)
-//       routes.splice(index, 1)
-//     } else if ( route.children && route.children.length>0 ) {
-//       ClearConstantRoutes(route.children)
-//     }
-//   })
-// }
 
 // 遍历所有的path
 const getPaths = (routes, array) => {
@@ -38,8 +25,18 @@ const getPaths = (routes, array) => {
   })
 }
 
+// 验证是否满足邮箱格式
+const isEmail = (email) => {
+  if (email==null||email=="") {
+    return false
+  }
+  const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+  return reg.test(email)
+}
+
 export default {
   ClearAsyncRoutes,
   // ClearConstantRoutes,
-  getPaths
+  getPaths,
+  isEmail
 }

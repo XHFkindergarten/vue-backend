@@ -13,7 +13,7 @@
       <div class="userinfo">
         <!-- <el-row type="flex" justify="center"> -->
           <!-- <el-col :span="21"> -->
-            <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
+            <img style="display:none" v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
             <template>
               <el-popover
                 placement="bottom"

@@ -45,14 +45,16 @@ export default {
     }
   },
   created() {
-    const token = Cookies.get('login-token')
-    if(token!='') {
-      this.$store.commit('setToken', token)
-      this.$store.dispatch('currentAction')
-        .catch(err => {
-          this.$store.commit('resetToken')
-        })
-    }
+    // const token = Cookies.get('login-token')
+    // if(token!=''&&token!=undefined) {
+    //   this.$store.commit('setToken', token)
+    //   this.$store.dispatch('currentAction')
+    //     .catch(err => {
+    //       this.$store.commit('resetToken')
+    //     })
+    // } else {
+    //   this.$store.dispatch('addRoutes')
+    // }
 
   },
   methods: {
