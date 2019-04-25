@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      :default-active="$route.path"
+      :default-active="currentRoute"
       class="el-menu-demo"
       mode="horizontal"
       text-color="#000"
@@ -10,25 +10,26 @@
       <el-menu-item index="/">主页</el-menu-item>
       <el-menu-item v-if="!hasLogin" index="/register">注册</el-menu-item>
       <el-menu-item v-if="!hasLogin" index="/login">登录</el-menu-item>
+      <el-menu-item>
+        <template>
+          <el-input
+            placeholder="search..."
+            suffix-icon="el-icon-search"></el-input>
+        </template>
+      </el-menu-item>
       <div class="userinfo">
-        <!-- <el-row type="flex" justify="center"> -->
-          <!-- <el-col :span="21"> -->
-            <img style="display:none" v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
-            <template>
-              <el-popover
-                placement="bottom"
-                title=""
-                width="100"
-                trigger="hover">
-                <MeItems
-                  :hasLogin="hasLogin"></MeItems>
-                <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button>
-              </el-popover>
-            </template>
-          <!-- </el-col> -->
-        <!-- </el-row> -->
-        
-        
+        <img style="display:none" v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
+        <template>
+          <el-popover
+            placement="bottom"
+            title=""
+            width="100"
+            trigger="hover">
+            <MeItems
+              :hasLogin="hasLogin"></MeItems>
+              <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button>
+            </el-popover>
+          </template>    
       </div>
     </el-menu>
   </div>
@@ -55,9 +56,9 @@ export default {
     hasLogin() {
       return this.$store.state.status
     },
-    // userInfo() {
-    //   return this.$store.state.userInfo
-    // }
+    currentRoute() {
+      return this.$route.path
+    }
   },
   methods: {
 

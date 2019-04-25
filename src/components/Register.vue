@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="../assets/scutLOGO.png">
     <h1>Register</h1>
     <el-form
       :model="registerForm"
@@ -144,11 +145,8 @@ export default {
         this.$message.error('请输入正确的邮箱')
         return
       }
-      
-      
       this.$store.dispatch('sendemailAction', this.registerForm.email)
         .then(res => {
-          console.log(res)
           if (res.data.success) {
             // 修改按钮文字
             this.sendBtnWord = true
@@ -161,6 +159,7 @@ export default {
                 clearInterval(timer)
                 this.sendBtnWord = false
                 this.timeout = keys.sendEmailWaitTime
+                this.hasSend = false
               }
             }, 1000)
             this.$store.commit('setEmailCode', res.data.code)

@@ -11,7 +11,6 @@
           <Side @altCollapse="altCollapse"></Side>
         </el-aside>
         <el-main>
-          <img src="./assets/scutLOGO.png">
           <router-view/>
         </el-main>
       </el-container>

@@ -6,6 +6,7 @@ import Register from '@/components/Register'
 import Hello from '@/components/HelloWorld'
 import NotFound from '@/layouts/404'
 import NoPermission from '@/layouts/403'
+import Me from '@/components/Me'
 import Test from '@/components/Test'
 import Cookies from 'js-cookie'
 
@@ -44,6 +45,12 @@ export const constantRouterMap =  [
     hidden: true
   },
   {
+    path: '/me',
+    name: 'me',
+    component: Me,
+    hidden: true
+  },
+  {
     path: '/test1',
     name: 'Test1',
     label: '一级路由1',  // 显示的按钮名称
@@ -74,7 +81,7 @@ export const constantRouterMap =  [
     path: '/test2',
     name: 'Test2',
     label: '一级路由2',  // 显示的按钮名称
-    icon: 'edit', // 显示的图标
+    icon: 'picture', // 显示的图标
     hidden: false,
     children: [
       {

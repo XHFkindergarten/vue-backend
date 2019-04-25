@@ -11,11 +11,17 @@
 </template>
 
 <script>
+import keys from '@/common'
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Hello'
+    }
+  },
+  computed: {
+    baseURL() {
+      return process.env.NODE_ENV=='development' ? keys.devHost : keys.prdHost
     }
   }
 }

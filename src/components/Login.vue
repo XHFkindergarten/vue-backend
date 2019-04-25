@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="../assets/scutLOGO.png">
     <h1>Login</h1>
     <el-form
       :model="loginForm"

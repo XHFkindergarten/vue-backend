@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="../assets/scutLOGO.png">
     <h1>Main</h1>
     <p>A Vue.js project</p>
     <p>Build Setup</p>

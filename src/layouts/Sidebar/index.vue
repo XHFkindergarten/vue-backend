@@ -29,7 +29,7 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      isCollapse: false,
+      isCollapse: true,
     }
   },
   components: {

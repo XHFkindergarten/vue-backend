@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="hasLogin" class="row">
-      <el-button type="text">关于我</el-button>
+      <el-button type="text" @click="aboutMe">关于我</el-button>
     </div>
     <div v-if="hasLogin" class="row">
       <el-button type="text" @click="logout">LogOut</el-button>
@@ -28,6 +28,9 @@ export default {
     },
     login: function() {
       this.$router.push('/login')
+    },
+    aboutMe: function() {
+      this.$router.push('/me')
     }
   }
 }
