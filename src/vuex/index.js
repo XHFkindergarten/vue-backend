@@ -79,7 +79,6 @@ let actions = {
     const login = await http.Login(email, loginForm.password)
     commit('setToken', login.data.token)
     const getUserInfo = await dispatch('currentAction')
-    console.log(getUserInfo)
     return login
   },
   // 注册
@@ -110,7 +109,6 @@ let actions = {
     } else {
       commit('resetToken')
       dispatch('addRoutes')
-      console.log(res)
     }
   },
   // 获取用户权限
@@ -134,7 +132,6 @@ let actions = {
   },
   // 挂载动态权限路由
   addRoutes: ({commit,state,getters}) => {
-    console.log('add')
     let constantRoute = Array.from(constantRouterMap)
     if(state.Roles.length==0) {
       state.routes = constantRoute

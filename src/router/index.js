@@ -118,7 +118,6 @@ router.beforeEach( async (to,from,next) => {
     const token = Cookies.get('login-token')
     if (token!=''&&token!=undefined) {
       store.commit('setToken', token)
-      console.log('alt1')
       await store.dispatch('currentAction')
         .then(() => {
           next(to.path)

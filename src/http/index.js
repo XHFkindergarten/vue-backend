@@ -47,7 +47,6 @@ const Role = async (id) => {
     throw new Error('暂无用户信息，无法查询身份')
   }
   const res = await axios.get('users/role?id='+id)
-  console.log(res)
   return res
 }
 

@@ -11,6 +11,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+// 引入图片裁剪插件
+import VueCropper from 'vue-cropper'
+Vue.use(VueCropper)
+
 // 引入全局配置(请求地址)
 import keys from './common'
 

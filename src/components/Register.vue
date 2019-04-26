@@ -114,7 +114,6 @@ export default {
   methods: {
     // 注册 @click
     register: function() {
-      console.log(this.isEmailCodeRight)
       if (!this.isEmailCodeRight) {
         this.$message.error('对不起，您输入的验证码与发送到您邮箱中的验证码不一致')
         return
@@ -124,7 +123,6 @@ export default {
         if(valid) {
           app.$store.dispatch('registerAction',this.registerForm)
             .then(res => {
-              console.log(res)
               if(res.status==200&&res.data.success) {
                 this.$message({
                   message: '注册成功',
