@@ -4,7 +4,8 @@ import Cookies from 'js-cookie'
 import http from '../http'
 import keys from '../common'
 // 引入同步路由和根据权限加载的异步路由
-import {constantRouterMap,asyncRouterMap} from '@/router'
+import { constantRouterMap } from '@/router/constantRouterMap'
+import { asyncRouterMap } from '@/router/asyncRouterMap'
 import router from '@/router'
 import utils from '@/tools/utils'
 Vue.use(Vuex)
@@ -106,9 +107,12 @@ let actions = {
       const getRole = await dispatch('getRoleAction', {
         id: state.userInfo.id
       })
+      return true
     } else {
       commit('resetToken')
+      Cookies.remove('login-token')
       dispatch('addRoutes')
+      throw new Error('Cookies已过期')
     }
   },
   // 获取用户权限
@@ -133,12 +137,16 @@ let actions = {
   // 挂载动态权限路由
   addRoutes: ({commit,state,getters}) => {
     let constantRoute = Array.from(constantRouterMap)
+    utils.spliceRoutes(constantRoute, '')
     if(state.Roles.length==0) {
       state.routes = constantRoute
     } else {
       let asyncRoute = Array.from(asyncRouterMap)
+      utils.spliceRoutes(asyncRoute, '')
       utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
+
       state.routes = constantRoute.concat(asyncRoute)
+      console.log(asyncRoute)
       router.addRoutes(asyncRoute)
     }
     

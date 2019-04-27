@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="img-container">
-        <img id="img" :src="avatarUrl" alt="">
+        <img id="img" ref="img" :src="editUrl" alt="">
       </div>
       <div class="preview-container">
         <div class="preview"></div>
@@ -65,21 +65,17 @@ export default {
       avatarParams: {
         id: this.$store.state.userInfo.id
       },
-      hasPic: false
+      hasPic: false,
+      // 修改图片的url
+      editUrl: this.avatarUrl
     }
   },
   computed: {
-    
+
   },
   methods: {
     initCropper() {
-      console.log('init')
-      let image = document.getElementById('img')
-      console.log(image)
-      if(image==null) {
-        return
-      }
-      this.cropper = new Cropper(image, {
+      this.cropper = new Cropper(this.$refs.img, {
         aspectRatio: 1, // 裁剪框比例
         viewMode: 2,  // 裁剪模式 2-裁剪框只能在图片范围内移动
         dragMode: 'crop', // 允许创建一个裁剪框
@@ -101,10 +97,31 @@ export default {
         }
       })
     },
-    // 上传函数
+    // 发起上传函数
     httpRequest(params) {
-      console.log(params)
-      console.log(this.cropper.getCroppedCanvas())  //输出null
+      const { cropper } = this
+      console.log(cropper)
+      console.log(cropper.getData()) 
+      console.log(cropper.getCanvasData()) 
+      console.log(cropper.getCropBoxData()) 
+      const canvas = cropper.getCroppedCanvas({
+        width: 160,
+        height: 90,
+        minWidth: 256,
+        minHeight: 256,
+        maxWidth: 4096,
+        maxHeight: 4096,
+        fillColor: '#fff',
+        imageSmoothingEnabled: false,
+        imageSmoothingQuality: 'high',
+      });
+      console.log(canvas)
+      // TODO 为什么getCroppedCanvas一直是null
+      // cropper.getCroppedCanvas().toBlob(async function(blob) {
+      //   const params = new FormData()
+      //   params.append('file', blob)
+      //   console.log(params)
+      // }, 'image/jpg')
     
 
       // let croppedCanvas;
@@ -148,9 +165,9 @@ export default {
       }
       this.fileList.push(fileList[0])
       // 文件对象无法直接使用，需要生成本地URL
-      this.avatarUrl = URL.createObjectURL(file.raw)
+      this.editUrl = URL.createObjectURL(file.raw)
       if (this.cropper) {
-        this.cropper.replace(this.avatarUrl)
+        this.cropper.replace(this.editUrl)
       } else {
         this.hasPic = true
         this.initCropper()
@@ -160,13 +177,13 @@ export default {
       // console.log(cropper)
       // const round = cropper.getCroppedCanvas()
       // console.log(round)
-      // this.$refs.upload.submit()
+      this.$refs.upload.submit()
     },
     // 上传成功钩子函数
     uploadSuccess(res) {
       // console.log(res)
       // if (res.success) {
-      //   this.avatarUrl = res.imgpath
+      //   this.editUrl = res.imgpath
       // }
       
     },

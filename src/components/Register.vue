@@ -69,7 +69,7 @@ import Utils from '@/tools/utils'
 import keys from '@/common'
 export default {
   created() {
-    console.log(this.$refs)
+    
   },
   data() {
     return {

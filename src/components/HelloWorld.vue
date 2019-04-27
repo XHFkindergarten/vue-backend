@@ -7,6 +7,7 @@
     <div class="container">
       <h2>您收到的验证码为:</h2>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

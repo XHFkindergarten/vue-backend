@@ -1,17 +1,29 @@
 import store from '@/vuex'
 
 // 取出当前有权限访问的动态路由
-const ClearAsyncRoutes = (routes,role) => {
+const ClearAsyncRoutes = (routes, role) => {
   routes.forEach((route, index) => {
-    // console.log(route.path,route.meta)
+    // console.log('?',route.path)
     if (!route.meta || route.meta.role.indexOf(role)<0) {
       routes.splice(index,1)
     } else if (route.hidden) {
       routes.splice(index,1)
     } else if ( route.children && route.children.length>0 ) {
-      ClearAsyncRoutes(route.children,role)
+      ClearAsyncRoutes(route.children, role)
     }
   });
+}
+
+// 将路由表中的嵌套路由进行组装
+const spliceRoutes = (routes, preRoute) => {
+  routes.forEach(route => {
+    if (preRoute!='') {
+      route.path = `${preRoute}/${route.path}`
+    }
+    if (route.children && route.children.length>0) {
+      spliceRoutes(route.children, route.path)
+    }
+  })
 }
 
 
@@ -36,6 +48,7 @@ const isEmail = (email) => {
 
 export default {
   ClearAsyncRoutes,
+  spliceRoutes,
   // ClearConstantRoutes,
   getPaths,
   isEmail

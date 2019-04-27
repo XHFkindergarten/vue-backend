@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Permission Test demo</h1>
+    <h2>test2 content</h2>
     <router-view></router-view>
   </div>
 </template>
