@@ -43,23 +43,22 @@ export default {
       return this.$store.state.userInfo
     }
   },
-  created() {
-    // const token = Cookies.get('login-token')
-    // if(token!=''&&token!=undefined) {
-    //   this.$store.commit('setToken', token)
-    //   this.$store.dispatch('currentAction')
-    //     .catch(err => {
-    //       this.$store.commit('resetToken')
-    //     })
-    // } else {
-    //   this.$store.dispatch('addRoutes')
-    // }
-
+  created() {å
   },
   methods: {
     altCollapse() {
       !this.sideWidth
     }
+  },
+  mounted() {
+    // 监听键盘按键
+    // window.addEventListener('keydown', event => {
+    //   console.log('按下', event.key)
+    //   console.log('keynode', event.keyCode)
+    //   if (event.keyCode==9) {
+    //     event.preventDefault()
+    //   }
+    // })
   }
 }
 </script>

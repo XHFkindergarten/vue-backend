@@ -47,6 +47,9 @@ const Role = async (id) => {
     throw new Error('暂无用户信息，无法查询身份')
   }
   const res = await axios.get('users/role?id='+id)
+    .catch((err) => {
+      throw new Error(err)
+    })
   return res
 }
 
@@ -59,12 +62,42 @@ const Email = async (email) => {
   return res
 }
 
+// 上传图片
+const uploadImg = async (file, type='context') => {
+  if (file==null || file==undefined) {
+    throw new Error('请选择文件')
+  }
+  let param = new FormData()
+  param.append('file', file)
+  param.append('type', type)
+  
+  let config = {headers: { 'Content-Type': 'multipart/form-data'}}
+  const res = await axios.post('users/uploadImg', param, config)
+  return res.data.imgpath
+}
+
+// 修改用户信息（密码除外）
+const updateUserInfo = async (param) => {
+  if (!param) {
+    throw new Error('请检查要修改的内容')
+  }
+  const config = {
+    Authorization: store.state.token
+  }
+  const res = await axios.post('users/update', param, config)
+  if (res) {
+    return res
+  }
+}
+
 const http = {
   Login,
   Register,
   Current,
   Role,
-  Email
+  Email,
+  uploadImg,
+  updateUserInfo
 }
 
 export default http

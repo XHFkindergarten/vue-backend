@@ -1,12 +1,9 @@
 import store from '@/vuex'
 
-// 取出当前有权限访问的动态路由
+// 删除没有权限访问的所有动态路由
 const ClearAsyncRoutes = (routes, role) => {
   routes.forEach((route, index) => {
-    // console.log('?',route.path)
     if (!route.meta || route.meta.role.indexOf(role)<0) {
-      routes.splice(index,1)
-    } else if (route.hidden) {
       routes.splice(index,1)
     } else if ( route.children && route.children.length>0 ) {
       ClearAsyncRoutes(route.children, role)

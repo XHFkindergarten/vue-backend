@@ -45,10 +45,6 @@ let mutations = {
   resetRoles: (state) => {
     state.Roles = []
   },
-  resetLoginAccess: (state, getters) => {
-    const index = getters.getRoutesPath.indexOf('/login')
-    getters.getRoutesPath.splice(index, 1)
-  },
   resetRoutes: (state) => {
     state.routes = []
   },
@@ -59,14 +55,6 @@ let mutations = {
 }
 // getters
 let getters = {
-  
-  // 所有合法的路由path数组
-  getRoutesPath: (state) => {
-    const array = []
-    utils.getPaths(constantRouterMap, array)
-    utils.getPaths(asyncRouterMap, array)
-    return array
-  },
   // 获取用户的第一个身份权限(一般一个用户只有一个身份，为了防止特殊情况权限是个数组)
   getRole: (state) => {
     return state.Roles[0]
@@ -80,7 +68,9 @@ let actions = {
     const login = await http.Login(email, loginForm.password)
     commit('setToken', login.data.token)
     const getUserInfo = await dispatch('currentAction')
-    return login
+    if (getUserInfo) {
+      return login
+    }
   },
   // 注册
   registerAction: ({commit}, registerForm) => {
@@ -99,33 +89,42 @@ let actions = {
   // 根据token获取用户信息
   currentAction: async ({dispatch,commit,state}) => {
     const res = await http.Current(state.token)
-    if (res) {
-      commit('setUserInfo', res.data)
-      if(!state.status){
-        commit('altStatus')
-      }
-      const getRole = await dispatch('getRoleAction', {
-        id: state.userInfo.id
+      .catch(err => {
+        throw new Error(err)
       })
-      return true
-    } else {
-      commit('resetToken')
-      Cookies.remove('login-token')
-      dispatch('addRoutes')
-      throw new Error('Cookies已过期')
-    }
+    return res
   },
+
+  // // 根据token获取用户信息
+  // currentAction: async ({dispatch,commit,state}) => {
+  //   const res = await http.Current(state.token)
+  //   if (res) {
+  //     commit('setUserInfo', res.data)
+  //     if(!state.status){
+  //       commit('altStatus')
+  //     }
+  //     const getRole = await dispatch('getRoleAction', {
+  //       id: state.userInfo.id
+  //     })
+  //     return true
+  //   } else {
+  //     commit('resetToken')
+  //     Cookies.remove('login-token')
+  //     dispatch('addRoutes')
+  //     throw new Error('Cookies已过期')
+  //   }
+  // },
   // 获取用户权限
   getRoleAction: async ({commit,dispatch}, info) => {
     if (info==null) {
       throw new Error('暂无用户信息，无法获取权限表')
     }
     const res = await http.Role(info.id)
-    if (res) {
-      commit('setRoles', res.data.data)
-      await dispatch('addRoutes')
-      return res
-    }
+      .catch(err=> {
+        throw err
+      })
+    commit('setRoles', res.data.data)
+    return res
   },
   // 登出
   logoutAction: ({commit}) => {
@@ -146,7 +145,6 @@ let actions = {
       utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
 
       state.routes = constantRoute.concat(asyncRoute)
-      console.log(asyncRoute)
       router.addRoutes(asyncRoute)
     }
     
@@ -166,8 +164,30 @@ let actions = {
     } else {
       throw new Error('发送邮箱操作失败!')
     }
-  }
+  },
   
+  // 上传图片
+  sendImage: ({commit}, params) => {
+    if (!params.file) {
+      throw new Error('没有文件，怎么发送???')
+    }
+    const res = http.uploadImg(params.file, params.type)
+    if (res) {
+      return res
+    } else {
+      throw new Error('上传失败')
+    }
+  },
+
+  // 更新用户信息
+  updateUserInfo: ({commit}, params) => {
+    const res = http.updateUserInfo(params)
+    if (res) {
+      return res
+    } else {
+      throw new Error('更新信息失败')
+    }
+  }
 }
 const store = new Vuex.Store({
   state,

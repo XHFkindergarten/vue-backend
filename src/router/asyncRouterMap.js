@@ -6,6 +6,8 @@ import Table from '@/components/Table'
 import Hello from '@/components/HelloWorld'
 import Empty from '@/components/Empty'
 import RichText from '@/components/RichText'
+import NotFound from '@/layouts/404'
+import Markdown from '@/components/Markdown'
 
 export const asyncRouterMap = [
   {
@@ -66,11 +68,20 @@ export const asyncRouterMap = [
   {
     path: '/richtext',
     label: '文本编辑',
-    icon: 'link',
-    name: 'richtext',
+    icon: 'document',
     meta: { role: [0] },
     hidden: false,
-    component:RichText
+    component: Empty,
+    children: [
+      {
+        path: 'tinymce',
+        label: 'tinymce文本编辑器',
+        name: 'richtext',
+        meta: { role: [0] },
+        hidden: false,
+        component: RichText
+      }
+    ]
   },
   {
     path: '/me',
@@ -78,5 +89,30 @@ export const asyncRouterMap = [
     component: Me,
     hidden: true,
     meta: { role: [0, 1, 2] }
+  },{
+    path: '/markdown',
+    name: 'markdown',
+    component: Empty,
+    label: 'MarkDown',
+    meta: { role: [0] },
+    hidden: false,
+    children: [
+      {
+        path: 'simplemde',
+        name: 'simplemde',
+        component: Markdown,
+        hidden: false,
+        label: 'simplemde编辑器',
+        meta: { role: [0] }
+      }
+    ]
   },
+  // 404的path可以匹配所有路径，所以必须放在最后一个路由
+  {
+    path: '*',
+    name: '404',
+    component: NotFound,
+    hidden: true,
+    meta: { role: [0, 1, 2] }
+  }
 ]

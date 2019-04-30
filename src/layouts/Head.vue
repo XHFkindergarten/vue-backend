@@ -18,7 +18,7 @@
         </template>
       </el-menu-item>
       <div class="userinfo">
-        <img style="display:none" v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
+        <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
         <template>
           <el-popover
             placement="bottom"

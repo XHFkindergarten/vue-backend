@@ -57,25 +57,6 @@ export default {
         // Login按钮 @click
         login: function() {
           const app = this
-
-          // TODO 复原
-          app.$store.dispatch('loginAction', {
-                email: '1131911308@qq.com',
-                password: '123123'
-              })
-                .then (res => {
-                  if (res.status==200&&res.data.success) {
-                    Cookies.set('login-token', res.data.token, { expires: 1 })
-                    this.$router.push('/')
-                  } else {
-                    this.$message.error(res.data.msg)
-                  }
-                })
-                .catch (err => {
-                  throw new Error(err)
-                })
-
-          return
           this.$refs['loginForm'].validate(valid => {
             if(valid) {
               app.$store.dispatch('loginAction', {

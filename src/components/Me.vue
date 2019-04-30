@@ -13,7 +13,7 @@
           :center="false"
           :visible.sync="editAvatarDialog"
           title="修改头像">
-          <EditAvatar :avatarUrl="userInfo.avatar"></EditAvatar>
+          <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
         </el-dialog>
         <div class="status-container">
           <i class="el-icon-edit icon"></i>
@@ -70,6 +70,13 @@ export default {
     },
     editAvatar() {
       this.editAvatarDialog = true
+    },
+    editAvatarSuccess() {
+      this.$store.dispatch('currentAction')
+        .then(res=> {
+          this.$store.commit('setUserInfo', res.data)
+        })
+      this.editAvatarDialog = false
     }
   },
   directives: {

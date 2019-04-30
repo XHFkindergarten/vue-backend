@@ -22,7 +22,8 @@
           :on-change="handleChange"
           :on-success="uploadSuccess"
           :on-error="uploadError"
-          :limit="1"
+          :on-preview="onPreview"
+          :limit="2"
           :auto-upload="false">
           <!-- <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
@@ -31,7 +32,7 @@
         </el-upload>
       </el-col>
       <el-col :span="3" :offset="7">
-        <el-button type="primary" round>点击上传</el-button>
+        <el-button type="primary" @click="clickUpload" round>点击上传</el-button>
       </el-col>
     </el-row>
   </div>
@@ -58,16 +59,19 @@ export default {
       // 声明cropper对象
       cropper: '',
       // 上传后台路由
-      uploadUrl: keys.host+'/users/avatar',
-      // 上传文件列表
-      fileList: [],
+      uploadUrl: keys.host+'/users/uploadImg',
       // 上传头像时附带的额外参数
       avatarParams: {
         id: this.$store.state.userInfo.id
       },
       hasPic: false,
       // 修改图片的url
-      editUrl: this.avatarUrl
+      editUrl: this.avatarUrl,
+      // 上传文件列表
+      fileList: [{
+        name: '原始头像',
+        url: this.avatarUrl
+      }],
     }
   },
   computed: {
@@ -101,67 +105,44 @@ export default {
     httpRequest(params) {
       const { cropper } = this
       console.log(cropper)
-      console.log(cropper.getData()) 
-      console.log(cropper.getCanvasData()) 
-      console.log(cropper.getCropBoxData()) 
-      const canvas = cropper.getCroppedCanvas({
-        width: 160,
-        height: 90,
-        minWidth: 256,
-        minHeight: 256,
-        maxWidth: 4096,
-        maxHeight: 4096,
-        fillColor: '#fff',
-        imageSmoothingEnabled: false,
-        imageSmoothingQuality: 'high',
-      });
-      console.log(canvas)
-      // TODO 为什么getCroppedCanvas一直是null
-      // cropper.getCroppedCanvas().toBlob(async function(blob) {
-      //   const params = new FormData()
-      //   params.append('file', blob)
-      //   console.log(params)
-      // }, 'image/jpg')
-    
-
-      // let croppedCanvas;
-      // let roundedCanvas;
-      // Crop
-      // croppedCanvas = this.cropper.getCroppedCanvas();
-      // console.log(croppedCanvas)
-      // Round
-      // roundedCanvas = this.getRoundedCanvas(croppedCanvas)
-      // console.log(roundedCanvas.toDataURL())
+      cropper.getCroppedCanvas().toBlob((blob) => {
+        console.log(blob)
+        const res = this.$store.dispatch('sendImage', {
+          file: blob,
+          type: 'avatar'
+        })
+          .then(res => {
+            const newAvatarUrl = res
+            const params = {
+              id: this.$store.state.userInfo.id,
+              avatar: newAvatarUrl
+            }
+            this.$store.dispatch('updateUserInfo', params)
+              .then(res => {
+                if (res.data.success) {
+                  this.$message({
+                    type: 'success',
+                    message: '更改成功'
+                  })
+                  this.$emit('editavatarsuccess')
+                }
+              })
+          })
+          .catch(err => {
+            this.$message.error(err)
+          })
+      })
     },
-    //canvas画图导出图像
-    getRoundedCanvas(sourceCanvas) {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-      const width = sourceCanvas.width;
-      const height = sourceCanvas.height;
-      canvas.width = width;
-      canvas.height = height;
-      context.imageSmoothingEnabled = true;
-      context.drawImage(sourceCanvas, 0, 0, width, height);
-      context.globalCompositeOperation = "destination-in";
-      context.beginPath();
-      context.arc(
-        width / 2,
-        height / 2,
-        Math.min(width, height) / 2,
-        0,
-        2 * Math.PI,
-        true
-      );
-      context.fill();
- 
-      return canvas;
+    clickUpload() {
+      this.$refs.upload.submit()
     },
     // 文件变化钩子函数
     handleChange(file, fileList) {
+      console.log(fileList)
       let that = this
       if (fileList.length>1) {
         fileList.shift()
+        this.fileList.shift()
       }
       this.fileList.push(fileList[0])
       // 文件对象无法直接使用，需要生成本地URL
@@ -172,24 +153,17 @@ export default {
         this.hasPic = true
         this.initCropper()
       }
-      
-      // const {cropper} = this
-      // console.log(cropper)
-      // const round = cropper.getCroppedCanvas()
-      // console.log(round)
-      this.$refs.upload.submit()
     },
     // 上传成功钩子函数
     uploadSuccess(res) {
-      // console.log(res)
-      // if (res.success) {
-      //   this.editUrl = res.imgpath
-      // }
       
     },
     // 上传失败钩子函数
     uploadError(error) {
       this.$message.error('上传失败,请检查网络连接')
+    },
+    onPreview(file) {
+      console.log(file)
     }
   }
 }

@@ -157,7 +157,6 @@ export default {
                 clearInterval(timer)
                 this.sendBtnWord = false
                 this.timeout = keys.sendEmailWaitTime
-                this.hasSend = false
               }
             }, 1000)
             this.$store.commit('setEmailCode', res.data.code)
@@ -205,6 +204,7 @@ export default {
 }
 .code-input{
   width:45px;
+  text-align: center;
 }
 .code-input-container{
   width:100%;

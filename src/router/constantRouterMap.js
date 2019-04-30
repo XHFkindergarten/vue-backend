@@ -2,7 +2,6 @@
 import Main from '@/components/Main'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
-import NotFound from '@/layouts/404'
 import NoPermission from '@/layouts/403'
 import Hello from '@/components/HelloWorld'
 import Test from '@/components/Test'
@@ -26,12 +25,6 @@ export const constantRouterMap =  [
     path: '/Register',
     name: 'Register',
     component: Register,
-    hidden: true
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: NotFound,
     hidden: true
   },
   {
@@ -67,5 +60,5 @@ export const constantRouterMap =  [
         ]
       }
     ]
-  },
+  }
 ]
