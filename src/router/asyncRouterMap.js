@@ -2,12 +2,15 @@
 // 动态需要根据权限加载的路由表
 
 import Me from '@/components/Me'
+import TableContainer from '@/components/TableContainer'
 import Table from '@/components/Table'
 import Hello from '@/components/HelloWorld'
-import Empty from '@/components/Empty'
+import Empty from '@/layouts/Empty'
 import RichText from '@/components/RichText'
 import NotFound from '@/layouts/404'
 import Markdown from '@/components/Markdown'
+import ExportExcel from '@/components/ExportExcel'
+import ImportExcel from '@/components/ImportExcel'
 
 export const asyncRouterMap = [
   {
@@ -52,7 +55,7 @@ export const asyncRouterMap = [
     name: 'table',
     meta: { role: [0] }, //页面需要的权限，这也是vue-router文档推荐的做法
     hidden: false,
-    component: Empty,
+    component: TableContainer,
     children: [
       {
         path: 'table1',
@@ -92,7 +95,7 @@ export const asyncRouterMap = [
   },{
     path: '/markdown',
     name: 'markdown',
-    icon: 'coin',
+    icon: 'info',
     component: Empty,
     label: 'MarkDown',
     meta: { role: [0] },
@@ -107,7 +110,31 @@ export const asyncRouterMap = [
         meta: { role: [0] }
       }
     ]
+  },{
+    path: '/excel',
+    component: Empty,
+    hidden: false,
+    label: 'Excel表格',
+    meta: { role: [0] },
+    icon: 'files',
+    children: [
+      {
+        path: 'exportExcel',
+        name: 'exportExcel',
+        component: ExportExcel,
+        label: '导出Excel表格',
+        meta: { role: [0] }
+      },{
+        path: 'importExcel',
+        name: 'importExcel',
+        component: ImportExcel,
+        label: '导入Excel表格',
+        meta: { role: [0] }
+      }
+    ]
   },
+
+
   // 404的path可以匹配所有路径，所以必须放在最后一个路由
   {
     path: '*',

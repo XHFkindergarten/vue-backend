@@ -1,5 +1,19 @@
 import store from '@/vuex'
 
+// 是否为空
+const isEmpty = (data) => {
+  if (typeof(data) == 'string') {
+    return data.length==0
+  } else if (typeof(data) == 'object') {
+    const keys = Object.keys(data)
+    return keys.length==0
+  } else if (typeof(data) == 'array') {
+    return data.length==0
+  } else {
+    return data==undefined || data==null
+  }
+}
+
 // 删除没有权限访问的所有动态路由
 const ClearAsyncRoutes = (routes, role) => {
   routes.forEach((route, index) => {
@@ -44,6 +58,7 @@ const isEmail = (email) => {
 }
 
 export default {
+  isEmpty,
   ClearAsyncRoutes,
   spliceRoutes,
   // ClearConstantRoutes,
