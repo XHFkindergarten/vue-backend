@@ -68,10 +68,7 @@ export default {
       // 修改图片的url
       editUrl: this.avatarUrl,
       // 上传文件列表
-      fileList: [{
-        name: '原始头像',
-        url: this.avatarUrl
-      }],
+      fileList: [],
     }
   },
   computed: {
@@ -165,6 +162,16 @@ export default {
     onPreview(file) {
       console.log(file)
     }
+  },
+  created() {
+    // 获取blob格式的图片并转换成File
+    // this.$axios.get('upload/avatar/1556612757084.png',{
+    //   responseType: 'blob'
+    // })
+    //   .then(res => {
+    //     const file = new File([res.data], 'imgname', {type: res.data.type})
+    //     this.fileList.push(file)
+    //   })
   }
 }
 </script>

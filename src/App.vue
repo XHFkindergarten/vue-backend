@@ -43,7 +43,8 @@ export default {
       return this.$store.state.userInfo
     }
   },
-  created() {å
+  created() {
+    
   },
   methods: {
     altCollapse() {

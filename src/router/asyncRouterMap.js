@@ -92,6 +92,7 @@ export const asyncRouterMap = [
   },{
     path: '/markdown',
     name: 'markdown',
+    icon: 'coin',
     component: Empty,
     label: 'MarkDown',
     meta: { role: [0] },

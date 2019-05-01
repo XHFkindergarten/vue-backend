@@ -29,8 +29,8 @@
             </el-col>
           </el-row>
           
-          <p v-else @click="editUsername" id="username">小哈佛幼儿园<i class="el-icon-edit username-icon"></i></p>
-          <p id="email">XHFkindergarten@gmail.com</p>
+          <p v-else @click="editUsername" id="username">{{userInfo.username}}<i class="el-icon-edit username-icon"></i></p>
+          <p id="email">{{userInfo.email}}</p>
         </div>
       </el-col>
     </el-row>
@@ -56,7 +56,8 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.userInfo
-    }
+    },
+    
   },
   created() {
     
