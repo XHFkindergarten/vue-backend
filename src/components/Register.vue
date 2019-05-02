@@ -1,7 +1,6 @@
 <template>
   <div>
-    <img src="../assets/scutLOGO.png">
-    <h1>Register</h1>
+    <Favicon bird="boxer" style="margin-bottom:30px;" title="Register"></Favicon>
     <el-form
       :model="registerForm"
       ref="registerForm"
@@ -65,11 +64,15 @@
   </div>
 </template>
 <script>
+import Favicon from '@/layouts/Favicon'
 import Utils from '@/tools/utils'
 import keys from '@/common'
 export default {
   created() {
     
+  },
+  components: {
+    Favicon
   },
   data() {
     return {

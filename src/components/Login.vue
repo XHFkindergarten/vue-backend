@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img src="../assets/scutLOGO.png">
-    <h1>Login</h1>
+    <Favicon
+      title="LOGIN"></Favicon>
     <el-form
       :model="loginForm"
       ref="loginForm"
@@ -31,9 +31,13 @@
   </div>
 </template>
 <script>
+import Favicon from '@/layouts/Favicon'
 import Cookies from 'js-cookie'
 export default {
     name: 'Login',
+    components: {
+      Favicon
+    },
     data () {
         return {
             // 登录表单数据
@@ -102,4 +106,6 @@ export default {
     height:50px;
     border-radius: 25px;
 }
+
+
 </style>

@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h1>403</h1>
-    <h2>
-      {{ msg }}
-    </h2>
-    <p>get more info plz connect with XHFkindergarten@gmail.com</p>
+    <Favicon
+      title="403"
+      bird="knight"></Favicon>
+    <p style="font-size:60px;font-bold:bolder;">NO PERMISSION</p>
+    <p>more infomation plz connect with XHFkindergarten@gmail.com</p>
   </div>
 </template>
 <script>
+import Favicon from '@/layouts/Favicon'
 export default {
+  components: {
+    Favicon
+  },
   data() {
     return {
       msg: 'You have no permission 2 access this page'

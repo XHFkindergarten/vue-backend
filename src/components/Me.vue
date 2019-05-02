@@ -37,7 +37,6 @@
   </div>
 </template>
 <script>
-import ImgCropper from '@/components/cropper'
 import EditAvatar from '@/components/editAvatar'
 export default {
   name: 'me',
@@ -50,8 +49,7 @@ export default {
     }
   },
   components: {
-    EditAvatar,
-    ImgCropper
+    EditAvatar
   },
   computed: {
     userInfo() {
