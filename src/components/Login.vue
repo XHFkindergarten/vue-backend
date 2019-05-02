@@ -24,7 +24,7 @@
         </el-row>
         <el-row class="row">
             <el-col :span="6" :offset="9">
-                <el-button class="login-button" @click="login" type="primary" size="medium">Login</el-button>
+                <el-button class="login-button" @keyup.enter.native="login" @click="login" type="primary" size="medium">Login</el-button>
             </el-col>
         </el-row>
     </el-form>
@@ -81,7 +81,16 @@ export default {
             }
           })
         }
-    }
+    },
+    created: function() {
+        var _this = this;
+        document.onkeydown = function(e) {
+            let key = e.keyCode;
+            if (key==13) {
+              _this.login()
+            }
+        };
+    },
 }
 </script>
 <style lang="less" scoped>

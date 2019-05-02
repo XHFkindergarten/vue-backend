@@ -1,21 +1,12 @@
 // 异步挂载路由
 // 动态需要根据权限加载的路由表
 
-import Me from '@/components/Me'
-import TableContainer from '@/components/TableContainer'
-import Table from '@/components/Table'
-import Hello from '@/components/HelloWorld'
-import Empty from '@/layouts/Empty'
-import RichText from '@/components/RichText'
-import NotFound from '@/layouts/404'
-import Markdown from '@/components/Markdown'
-import ExportExcel from '@/components/ExportExcel'
-import ImportExcel from '@/components/ImportExcel'
+// import EchartsDemo from '@/components/EchartsDemo'
 
 export const asyncRouterMap = [
   {
     path: '/permission',
-    component: Hello,
+    component: () => import('@/components/HelloWorld'),
     name: '权限测试',
     label: 'admin权限test',
     icon: 'indent',
@@ -26,24 +17,24 @@ export const asyncRouterMap = [
         path: 'permission1',
         meta: { role: [0] },
         label: 'permission1',
-        component: Empty,
+        component: () => import('@/layouts/Empty'),
         children: [
           {
             path: 'permission1-1',
             label: 'permission1-1',
-            component: Table,
+            component: () => import('@/components/Table'),
             meta: { role: [0] }
           },{
             path: 'permission1-2',
             label: 'permission1-2',
-            component: Hello,
+            component: () => import('@/components/HelloWorld'),
             meta: { role: [1] }
           }
         ]
       },{
         path: 'permission2',
         label: 'permission2',
-        component: Hello,
+        component: () => import('@/components/HelloWorld'),
         meta: { role: [0]}
       }
     ]
@@ -55,7 +46,7 @@ export const asyncRouterMap = [
     name: 'table',
     meta: { role: [0] }, //页面需要的权限，这也是vue-router文档推荐的做法
     hidden: false,
-    component: TableContainer,
+    component: () => import('@/components/TableContainer'),
     children: [
       {
         path: 'table1',
@@ -63,7 +54,7 @@ export const asyncRouterMap = [
         icon: 'document',
         name: 'table1',
         meta: { role: [0] },
-        component: Table,
+        component: () => import('@/components/Table'),
         hidden: false
       }
     ]
@@ -74,7 +65,7 @@ export const asyncRouterMap = [
     icon: 'edit',
     meta: { role: [0] },
     hidden: false,
-    component: Empty,
+    component: () => import('@/layouts/Empty'),
     children: [
       {
         path: 'tinymce',
@@ -82,21 +73,21 @@ export const asyncRouterMap = [
         name: 'richtext',
         meta: { role: [0] },
         hidden: false,
-        component: RichText
+        component: () => import('@/components/RichText'),
       }
     ]
   },
   {
     path: '/me',
     name: 'me',
-    component: Me,
+    component: () => import('@/components/Me'),
     hidden: true,
     meta: { role: [0, 1, 2] }
   },{
     path: '/markdown',
     name: 'markdown',
     icon: 'file-markdown',
-    component: Empty,
+    component: () => import('@/layouts/Empty'),
     label: 'MarkDown',
     meta: { role: [0] },
     hidden: false,
@@ -104,7 +95,7 @@ export const asyncRouterMap = [
       {
         path: 'simplemde',
         name: 'simplemde',
-        component: Markdown,
+        component: () => import('@/components/Markdown'),
         hidden: false,
         label: 'simplemde编辑器',
         meta: { role: [0] }
@@ -112,7 +103,7 @@ export const asyncRouterMap = [
     ]
   },{
     path: '/excel',
-    component: Empty,
+    component: () => import('@/layouts/Empty'),
     hidden: false,
     label: 'Excel表格',
     meta: { role: [0] },
@@ -121,7 +112,7 @@ export const asyncRouterMap = [
       {
         path: 'exportExcel',
         name: 'exportExcel',
-        component: ExportExcel,
+        component: () => import('@/components/ExportExcel'),
         label: '导出Excel表格',
         icon: 'down',
         meta: { role: [0] }
@@ -129,8 +120,25 @@ export const asyncRouterMap = [
         path: 'importExcel',
         name: 'importExcel',
         icon: 'up',
-        component: ImportExcel,
+        component: () => import('@/components/ImportExcel'),
         label: '导入Excel表格',
+        meta: { role: [0] }
+      }
+    ]
+  },{
+    path: '/echarts',
+    label: '表格',
+    icon: 'carryout',
+    hidden: false,
+    meta: { role: [0] },
+    component: () => import('@/layouts/Empty'),
+    children: [
+      {
+        path: 'echartsDemo',
+        label: 'echarts入门实例',
+        name: 'echartsDemo',
+        component: () => import('@/components/EchartsDemo'),
+        hidden: false,
         meta: { role: [0] }
       }
     ]
@@ -141,7 +149,7 @@ export const asyncRouterMap = [
   {
     path: '*',
     name: '404',
-    component: NotFound,
+    component: () => import('@/layouts/404'),
     hidden: true,
     meta: { role: [0, 1, 2] }
   }

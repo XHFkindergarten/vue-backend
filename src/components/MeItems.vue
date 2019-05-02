@@ -18,7 +18,7 @@
     </div>
     <div v-else class="row">
       <el-button @click="login" type="text">
-        <el-button type="text" @click="logout">
+        <el-button type="text" @click="login">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-login"></use>
           </svg>
