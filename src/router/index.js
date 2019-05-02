@@ -39,6 +39,9 @@ router.beforeEach( async (to, from, next) => {
       await store.dispatch('addRoutes')
     } catch(err) {
       this.$message.error(err)
+      store.commit('resetToken')
+      store.dispatch('addRoutes')
+      next('/login')
     }
 
     if(store.state.userInfo) {
