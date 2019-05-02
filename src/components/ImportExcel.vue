@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Import Excel</h1>
+    <h1>{{title}}</h1>
     <div v-if="fileList.length==0">
       <el-upload
         drag
@@ -46,6 +46,7 @@ export default {
   name: 'ImportExcel',
   data() {
     return {
+      title: 'Import Excel',
       fileList: [],
       tableData: {},
       currentSheet: '',
@@ -72,8 +73,9 @@ export default {
 
     },
     // 上传文件改变钩子函数
-    async onChange(file, fileList) {
-      this.tableData = await this.readExcel(file)
+    onChange(file, fileList) {
+      this.title = file.name
+      this.tableData = this.readExcel(file)
       this.fileList.push(file)
       this.currentSheet = this.sheetOptions[0]
     },

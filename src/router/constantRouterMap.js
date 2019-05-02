@@ -36,8 +36,8 @@ export const constantRouterMap =  [
   {
     path: '/test1',
     name: 'Test1',
-    label: '一级路由1',  // 显示的按钮名称
-    icon: 'edit', // 显示的图标
+    label: '0权限路由1',  // 显示的按钮名称
+    icon: 'gift', // 显示的图标
     component:Test,
     hidden: false,
     children: [
@@ -46,14 +46,14 @@ export const constantRouterMap =  [
         name: 'Test1-1',
         hidden: false,
         label: '二级路由',
-        icon: 'refresh',
+        icon: 'verticalright',
         component: Test2,
         children: [
           {
             path: 'test1-1-1',
             name: 'Test1-1-1',
             label: '三级路由',
-            icon: 'setting',
+            icon: 'car',
             hidden: false,
             component: Test
           }

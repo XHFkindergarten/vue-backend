@@ -7,9 +7,24 @@
       text-color="#000"
       active-text-color="#409EFF"
       router>
-      <el-menu-item index="/">主页</el-menu-item>
-      <el-menu-item v-if="!hasLogin" index="/register">注册</el-menu-item>
-      <el-menu-item v-if="!hasLogin" index="/login">登录</el-menu-item>
+      <el-menu-item index="/">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <span>主页</span>
+      </el-menu-item>
+      <el-menu-item v-if="!hasLogin" index="/register">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-adduser"></use>
+        </svg>
+        <span>注册</span>
+      </el-menu-item>
+      <el-menu-item v-if="!hasLogin" index="/login">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-login"></use>
+        </svg>
+        <span>登录</span>
+      </el-menu-item>
       <el-menu-item>
         <template>
           <el-input

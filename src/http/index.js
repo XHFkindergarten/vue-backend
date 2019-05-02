@@ -27,6 +27,9 @@ const Login = async (email,password) => {
     email,
     password
   })
+    .catch(err => {
+      throw new Error(err)
+    }) 
   return res
 }
 

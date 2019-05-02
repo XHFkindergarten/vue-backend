@@ -18,7 +18,7 @@ export const asyncRouterMap = [
     component: Hello,
     name: '权限测试',
     label: 'admin权限test',
-    icon: 'circle-plus',
+    icon: 'indent',
     meta: { role: [0,1] }, //页面需要的权限，这也是vue-router文档推荐的做法,
     hidden: false,
     children: [
@@ -51,7 +51,7 @@ export const asyncRouterMap = [
   {
     path: '/table',
     label: '表格',
-    icon: 'tickets',
+    icon: 'table',
     name: 'table',
     meta: { role: [0] }, //页面需要的权限，这也是vue-router文档推荐的做法
     hidden: false,
@@ -71,7 +71,7 @@ export const asyncRouterMap = [
   {
     path: '/richtext',
     label: '文本编辑',
-    icon: 'document',
+    icon: 'edit',
     meta: { role: [0] },
     hidden: false,
     component: Empty,
@@ -95,7 +95,7 @@ export const asyncRouterMap = [
   },{
     path: '/markdown',
     name: 'markdown',
-    icon: 'info',
+    icon: 'file-markdown',
     component: Empty,
     label: 'MarkDown',
     meta: { role: [0] },
@@ -116,17 +116,19 @@ export const asyncRouterMap = [
     hidden: false,
     label: 'Excel表格',
     meta: { role: [0] },
-    icon: 'files',
+    icon: 'file-excel',
     children: [
       {
         path: 'exportExcel',
         name: 'exportExcel',
         component: ExportExcel,
         label: '导出Excel表格',
+        icon: 'down',
         meta: { role: [0] }
       },{
         path: 'importExcel',
         name: 'importExcel',
+        icon: 'up',
         component: ImportExcel,
         label: '导入Excel表格',
         meta: { role: [0] }

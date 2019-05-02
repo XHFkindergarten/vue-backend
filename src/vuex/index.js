@@ -66,11 +66,22 @@ let actions = {
   loginAction: async ({dispatch,commit}, loginForm) => {
     const email = loginForm.email.trim()
     const login = await http.Login(email, loginForm.password)
-    commit('setToken', login.data.token)
-    const getUserInfo = await dispatch('currentAction')
-    if (getUserInfo) {
-      return login
+      .catch(err => {
+        throw err
+      })
+    if (login.data.success) {
+      // 如果登录成功
+      commit('setToken', login.data.token)
+      const getUserInfo = await dispatch('currentAction')
+      console.log(getUserInfo)
+      if (getUserInfo) {
+        return login
+      }
+    } else {
+      // 如果账号或者密码错误
+      throw new Error(login.data.msg)
     }
+    
   },
   // 注册
   registerAction: ({commit}, registerForm) => {

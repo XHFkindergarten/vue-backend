@@ -1,13 +1,30 @@
 <template>
   <div>
     <div v-if="hasLogin" class="row">
-      <el-button type="text" @click="aboutMe">关于我</el-button>
+      <el-button type="text" @click="aboutMe">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-user"></use>
+        </svg>
+        关于我
+      </el-button>
     </div>
     <div v-if="hasLogin" class="row">
-      <el-button type="text" @click="logout">LogOut</el-button>
+      <el-button type="text" @click="logout">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-logout"></use>
+        </svg>
+        LOGOUT
+      </el-button>
     </div>
     <div v-else class="row">
-      <el-button @click="login" type="text">登录</el-button>
+      <el-button @click="login" type="text">
+        <el-button type="text" @click="logout">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-login"></use>
+          </svg>
+          登录
+        </el-button>
+      </el-button>
     </div>
   </div>
   
@@ -39,5 +56,13 @@ export default {
 <style lang="less" scoped>
 .row {
   text-align: center;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  // 在el-button中的垂直居中需要设置
+  vertical-align: -5px;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>

@@ -57,6 +57,7 @@ router.beforeEach( async (to, from, next) => {
     next()
   } else {
     // 没cookie没role
+    store.dispatch('addRoutes')
     if (to.path=="/login" || to.path=="/register") {
       next()
     } else {

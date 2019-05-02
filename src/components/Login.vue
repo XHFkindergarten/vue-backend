@@ -72,7 +72,8 @@ export default {
                   }
                 })
                 .catch (err => {
-                  throw new Error(err)
+                  this.$message.error(err.message)
+                  this.$refs.loginForm.resetFields()
                 })
             }else {
               // TODO 未通过校验
