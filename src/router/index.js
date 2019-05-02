@@ -38,12 +38,12 @@ router.beforeEach( async (to, from, next) => {
       })
       await store.dispatch('addRoutes')
     } catch(err) {
-      this.$message.error(err)
+      Cookies.remove('login-token')
       store.commit('resetToken')
       store.dispatch('addRoutes')
       next('/login')
     }
-
+    // 如果获取用户信息成功
     if(store.state.userInfo) {
       next({...to})
     } else {
