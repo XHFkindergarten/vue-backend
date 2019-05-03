@@ -16,7 +16,7 @@
           <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
         </el-dialog>
         <div class="status-container">
-          <i class="el-icon-edit icon"></i>
+          <SvgIcon icon="edit" size="mini" style="margin-left:10px;"></SvgIcon>
           <div style="display:inline-block">Focusing</div>
         </div>
         <div class="username-container">
@@ -37,6 +37,7 @@
   </div>
 </template>
 <script>
+import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
 export default {
   name: 'me',
@@ -49,7 +50,8 @@ export default {
     }
   },
   components: {
-    EditAvatar
+    EditAvatar,
+    SvgIcon
   },
   computed: {
     userInfo() {
@@ -117,6 +119,9 @@ export default {
   border-radius: 5px;
 }
 .status-container{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   height: 40px;
   width: 240px;
   border-bottom: 1px #e1e4e8 solid;

@@ -16,7 +16,7 @@
             </el-col>
             <el-col :span="3">
               <div class="button-container">
-                <el-button @click="sendMail" type="primary" :disabled="hasSend" round>{{sendBtnWord?`请在${timeout}s后重试`:'发送邮件'}}</el-button>
+                <el-button @click="sendMail" type="primary" :disabled="hasSend" round>{{sendBtnWord?`请在${timeout}s后重试`:'收取验证码'}}</el-button>
               </div>
             </el-col>
         </el-row>
@@ -24,12 +24,12 @@
           <el-col :span="6" :offset="9">
             <el-form-item prop="emailcode" label="验证码">
               <div class="code-input-container">
-                <el-input v-model="registerForm.code1" class="code-input" type="text" maxlength="1"></el-input>
-                <el-input v-model="registerForm.code2" class="code-input" type="text" maxlength="1"></el-input>
-                <el-input v-model="registerForm.code3" class="code-input" type="text" maxlength="1"></el-input>
-                <el-input v-model="registerForm.code4" class="code-input" type="text" maxlength="1"></el-input>
-                <el-input v-model="registerForm.code5" class="code-input" type="text" maxlength="1"></el-input>
-                <el-input v-model="registerForm.code6" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code1" v-model="registerForm.code1" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code2" v-model="registerForm.code2" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code3" v-model="registerForm.code3" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code4" v-model="registerForm.code4" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code5" v-model="registerForm.code5" class="code-input" type="text" maxlength="1"></el-input>
+                <el-input ref="code6" v-model="registerForm.code6" class="code-input" type="text" maxlength="1"></el-input>
               </div>
             </el-form-item>
           </el-col>
@@ -114,14 +114,33 @@ export default {
       sendBtnWord: false
     }
   },
+  watch: {
+    'registerForm.code1': function() {
+      this.$refs.code2.focus()
+    },
+    'registerForm.code2': function() {
+      this.$refs.code3.focus()
+    },
+    'registerForm.code3': function() {
+      this.$refs.code4.focus()
+    },
+    'registerForm.code4': function() {
+      this.$refs.code5.focus()
+    },
+    'registerForm.code5': function() {
+      this.$refs.code6.focus()
+    },
+  },
   methods: {
     // 注册 @click
     register: function() {
+      // 邮箱验证码校验是否通过
       if (!this.isEmailCodeRight) {
         this.$message.error('对不起，您输入的验证码与发送到您邮箱中的验证码不一致')
         return
       }
       const app = this
+      // 表单校验
       this.$refs['registerForm'].validate(valid => {
         if(valid) {
           app.$store.dispatch('registerAction',this.registerForm)
@@ -163,20 +182,25 @@ export default {
               }
             }, 1000)
             this.$store.commit('setEmailCode', res.data.code)
+            this.$nextTick(() => {
+              this.$refs.code1.focus()
+            })
           } else {
             this.$message.error(res.data.msg)
-            // clearInterval(timer)
-            // this.timeout = keys.sendEmailWaitTime
-            // this.sendBtnWord = false
-            // this.hasSend = false
           }
         })
         .catch(err => {
           throw new Error(err)
         })
+    },
+
+    //
+    handleChange() {
+      alert('change')
     }
   },
   computed: {
+    // 邮箱验证码是否正确
     isEmailCodeRight() {
       const code = localStorage.getItem('email-code')
       const input = this.registerForm.code1+
