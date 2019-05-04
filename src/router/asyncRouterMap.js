@@ -3,6 +3,11 @@
 
 // import EchartsDemo from '@/components/EchartsDemo'
 
+// role
+// 0 admin
+// 1 manager
+// 2 super manager
+
 export const asyncRouterMap = [
   {
     path: '/permission',
@@ -10,32 +15,36 @@ export const asyncRouterMap = [
     name: '权限测试',
     label: 'admin权限test',
     icon: 'indent',
-    meta: { role: [0,1] }, //页面需要的权限，这也是vue-router文档推荐的做法,
+    meta: { role: [ 2, 0,1] }, //页面需要的权限，这也是vue-router文档推荐的做法,
     hidden: false,
     children: [
       {
         path: 'permission1',
-        meta: { role: [0] },
+        meta: { role: [ 2, 0] },
         label: 'permission1',
+        name: 'permission1',
         component: () => import('@/layouts/Empty'),
         children: [
           {
-            path: 'permission1-1',
+            path: '',
             label: 'permission1-1',
+            name: 'permission1-1',
             component: () => import('@/components/Table'),
-            meta: { role: [0] }
+            meta: { role: [ 2, 0] }
           },{
             path: 'permission1-2',
             label: 'permission1-2',
+            name: 'permission1-2',
             component: () => import('@/components/HelloWorld'),
-            meta: { role: [1] }
+            meta: { role: [ 0, 1 ] }
           }
         ]
       },{
         path: 'permission2',
         label: 'permission2',
+        name: 'permission2',
         component: () => import('@/components/HelloWorld'),
-        meta: { role: [0]}
+        meta: { role: [ 2, 0]}
       }
     ]
   },
@@ -43,8 +52,8 @@ export const asyncRouterMap = [
     path: '/table',
     label: '表格',
     icon: 'table',
-    name: 'table',
-    meta: { role: [0] }, //页面需要的权限，这也是vue-router文档推荐的做法
+    name: '表格',
+    meta: { role: [ 2, 0] }, //页面需要的权限，这也是vue-router文档推荐的做法
     hidden: false,
     component: () => import('@/components/TableContainer'),
     children: [
@@ -52,8 +61,8 @@ export const asyncRouterMap = [
         path: 'table1',
         label: '表格1',
         icon: 'document',
-        name: 'table1',
-        meta: { role: [0] },
+        name: '测试表格',
+        meta: { role: [ 2, 0] },
         component: () => import('@/components/Table'),
         hidden: false
       }
@@ -62,16 +71,17 @@ export const asyncRouterMap = [
   {
     path: '/richtext',
     label: '文本编辑',
+    name: '文本编辑',
     icon: 'edit',
-    meta: { role: [0] },
+    meta: { role: [ 2, 0] },
     hidden: false,
     component: () => import('@/layouts/Empty'),
     children: [
       {
-        path: 'tinymce',
+        path: '',
         label: 'tinymce文本编辑器',
-        name: 'richtext',
-        meta: { role: [0] },
+        name: 'tinymce文本编辑器',
+        meta: { role: [ 2, 0] },
         hidden: false,
         component: () => import('@/components/RichText'),
       }
@@ -79,67 +89,105 @@ export const asyncRouterMap = [
   },
   {
     path: '/me',
-    name: 'me',
+    name: '我的',
     component: () => import('@/components/Me'),
     hidden: true,
-    meta: { role: [0, 1, 2] }
+    meta: { role: [ 2, 0, 1, 2] }
   },{
     path: '/markdown',
-    name: 'markdown',
+    name: 'MarkDown',
     icon: 'file-markdown',
     component: () => import('@/layouts/Empty'),
     label: 'MarkDown',
-    meta: { role: [0] },
+    meta: { role: [ 2, 0] },
     hidden: false,
     children: [
       {
-        path: 'simplemde',
-        name: 'simplemde',
+        path: '',
+        name: 'simplemde编辑器',
         component: () => import('@/components/Markdown'),
         hidden: false,
         label: 'simplemde编辑器',
-        meta: { role: [0] }
+        meta: { role: [ 2, 0] }
       }
     ]
   },{
     path: '/excel',
     component: () => import('@/layouts/Empty'),
     hidden: false,
+    name: 'Excel表格',
     label: 'Excel表格',
-    meta: { role: [0] },
+    meta: { role: [ 2, 0] },
     icon: 'file-excel',
     children: [
       {
-        path: 'exportExcel',
-        name: 'exportExcel',
+        path: '',
+        name: '导出Excel表格',
         component: () => import('@/components/ExportExcel'),
         label: '导出Excel表格',
         icon: 'down',
-        meta: { role: [0] }
+        meta: { role: [ 2, 0] }
       },{
         path: 'importExcel',
-        name: 'importExcel',
+        name: '导入Excel表格',
         icon: 'up',
         component: () => import('@/components/ImportExcel'),
         label: '导入Excel表格',
-        meta: { role: [0] }
+        meta: { role: [ 2, 0] }
       }
     ]
   },{
     path: '/echarts',
     label: '表格',
+    name: '图标',
     icon: 'carryout',
     hidden: false,
-    meta: { role: [0] },
+    meta: { role: [ 2, 0] },
     component: () => import('@/layouts/Empty'),
     children: [
       {
-        path: 'echartsDemo',
+        path: '',
         label: 'echarts入门实例',
-        name: 'echartsDemo',
+        name: 'echarts实例',
         component: () => import('@/components/EchartsDemo'),
         hidden: false,
-        meta: { role: [0] }
+        meta: { role: [ 2, 0] }
+      }
+    ]
+  },{
+    path: '/authority',
+    label: '权限管理',
+    icon: 'earth',
+    name: '权限管理',
+    meta: { role: [ 2 ] },
+    component: () => import('@/layouts/Empty'),
+    hidden: false,
+    children: [
+      {
+        path: '',
+        label: '修改用户权限',
+        name: '修改用户权限',
+        meta: { role: [2] },
+        component: () => import('@/components/AuthorityTree'),
+        hidden: false
+      }
+    ]
+  },{
+    path: '/article',
+    label: '文章管理',
+    icon: 'article',
+    name: '文章管理',
+    meta: { role: [0, 2] },
+    component: () => import('@/layouts/Empty'),
+    hidden: false,
+    children: [
+      {
+        path: 'addArticle',
+        name: '添加文章',
+        label: '添加文章',
+        meta: { role: [0, 1, 2]},
+        component: () => import('@/components/addArticle'),
+        hidden: false
       }
     ]
   },
@@ -151,6 +199,6 @@ export const asyncRouterMap = [
     name: '404',
     component: () => import('@/layouts/404'),
     hidden: true,
-    meta: { role: [0, 1, 2] }
+    meta: { role: [ 0, 1, 2] }
   }
 ]

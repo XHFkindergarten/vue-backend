@@ -22,6 +22,7 @@ import keys from '@/common';
 // 挂载全局前置钩子函数
 
 router.beforeEach( async (to, from, next) => {
+  console.log(to)
   console.log('from', from.path, 'to', to.path) 
   if (store.state.Roles.length==0&&Cookies.get('login-token')) {
     // 有Cookie但是没有role

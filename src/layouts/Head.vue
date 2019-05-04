@@ -32,6 +32,9 @@
             suffix-icon="el-icon-search"></el-input>
         </template>
       </el-menu-item>
+      <el-menu-item>
+        <RouteView></RouteView>
+      </el-menu-item>
       <div class="userinfo">
         <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
         <template>
@@ -50,11 +53,13 @@
   </div>
 </template>
 <script>
+import RouteView from '@/layouts/RouteView'
 import MeItems from '@/components/MeItems'
 export default {
   name:'Head',
   components:{
-    MeItems
+    MeItems,
+    RouteView
   },
   props: [
     'userInfo'

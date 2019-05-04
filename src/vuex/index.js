@@ -19,7 +19,6 @@ let state = {
   userInfo: {}, // 用户信息
   Roles: [], // 用户权限
   routes: [], // 允许显示的路由表
-  routesPaths: [], // 允许显示的路由表paths数组
 }
 // mutations
 let mutations = {
@@ -159,10 +158,6 @@ let actions = {
       router.addRoutes(asyncRoute)
     }
     
-    // 生成一个允许访问的路由path表
-    let routesPaths = []
-    utils.getPaths(state.routes, routesPaths)
-    state.routesPaths = routesPaths
   },
   // 发送验证邮箱
   sendemailAction: ({commit}, email) => {

@@ -1,35 +1,34 @@
 // 同步挂载路由
-import Main from '@/components/Main'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
-import NoPermission from '@/layouts/403'
-import Hello from '@/components/HelloWorld'
-import Test from '@/components/Test'
-import Test2 from '@/components/Test2'
+const Main = () => import('@/components/Main')
+const Login = () => import('@/components/Login')
+const Register = () => import('@/components/Register')
+const NoPermission = () => import('@/layouts/403')
+const Test = () => import('@/components/Test')
+const Test2 = () => import('@/components/Test2')
 
 
 export const constantRouterMap =  [
   {
     path: '/',
-    name: 'Main',
+    name: '主页',
     component: Main,
     hidden: true
   },
   {
     path: '/Login',
-    name: 'Login',
+    name: '登录',
     component: Login,
     hidden: true
   },
   {
     path: '/Register',
-    name: 'Register',
+    name: '注册',
     component: Register,
     hidden: true
   },
   {
     path: '/403',
-    name: '403',
+    name: '没有访问权限',
     component: NoPermission,
     hidden: true
   },
