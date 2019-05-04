@@ -1,6 +1,7 @@
 <template>
   <div style="display:inline">
     <el-button
+      :round="round"
       :style="`width:${width}px;`"
       :type="type">
       <div class="content-container">
@@ -26,6 +27,9 @@ export default {
     },
     width: {
       default: 120
+    },
+    round: {
+      default: false
     }
   }
 }

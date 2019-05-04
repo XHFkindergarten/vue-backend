@@ -105,25 +105,6 @@ let actions = {
     return res
   },
 
-  // // 根据token获取用户信息
-  // currentAction: async ({dispatch,commit,state}) => {
-  //   const res = await http.Current(state.token)
-  //   if (res) {
-  //     commit('setUserInfo', res.data)
-  //     if(!state.status){
-  //       commit('altStatus')
-  //     }
-  //     const getRole = await dispatch('getRoleAction', {
-  //       id: state.userInfo.id
-  //     })
-  //     return true
-  //   } else {
-  //     commit('resetToken')
-  //     Cookies.remove('login-token')
-  //     dispatch('addRoutes')
-  //     throw new Error('Cookies已过期')
-  //   }
-  // },
   // 获取用户权限
   getRoleAction: async ({commit,dispatch}, info) => {
     if (info==null) {

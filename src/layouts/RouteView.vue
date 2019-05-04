@@ -21,9 +21,6 @@ export default {
       })
       return array
     }
-  },
-  mounted() {
-    console.log(this.$route)
   }
 }
 </script>

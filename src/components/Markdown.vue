@@ -3,7 +3,7 @@
     <h1>MarkDown编译器</h1>
     <mavon-editor
       ref="markdown"
-      style="min-height:600px;"
+      style="min-height:900px;"
       placeholder="请输入markdown代码"
       v-model="content"
       @imgAdd="imgAdd"></mavon-editor>

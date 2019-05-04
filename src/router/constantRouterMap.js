@@ -23,6 +23,13 @@ export const constantRouterMap =  [
         hidden: true
       },
       {
+        path: 'me',
+        name: '我的',
+        component: () => import('@/components/Me'),
+        hidden: true,
+        meta: { role: [0, 1, 2] }
+      },
+      {
         path: 'Login',
         name: '登录',
         component: Login,

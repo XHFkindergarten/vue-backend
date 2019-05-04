@@ -37,7 +37,7 @@ export default {
 }
 .container-mini{
   display: inline;
-  height:30px;
+  height:20px;
   .icon{
     height: 20px;
     width: 20px;

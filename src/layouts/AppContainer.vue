@@ -47,5 +47,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+body {
+  margin: 8px;
+}
 </style>

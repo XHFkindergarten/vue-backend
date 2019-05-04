@@ -5,7 +5,14 @@
 </template>
 <script>
 export default {
-  
+  name: 'AddArticle',
+  data() {
+    return {
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
 <style lang="less" scoped>

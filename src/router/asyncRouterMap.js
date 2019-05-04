@@ -94,13 +94,6 @@ export const asyncRouterMap = [
             component: () => import('@/components/RichText'),
           }
         ]
-      },
-      {
-        path: 'me',
-        name: '我的',
-        component: () => import('@/components/Me'),
-        hidden: true,
-        meta: { role: [ 2, 0, 1, 2] }
       },{
         path: 'markdown',
         name: 'MarkDown',
@@ -194,22 +187,39 @@ export const asyncRouterMap = [
             name: '添加文章',
             label: '添加文章',
             meta: { role: [0, 1, 2]},
-            component: () => import('@/components/addArticle'),
+            redirect: '/article/addArticle',
             hidden: false
           }
         ]
       },
+      
+      // 404的path可以匹配所有路径，所以必须放在最后一个路由
+      {
+        path: '*',
+        name: '404',
+        component: () => import('@/layouts/404'),
+        hidden: true,
+        meta: { role: [0, 1, 2] }
+      }
     ]
   },
+  {
+    path: '/article',
+    name: 'article',
+    hidden: true,
+    meta: { role: [0, 1, 2]},
+    component: () => import('@/layouts/ArticleContainer'),
+    children: [
+      {
+        path: 'addArticle',
+        name: 'addArticle',
+        meta: { role: [0, 1, 2] },
+        component: () => import('@/components/AddArticle')
+      }
+    ]
+  }
   
 
 
-  // 404的path可以匹配所有路径，所以必须放在最后一个路由
-  {
-    path: '*',
-    name: '404',
-    component: () => import('@/layouts/404'),
-    hidden: true,
-    meta: { role: [ 0, 1, 2] }
-  }
+  
 ]

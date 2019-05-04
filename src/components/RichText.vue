@@ -2,7 +2,6 @@
 <template>
   <!-- 富文本编辑器tinymce -->
   <div>
-    <h1>Tinymce</h1>
     <Editor id="tinymce" ref="tinymce" v-model="tinymceHtml" :init="init"></Editor>
   </div>
 </template>
@@ -32,12 +31,12 @@ export default {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
         skin_url: '/static/tinymce/skins/ui/oxide',
-        height: 600,
+        height: 1200,
         branding: false,//是否禁用“Powered by TinyMCE”
         menubar: false,//顶部菜单栏显示
         plugins: 'link lists image code table wordcount',
         toolbar:
-          'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | removeformat',
+          'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | ',
         images_upload_handler: this.images_upload_handler
       }
     }

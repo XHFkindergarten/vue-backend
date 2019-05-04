@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="5" :offset="2">
         <div class="avatar-container" @click="editAvatar">
-          <img style="width:100%;height:100%;" :src="userInfo.avatar" alt="头像">
+          <img  v-loading="loadingBtn" style="width:100%;height:100%;" :src="userInfo.avatar" alt="头像">
           <div class="avatar-edit">
             <i class="el-icon-edit">Edit</i>
           </div>
@@ -15,10 +15,39 @@
           title="修改头像">
           <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
         </el-dialog>
-        <div class="status-container">
-          <SvgIcon icon="edit" size="mini" style="margin-left:10px;"></SvgIcon>
-          <div style="display:inline-block">Focusing</div>
-        </div>
+        <el-popover
+          v-model="editMoodDialog"
+          placement="bottom"
+          width="300"
+          trigger="click">
+          <p style="padding-left: 12px;">选择你的心情：）</p>
+          <div class="mood-select-container">
+            <el-radio-group v-model="mood">
+              <el-radio-button label="0">
+                <SvgIcon size="mid" icon="smile"></SvgIcon>
+              </el-radio-button>
+              <el-radio-button label="1">
+                <SvgIcon size="mid" icon="meh"></SvgIcon>
+              </el-radio-button>
+              <el-radio-button label="2">
+                <SvgIcon size="mid" icon="frown"></SvgIcon>
+              </el-radio-button>
+            </el-radio-group>
+          </div>
+          <p style="padding-left: 12px">一个词描述你</p>
+          <div style="text-align:center;">
+            <el-input v-model="sign" placeholder="请控制在12个字母以内" type="text" style="width: 216px;"></el-input>
+          </div> 
+          <div style="text-align:center;margin: 25px 0 0;">
+            <el-button @click="submitMood" type="primary" round>提交</el-button>
+          </div>
+          <div slot="reference" class="status-container">
+            <SvgIcon :icon="moodOption[this.mood]" size="mid" style="margin:0 5px 0 10px;"></SvgIcon>
+            <div style="display:inline-block">{{userInfo.sign}}</div>
+            <SvgIcon class="edit-icon" icon="edit" size="mid"></SvgIcon>
+          </div>
+        </el-popover>
+        
         <div class="username-container">
           <el-row v-if="isEditName" style="margin-top:15px;">
             <el-col :span="17">
@@ -45,8 +74,16 @@ export default {
     return {
       editDialog: false,
       isEditName: false,
-      editAvatarDialog: false
-      
+      editAvatarDialog: false,
+      moodOption: {
+        0: 'smile',
+        1: 'meh',
+        2: 'frown'
+      },
+      sign: '',
+      mood: '',
+      loadingBtn: false,
+      editMoodDialog: false
     }
   },
   components: {
@@ -56,8 +93,11 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.userInfo
-    },
-    
+    }
+  },
+  mounted() {
+    this.mood = this.userInfo.mood
+    this.sign = this.userInfo.sign
   },
   created() {
     
@@ -78,6 +118,36 @@ export default {
           this.$store.commit('setUserInfo', res.data)
         })
       this.editAvatarDialog = false
+    },
+    submitMood() {
+      this.loadingBtn = true
+      if (['0','1','2'].indexOf(this.mood)>=0 && this.sign.length<=12) {
+        const res = this.$store.dispatch('updateUserInfo', {
+          mood: this.mood,
+          sign: this.sign,
+          id: this.userInfo.id
+        })
+          .then(res => {
+            if (res.data.success) {
+              this.loadingBtn = false
+              this.editMoodDialog = false
+              this.$store.dispatch('currentAction')
+                .then(res => {
+                  this.$store.commit('setUserInfo', res.data)
+                  this.$message({
+                    type: 'success',
+                    message: '修改成功'
+                  })
+                })
+            }
+          })
+          .catch(err => {
+            this.$message.error(err)
+          })
+      } else {
+        this.$message.error('请输入正确的信息')
+      }
+      
     }
   },
   directives: {
@@ -119,6 +189,7 @@ export default {
   border-radius: 5px;
 }
 .status-container{
+  cursor: pointer;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -131,6 +202,17 @@ export default {
   border-bottom-left-radius: 4px;
   text-align: left;
   line-height: 40px;
+  position: relative;
+  .edit-icon{
+    display: none;
+  }
+}
+.status-container:hover{
+  .edit-icon{
+    display: block;
+    position: absolute;
+    right: 10px;
+  }
 }
 .editUsernameInput{
   width: 80%;
@@ -163,5 +245,10 @@ export default {
   font-size: 18px;
   font-weight: thin;
   margin:0;
+}
+.mood-select-container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 </style>
