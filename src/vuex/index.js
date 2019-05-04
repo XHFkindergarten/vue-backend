@@ -147,15 +147,16 @@ let actions = {
   addRoutes: ({commit,state,getters}) => {
     let constantRoute = Array.from(constantRouterMap)
     utils.spliceRoutes(constantRoute, '')
+    constantRoute = constantRoute[0].children
     if(state.Roles.length==0) {
       state.routes = constantRoute
     } else {
       let asyncRoute = Array.from(asyncRouterMap)
       utils.spliceRoutes(asyncRoute, '')
       utils.ClearAsyncRoutes(asyncRoute, state.Roles[0])
-
-      state.routes = constantRoute.concat(asyncRoute)
       router.addRoutes(asyncRoute)
+      asyncRoute = asyncRoute[0].children
+      state.routes = constantRoute.concat(asyncRoute)
     }
     
   },

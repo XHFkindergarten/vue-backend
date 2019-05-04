@@ -7,19 +7,19 @@
       text-color="#000"
       active-text-color="#409EFF"
       router>
-      <el-menu-item index="/">
+      <el-menu-item index="/main/">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-home"></use>
         </svg>
         <span>主页</span>
       </el-menu-item>
-      <el-menu-item v-if="!hasLogin" index="/register">
+      <el-menu-item v-if="!hasLogin" index="/main/register">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-adduser"></use>
         </svg>
         <span>注册</span>
       </el-menu-item>
-      <el-menu-item v-if="!hasLogin" index="/login">
+      <el-menu-item v-if="!hasLogin" index="/main/login">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-login"></use>
         </svg>
@@ -32,9 +32,7 @@
             suffix-icon="el-icon-search"></el-input>
         </template>
       </el-menu-item>
-      <el-menu-item>
-        <RouteView></RouteView>
-      </el-menu-item>
+      <RouteView></RouteView>
       <div class="userinfo">
         <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
         <template>
@@ -95,6 +93,7 @@ export default {
   line-height: 60px;
   position: absolute;
   right:0;
+  top:0;
   display: flex;
   align-items: center;
 }
