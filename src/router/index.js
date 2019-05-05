@@ -22,6 +22,7 @@ import keys from '@/common';
 // 挂载全局前置钩子函数
 
 router.beforeEach( async (to, from, next) => {
+  console.log('from', from.path, 'to', to.path)
   if (store.state.Roles.length==0&&Cookies.get('login-token')) {
     // 有Cookie但是没有role
     store.commit('setToken', Cookies.get('login-token'))
@@ -60,7 +61,7 @@ router.beforeEach( async (to, from, next) => {
   } else {
     // 没cookie没role
     store.dispatch('addRoutes')
-    if (to.path=="/main/login" || to.path=="/main/register" || to.path=="/main") {
+    if (to.path=="/main/login" || to.path=="/main/register" || to.path=="/main/") {
       next()
     } else {
       next('/main/login')

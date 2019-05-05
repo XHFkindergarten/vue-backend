@@ -175,6 +175,27 @@ let actions = {
     } else {
       throw new Error('更新信息失败')
     }
+  },
+
+  // 获取用户文章分组列表
+  getGroupAction: async ({commit}, userId) => {
+    const res = await http.getArticleGroup(userId)
+      .catch(err => {
+        throw err
+      })
+    if (res) {
+      return res 
+    }
+  },
+
+  // 为用户添加一个文章分组
+  addGroupAction: async ({commit}, params) => {
+    console.log('h1')
+    const res = await http.addArticleGroup(params)
+      .catch(err => {
+        throw err
+      })
+    return res
   }
 }
 const store = new Vuex.Store({

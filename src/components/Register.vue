@@ -141,21 +141,19 @@ export default {
       }
       const app = this
       // 表单校验
-      this.$refs['registerForm'].validate(valid => {
+      this.$refs['registerForm'].validate(async valid => {
         if(valid) {
-          app.$store.dispatch('registerAction',this.registerForm)
-            .then(res => {
-              if(res.status==200&&res.data.success) {
-                this.$message({
-                  message: '注册成功',
-                  type: 'success'
-                })
-                this.$router.push('/login')
-              }
-            })
+          const res = await app.$store.dispatch('registerAction',this.registerForm)
             .catch(err => {
               console.log(err)
             })
+          if(res.status==200&&res.data.success) {
+            this.$message({
+              message: '注册成功',
+              type: 'success'
+            })
+            this.$router.push('/login')
+          }
         }
       })
     },

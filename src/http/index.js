@@ -93,6 +93,30 @@ const updateUserInfo = async (param) => {
   }
 }
 
+// 获取用户的文章分组
+const getArticleGroup = async userId => {
+  if (!userId) {
+    throw new Error('请输入用户id')
+  }
+  const res = await axios.get('article/getGroup?userId='+userId)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 为用户添加一个分组
+const addArticleGroup = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('article/addGroup', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
 const http = {
   Login,
   Register,
@@ -100,7 +124,9 @@ const http = {
   Role,
   Email,
   uploadImg,
-  updateUserInfo
+  updateUserInfo,
+  getArticleGroup,
+  addArticleGroup
 }
 
 export default http

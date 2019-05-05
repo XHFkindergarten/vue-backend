@@ -15,7 +15,7 @@ export default {
     }
   },
   mounted() {
-    console.log(window.innerHeight)
+    // console.log(window.innerHeight)
   }
 }
 </script>

@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-    console.log(keys.host+this.birdOptions[this.bird])
+    
   }
 }
 </script>

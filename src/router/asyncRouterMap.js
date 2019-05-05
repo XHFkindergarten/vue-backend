@@ -187,7 +187,7 @@ export const asyncRouterMap = [
             name: '添加文章',
             label: '添加文章',
             meta: { role: [0, 1, 2]},
-            redirect: '/article/addArticle',
+            redirect: '/article',
             hidden: false
           }
         ]
@@ -208,15 +208,7 @@ export const asyncRouterMap = [
     name: 'article',
     hidden: true,
     meta: { role: [0, 1, 2]},
-    component: () => import('@/layouts/ArticleContainer'),
-    children: [
-      {
-        path: 'addArticle',
-        name: 'addArticle',
-        meta: { role: [0, 1, 2] },
-        component: () => import('@/components/AddArticle')
-      }
-    ]
+    component: () => import('@/components/AddArticle')
   }
   
 

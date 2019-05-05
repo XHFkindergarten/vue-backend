@@ -30,13 +30,13 @@ export const constantRouterMap =  [
         meta: { role: [0, 1, 2] }
       },
       {
-        path: 'Login',
+        path: 'login',
         name: '登录',
         component: Login,
         hidden: true
       },
       {
-        path: 'Register',
+        path: 'register',
         name: '注册',
         component: Register,
         hidden: true
