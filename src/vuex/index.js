@@ -190,8 +190,45 @@ let actions = {
 
   // 为用户添加一个文章分组
   addGroupAction: async ({commit}, params) => {
-    console.log('h1')
     const res = await http.addArticleGroup(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 修改用户分组名
+  editGroupNameAction: async ({commit}, params) => {
+    const res = await http.updateArticleGroup(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+  // 删除用户分组
+  deleteGroupAction: async ({commit}, id) => {
+    const res = await http.deleteGroup(id)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 新增文章
+  addArticleAction: async ({state, commit}, params) => {
+    const res = await http.addArticle({
+      ...params,
+      userId: state.userInfo.id
+    })
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 根据groupId获取文章列表
+  getArticleList: async ({commit}, params) => {
+    const res = await http.getArticleList(params)
       .catch(err => {
         throw err
       })

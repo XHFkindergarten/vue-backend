@@ -2,7 +2,7 @@
 <template>
   <!-- 富文本编辑器tinymce -->
   <div>
-    <Editor id="tinymce" ref="tinymce" v-model="tinymceHtml" :init="init"></Editor>
+    <Editor id="tinymce" ref="tinymce" v-model="content" :init="init"></Editor>
   </div>
 </template>
 <script>
@@ -24,7 +24,6 @@ export default {
   name: 'RichText',
   data() {
     return {
-      tinymceHtml: '',
       accept: 'image/jpg, image/jpeg, image/png',
       maxSize: 5242880,
       init: {
@@ -41,6 +40,11 @@ export default {
       }
     }
   },
+  props: {
+    content: {
+      default: ''
+    }
+  },
   mounted() {
     // tinymce.init({})
   },
@@ -49,23 +53,23 @@ export default {
   },
   methods: {
     images_upload_handler: function (blobInfo, success, failure) {
-          if (blobInfo.blob().size > this.maxSize) {
-            failure('文件体积过大')
-          }
-          if (this.accept.indexOf(blobInfo.blob().type) >= 0) {
-            this.$store.dispatch('sendImage', {
-              file: blobInfo.blob()
-            })
-              .then(res => {
-                success(res)
-              })
-              .catch(err => {
-                this.$message.error(err)
-              })
-          } else {
-            failure('图片格式错误')
-          }
-        }
+      if (blobInfo.blob().size > this.maxSize) {
+        failure('文件体积过大')
+      }
+      if (this.accept.indexOf(blobInfo.blob().type) >= 0) {
+        this.$store.dispatch('sendImage', {
+          file: blobInfo.blob()
+        })
+          .then(res => {
+            success(res)
+          })
+          .catch(err => {
+            this.$message.error(err)
+          })
+      } else {
+        failure('图片格式错误')
+      }
+    }
   }
 }
 </script>
