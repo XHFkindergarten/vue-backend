@@ -113,14 +113,6 @@ export default {
       })
     }
   },
-  
-  created() {
-    // 监听页面失焦时保存文章
-    window.onblur = function() {
-      
-    }
-  },
-  
 }
 </script>
 

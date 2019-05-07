@@ -64,12 +64,38 @@ const addArticle = async params => {
   return res
 }
 
-// 根据分组id查询文章
+// 根据分组id查询文章列表
 const getArticleList = async params => {
   if (!params) {
     throw new Error('请输入参数')
   }
   const res = await axios.get('article/getArticleList?groupId=' + params.groupId)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 更新单篇文章
+const updateArticle = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('article/updateArticle', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 删除单篇文章
+const deleteArticle = async id => {
+  if (!id) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('article/deleteArticle', {
+    id
+  })
     .catch(err => {
       throw err
     })
@@ -83,6 +109,8 @@ const article = {
   deleteGroup,
   addArticle,
   getArticleList,
+  updateArticle,
+  deleteArticle,
 }
 
 export default article

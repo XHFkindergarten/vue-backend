@@ -16,12 +16,16 @@
       </div>
       <div :class="item.index==activeArt?'active-art-container':'art-container'" @click="openArticle(item)" v-for="item in articleList" :key="item.index">
         <div class="art-svg-container">
-        <SvgIcon icon="smile" size="mid" style="color:#b3b3b3"></SvgIcon>
-          <span class="font-num">字数:{{item.content.length}}</span>
+          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="item.id==currentArticleId" icon="save" size="mid"></SvgIcon>
+          <SvgIcon v-else icon="smile" size="mid" style="color:#b3b3b3"></SvgIcon>
         </div>
         <div class="art-title">
-          <p>{{item.title}}</p>
+          <span>{{item.title}}</span>
         </div>
+        <div class="delete-svg-container" @click="deleteArticle(item)">
+          <SvgIcon id="delete-icon" icon="delete1" size="mid"></SvgIcon>
+        </div>
+        <div style="clear:both;"></div>
       </div>
     </el-aside>
   </div>
@@ -52,6 +56,20 @@ export default {
     openArticle(item) {
       this.activeArt = item.index
       this.$emit('openArticle', item.index)
+    },
+    // 点击保存文章
+    saveArticle() {
+      this.$emit('saveArticle')
+    },
+    // 点击删除文章
+    deleteArticle(item) {
+      this.$emit('deleteArticle', item)
+    }
+  },
+  computed: {
+    // 正在编辑的文章id
+    currentArticleId() {
+      return this.$store.state.article.id
     }
   }
 }
@@ -82,47 +100,106 @@ export default {
     cursor: pointer;
   }
   .art-container{
-    height: 90px;
+    min-height: 90px;
     border-left: 3px #2e2e2e solid;
-    
+    .art-title{
+      float:left;
+      min-height: 90px;
+      width: 120px;
+      float: left;
+      display: flex;
+      align-items: center;
+      span{
+      text-align: left;
+        font-size: 20px;
+        color: #b3b3b3;
+      }
+    }
+    .art-svg-container{
+      display: flex;
+      // position:relative;
+      float: left;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      min-height: 90px;
+      float: left;
+      .font-num{
+        position: absolute;
+        bottom: 3px;
+        font-size: 10px;
+        color: #b3b3b3;
+      }
+    }
+    .delete-svg-container{
+      display: none;
+    }
   }
   .active-art-container{
     border-left: 3px #0A86AF solid;
-    height: 90px;
+    min-height: 90px;
+    .art-title{
+      float:left;
+      min-height: 90px;
+      width: 120px;
+      float: left;
+      display: flex;
+      align-items: center;
+      span{
+      text-align: left;
+        font-size: 20px;
+        color: #b3b3b3;
+      }
+    }
+    .art-svg-container{
+      display: flex;
+      float: left;
+      // position:relative;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      min-height: 90px;
+      float: left;
+      .font-num{
+        position: absolute;
+        bottom: 3px;
+        font-size: 10px;
+        color: #b3b3b3;
+      }
+    }
+    .delete-svg-container{
+      display: none;
+    }
   }
   .active-art-container:hover {
     background: #404040;
+    min-height: 90px;
+    .delete-svg-container{
+      float: left;
+      display:flex;
+      align-items: center;
+      min-height: 90px;
+      color: #b3b3b3;
+    }
   }
   .art-container:hover {
     background: #404040;
     border-left: 3px #404040 solid;
   }
 }
-.art-svg-container{
-  display: flex;
-  position:relative;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 100%;
-  float: left;
-  .font-num{
-    position: absolute;
-    bottom: 3px;
-    font-size: 10px;
-    color: #b3b3b3;
-  }
+
+
+
+
+#save-icon{
+  cursor: pointer;
+  color: #b3b3b3;
 }
-.art-title{
-  height: 100%;
-  width: 150px;
-  float: left;
-  display: flex;
-  align-items: center;
-  p{
-   text-align: left;
-    font-size: 20px;
-    color: #b3b3b3;
-  }
+#save-icon:hover{
+  color: #0A86AF;
 }
+#delete-icon{
+  cursor: pointer;
+}
+
 </style>

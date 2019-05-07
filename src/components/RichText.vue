@@ -2,7 +2,7 @@
 <template>
   <!-- 富文本编辑器tinymce -->
   <div>
-    <Editor id="tinymce" ref="tinymce" v-model="content" :init="init"></Editor>
+    <Editor id="tinymce" ref="tinymce" v-model="editContent" :init="init"></Editor>
   </div>
 </template>
 <script>
@@ -24,6 +24,7 @@ export default {
   name: 'RichText',
   data() {
     return {
+      editContent: this.content,
       accept: 'image/jpg, image/jpeg, image/png',
       maxSize: 5242880,
       init: {
@@ -44,6 +45,10 @@ export default {
     content: {
       default: ''
     }
+  },
+  computed: {
+  },
+  watch: {
   },
   mounted() {
     // tinymce.init({})

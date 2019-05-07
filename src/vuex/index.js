@@ -19,6 +19,8 @@ let state = {
   userInfo: {}, // 用户信息
   Roles: [], // 用户权限
   routes: [], // 允许显示的路由表
+  group: {}, // 当前选中的文章分组
+  article: {},  // 当前正在被编辑的文章
 }
 // mutations
 let mutations = {
@@ -229,6 +231,24 @@ let actions = {
   // 根据groupId获取文章列表
   getArticleList: async ({commit}, params) => {
     const res = await http.getArticleList(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 更新单篇文章
+  updateArticleAction: async ({commit}, params) => {
+    const res = await http.updateArticle(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 删除单篇文章
+  deleteArticleAction: async ({commit}, id) => {
+    const res = await http.deleteArticle(id)
       .catch(err => {
         throw err
       })

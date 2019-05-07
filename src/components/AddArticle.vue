@@ -19,6 +19,8 @@
       </el-dialog>
 
       <ArticleListAside
+        @deleteArticle="deleteArticle"
+        @saveArticle="saveArticle"
         @openArticle="openArticle"
         @addArticle="addArticle"
         :articleList="articleList"></ArticleListAside>
@@ -27,9 +29,10 @@
           <Favicon style="margin-top:50px;" title="Article"></Favicon>
         </div>
         <div v-else>
-          <input id="article-name" v-model="editArticleName" type="text" /> 
+          <input autocomplete="off" id="article-name" v-model="editArticle.title" type="text" /> 
           <RichText
-            :content="articleList[this.activeArt].content"></RichText>
+            :content="editArticle.content"
+            ref="richtext"></RichText>
         </div>
       </el-main>
     </el-container>
@@ -65,7 +68,6 @@ export default {
         name: '',
         id: ''
       },
-      editArticleName: '',
       // 被选中的文章分组index
       activeGroupIndex: '0',
     }
@@ -89,7 +91,6 @@ export default {
           .catch(err => {
             this.$message.error(err)
           })
-        console.log(res)
         if (res.data.success) {
           this.$message({
             type: 'success',
@@ -163,6 +164,8 @@ export default {
     // 子组件中选中的grouptab发生变化
     activeGroupChange(option) {
       this.activeGroupIndex = option.index
+      this.$store.state.group = this.groupList[option]
+      this.getArticleList()
     },
     async addArticle() {
       const res = await this.$store.dispatch('addArticleAction', {
@@ -174,18 +177,66 @@ export default {
     // 点击打开某一篇文章
     openArticle(option) {
       this.activeArt = option
-      // console.l(this.articleList[option].title)
-      this.editArticleName = this.articleList[option].title
+      this.$store.state.article = this.articleList[option]
+    },
+    // 保存当前编辑的文章
+    async saveArticle() {
+      const params = {
+        id: this.editArticle.id,
+        content: this.$refs.richtext.editContent,
+        title: this.editArticle.title,
+      }
+      const res = await this.$store.dispatch('updateArticleAction', params)
+      if (res.data.success) {
+        this.$message({
+          type: 'success',
+          message: '保存成功'
+        })
+        this.getArticleList()
+      }
+    },
+    // 删除当前文章
+    async deleteArticle(option) {
+      this.$confirm('是否确认要删除这篇文章?', 'warning', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then( async () => {
+        const id = option.id
+        const res = await this.$store.dispatch('deleteArticleAction', id)
+          .catch(err => {
+            throw err
+          })
+        if (res.data.success) {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.getArticleList()
+          this.activeArt = ''
+        }
+      })
     }
   },
   computed: {
     currentGroupId() {
       return this.groupList[parseInt(this.activeGroupIndex)].id
+    },
+    // 正要编辑的文章obj
+    editArticle() {
+      return this.$store.state.article
     }
   },
   async mounted() {
     await this.getGroupList()
     await this.getArticleList()
+  },
+  created() {
+    // 监听页面失焦时保存文章
+    // window.onblur = function() {
+    //   console.log('??')
+    //   console.log(this.currentArticleContent)
+    // }
   },
 }
 </script>

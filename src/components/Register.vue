@@ -147,6 +147,8 @@ export default {
             .catch(err => {
               console.log(err)
             })
+          console.log(res)
+          return
           if(res.status==200&&res.data.success) {
             this.$message({
               message: '注册成功',
