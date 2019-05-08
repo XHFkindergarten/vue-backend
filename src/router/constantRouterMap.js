@@ -6,43 +6,39 @@ const NoPermission = () => import('@/layouts/403')
 const Test = () => import('@/components/Test')
 const Test2 = () => import('@/components/Test2')
 const AppContainer = () => import('@/layouts/AppContainer')
+const HeaderContainer = () => import('@/layouts/HeaderContainer')
+const Me = () => import('@/components/Me')
 
 export const constantRouterMap =  [
   {
     path: '/main',
-    label: 'main',
-    name: 'main',
+    alias: '/',
     hidden: false,
     meta: { role: [0, 1]},
     component: AppContainer,
     children: [
       {
         path: '',
-        name: '主页',
         component: Main,
         hidden: true
       },
       {
-        path: 'me',
-        name: '我的',
-        component: () => import('@/components/Me'),
-        hidden: true,
-        meta: { role: [0, 1, 2] }
-      },
-      {
         path: 'login',
+        alias: '/login',
         name: '登录',
         component: Login,
         hidden: true
       },
       {
         path: 'register',
+        alias: '/register',
         name: '注册',
         component: Register,
         hidden: true
       },
       {
         path: '403',
+        alias: '/403',
         name: '没有访问权限',
         component: NoPermission,
         hidden: true
@@ -77,7 +73,15 @@ export const constantRouterMap =  [
       }
     ]
   },{
-    path: '',
-    redirect: '/main'
-  },
+    path: '/noheader',
+    name: 'nohead',
+    component: HeaderContainer,
+    children:[
+      {
+        alias: '/me',
+        path: 'me',
+        component: Me
+      }
+    ]
+  }
 ]

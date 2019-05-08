@@ -64,12 +64,27 @@ const addArticle = async params => {
   return res
 }
 
-// 根据分组id查询文章列表
+// 根据groupId获取文章列表
 const getArticleList = async params => {
   if (!params) {
     throw new Error('请输入参数')
   }
-  const res = await axios.get('article/getArticleList?groupId=' + params.groupId)
+  const keys = Object.keys(params) 
+  let sql = ''
+  keys.forEach(key => {
+    sql += `${key}=${params[key]}&`
+  })
+  sql = sql.substring(0, sql.length-1)
+  const res = await axios.get('article/getArticleList?' + sql)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 获取所有文章流
+const getAllArticle = async () => {
+  const res = await axios.get('article/getAllArticle')
     .catch(err => {
       throw err
     })
@@ -102,6 +117,7 @@ const deleteArticle = async id => {
   return res
 }
 
+
 const article = {
   getArticleGroup,
   addArticleGroup,
@@ -109,6 +125,7 @@ const article = {
   deleteGroup,
   addArticle,
   getArticleList,
+  getAllArticle,
   updateArticle,
   deleteArticle,
 }

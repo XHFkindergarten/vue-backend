@@ -1,12 +1,13 @@
 <template>
   <div>
     <el-container>
-      <el-header>
+      <el-header style="padding:0;height:auto;">
         <Head
           :userInfo="userInfo"></Head>
       </el-header>
       <el-container style="margin-top:1px;">
         <el-aside
+          class="hidden-sm-and-down"
           :width="(collapse?'201':'65'+'px')">
           <Side @altCollapse="altCollapse"></Side>
         </el-aside>
@@ -19,6 +20,7 @@
   </div>
 </template>
 <script>
+import 'element-ui/lib/theme-chalk/display.css';
 import Head from '@/layouts/Head'
 import Side from '@/layouts/Sidebar'
 

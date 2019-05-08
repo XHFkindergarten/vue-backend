@@ -9,19 +9,27 @@
       hide-required-asterisk
       >
         <el-row class="row">
-            <el-col :span="6" :offset="9">
+            <el-col
+              :lg={span:6,offset:9}
+              :md={span:8,offset:8}
+              :sm={span:8,offset:8}
+              :xs={span:10,offset:7}>
                 <el-form-item prop="email" label="邮箱">
                     <el-input v-model="registerForm.email" placeholder="请输入注册邮箱"></el-input>
                 </el-form-item>
             </el-col>
             <el-col :span="3">
-              <div class="button-container">
+              <div class="button-container" style="margin-left:10px;">
                 <el-button @click="sendMail" type="primary" :disabled="hasSend" round>{{sendBtnWord?`请在${timeout}s后重试`:'收取验证码'}}</el-button>
               </div>
             </el-col>
         </el-row>
         <el-row v-if="hasSend" style="margin-top:30px;">
-          <el-col :span="6" :offset="9">
+          <el-col
+              :lg={span:6,offset:9}
+              :md={span:8,offset:8}
+              :sm={span:8,offset:8}
+              :xs={span:10,offset:7}>
             <el-form-item prop="emailcode" label="验证码">
               <div class="code-input-container">
                 <el-input ref="code1" v-model="registerForm.code1" class="code-input" type="text" maxlength="1"></el-input>
@@ -35,21 +43,33 @@
           </el-col>
         </el-row>
         <el-row class="row">
-            <el-col :span="6" :offset="9">
+            <el-col
+              :lg={span:6,offset:9}
+              :md={span:8,offset:8}
+              :sm={span:8,offset:8}
+              :xs={span:10,offset:7}>
                 <el-form-item prop="name" label="用户名">
                     <el-input v-model="registerForm.name" placeholder="请输入用户名"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row class="row">
-            <el-col :span="6" :offset="9">
+            <el-col
+              :lg={span:6,offset:9}
+              :md={span:8,offset:8}
+              :sm={span:8,offset:8}
+              :xs={span:10,offset:7}>
                 <el-form-item prop="password" label="密码">
                     <el-input type="password" autocomplete="off" v-model="registerForm.password" placeholder="请输入密码"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row class="row">
-            <el-col :span="6" :offset="9">
+            <el-col
+              :lg={span:6,offset:9}
+              :md={span:8,offset:8}
+              :sm={span:8,offset:8}
+              :xs={span:10,offset:7}>
                 <el-form-item prop="password2" label="重复输入密码">
                     <el-input type="password" autocomplete="off" v-model="registerForm.password2" placeholder="请再次输入密码"></el-input>
                 </el-form-item>

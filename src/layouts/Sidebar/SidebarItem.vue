@@ -10,7 +10,7 @@
         </template>
         <sidebar-item :menuList="list.children.filter(l=>!l.hidden)"></sidebar-item>
       </el-submenu>
-      <el-menu-item v-else :index="list.path" :key="list.path">
+      <el-menu-item v-else :index="list.alias" :key="list.path">
         <template slot="title">
           <svg class="icon" aria-hidden="true">
             <use :xlink:href="`#icon-${list.icon}`"></use>

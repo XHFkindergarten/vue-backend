@@ -49,6 +49,9 @@ export default {
   computed: {
   },
   watch: {
+    content(newValue, oldValue) {
+      this.editContent = newValue
+    }
   },
   mounted() {
     // tinymce.init({})

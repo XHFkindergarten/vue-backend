@@ -127,9 +127,8 @@ let actions = {
     commit('resetRoles')
   },
   // 挂载动态权限路由
-  addRoutes: ({commit,state,getters}) => {
+  addRoutes: ({state}) => {
     let constantRoute = Array.from(constantRouterMap)
-    utils.spliceRoutes(constantRoute, '')
     constantRoute = constantRoute[0].children
     if(state.Roles.length==0) {
       state.routes = constantRoute
@@ -249,6 +248,15 @@ let actions = {
   // 删除单篇文章
   deleteArticleAction: async ({commit}, id) => {
     const res = await http.deleteArticle(id)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 分页获取所有文章
+  getAllArticleAction: async () => {
+    const res = await http.getAllArticle()
       .catch(err => {
         throw err
       })

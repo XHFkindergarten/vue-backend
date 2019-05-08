@@ -41,7 +41,7 @@ router.beforeEach( async (to, from, next) => {
       Cookies.remove('login-token')
       store.commit('resetToken')
       store.dispatch('addRoutes')
-      next('/main/login')
+      next('/login')
     }
     // 如果获取用户信息成功
     if(store.state.userInfo) {
@@ -49,22 +49,22 @@ router.beforeEach( async (to, from, next) => {
     } else {
       store.commit('resetToken')
       store.dispatch('addRoutes')
-      next('/main/login')
+      next('/login')
     }
   } else if(store.state.Roles.length>0) {
     // 有role
-    if(to.path=="/main/register" || to.path=="/main/login") {
-      next('/main')
+    if(to.path=="/register" || to.path=="/login") {
+      next('/')
       return
     }
     next()
   } else {
     // 没cookie没role
     store.dispatch('addRoutes')
-    if (to.path=="/main/login" || to.path=="/main/register" || to.path=="/main/") {
+    if (to.path=="/login" || to.path=="/register" || to.path=="/") {
       next()
     } else {
-      next('/main/login')
+      next('/login')
     }
   }
 })

@@ -45,10 +45,10 @@ export default {
       this.$router.push('/main/')
     },
     login: function() {
-      this.$router.push('/main/login')
+      this.$router.push('/login')
     },
     aboutMe: function() {
-      this.$router.push('/main/me')
+      this.$router.push('/me')
     }
   }
 }

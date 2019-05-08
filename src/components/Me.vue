@@ -1,15 +1,23 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="5" :offset="2">
+    <el-row
+      style="margin-top:50px;">
+      <el-col
+        :lg={span:5,offset:4}
+        :md={span:8,offset:8}
+        :sm={span:10,offset:7}
+        :xs={span:10,offset:7}
+        >
+
         <div class="avatar-container" @click="editAvatar">
           <img  v-loading="loadingBtn" style="width:100%;height:100%;" :src="userInfo.avatar" alt="头像">
           <div class="avatar-edit">
             <i class="el-icon-edit">Edit</i>
           </div>
         </div>
+        
         <el-dialog
-          width="40%"
+          width="700px"
           :center="false"
           :visible.sync="editAvatarDialog"
           title="修改头像">
@@ -51,21 +59,34 @@
         <div class="username-container">
           <el-row v-if="isEditName" style="margin-top:15px;">
             <el-col :span="17">
-              <el-input @blur="abandonEditName" v-model="userInfo.name" />
+              <el-input @blur="abandonEditName" v-model="editUsername" />
             </el-col>
             <el-col :span="6" :offset="1">
-              <el-button type="success" icon="el-icon-check" circle></el-button>
+              <el-button type="success" @click="updateUserName" icon="el-icon-check" circle></el-button>
             </el-col>
           </el-row>
           
-          <p v-else @click="editUsername" id="username">{{userInfo.username}}<i class="el-icon-edit username-icon"></i></p>
+          <p v-else @click="editusername" id="username">{{userInfo.username}}<i class="el-icon-edit username-icon"></i></p>
           <p id="email">{{userInfo.email}}</p>
         </div>
       </el-col>
+      <el-col
+        :lg={span:10,offset:1}
+        :md={span:12,offset:6}
+        :sm={span:14,offset:5}
+        :xs={span:16,offset:4}
+        >
+        <div class="big-title">My Article</div>
+        <div class="hr"></div>
+        <ArticlePreviewList
+          :articleList="articleList"></ArticlePreviewList>
+      </el-col>
+      
     </el-row>
   </div>
 </template>
 <script>
+import ArticlePreviewList from '@/layouts/ArticlePreviewList'
 import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
 export default {
@@ -74,6 +95,7 @@ export default {
     return {
       editDialog: false,
       isEditName: false,
+      editUsername: '',
       editAvatarDialog: false,
       moodOption: {
         0: 'smile',
@@ -83,10 +105,13 @@ export default {
       sign: '',
       mood: '',
       loadingBtn: false,
-      editMoodDialog: false
+      editMoodDialog: false,
+      // 个人文章列表
+      articleList: []
     }
   },
   components: {
+    ArticlePreviewList,
     EditAvatar,
     SvgIcon
   },
@@ -98,16 +123,19 @@ export default {
   mounted() {
     this.mood = this.userInfo.mood
     this.sign = this.userInfo.sign
+    this.getUserArticle()
   },
   created() {
     
   },
   methods: {
-    editUsername() {
+    editusername() {
       this.isEditName = true
+      this.editUsername = this.userInfo.username
     },
     abandonEditName() {
-      this.isEditName = false
+      // this.isEditName = false
+      // this.editUsername = ''
     },
     editAvatar() {
       this.editAvatarDialog = true
@@ -147,7 +175,37 @@ export default {
       } else {
         this.$message.error('请输入正确的信息')
       }
-      
+    },
+    // 更新用户名
+    async updateUserName() {
+      if (this.editUsername) {
+        const res = await this.$store.dispatch('updateUserInfo', {
+          id: this.userInfo.id,
+          name: this.editUsername
+        })
+        if (res.data.success) {
+          this.$message({
+            type: 'success',
+            message: '更改成功'
+          })
+          this.isEditName = false
+          const userinfo = await this.$store.dispatch('currentAction')
+          this.$store.commit('setUserInfo', userinfo.data)
+        }
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '请输入用户名'
+        })
+      }
+    },
+    // 根据用户id请求用户的所有文章
+    async getUserArticle() {
+      const res = await this.$store.dispatch('getArticleList', {
+        userId: this.userInfo.id
+      })
+      console.log(res)
+      this.articleList = res.data.article
     }
   },
   directives: {
@@ -162,6 +220,18 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.big-title{
+  font-size: 40px;
+  text-align: left;
+  font-weight: bolder;
+}
+.hr{
+  width: 100%;
+  border-top: 1px #505050 solid;
+  margin: 10px 0 20px 0;
+}
+
+
 .avatar-container{
   width: 240px;
   height: 240px;
