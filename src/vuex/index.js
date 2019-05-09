@@ -261,7 +261,79 @@ let actions = {
         throw err
       })
     return res
-  }
+  },
+
+  // 获取单篇文章
+  getOneArticleAction: async ({commit}, id) => {
+    const res = await http.getOneArticle(id)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 喜欢文章
+  likeArticleAction: async ({commit}, params) => {
+    const res = await http.likeArticle(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 查询某篇文章的喜欢列表
+  likeListAction: async ({commit}, articleId) => {
+    const res = await http.likeList(articleId)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 取消喜欢某篇文章
+  dislikeArticleAction: async ({commit}, params) => {
+    const res = await http.dislikeArticle(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 发起评论
+  addCommentAction: async ({commit}, params) => {
+    const res = await http.addComment(params)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 查询文章评论
+  getCommentAction: async ({commit}, articleId) => {
+    const res = await http.getComment(articleId)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
+  // 添加回复
+  addReplyAction: async ({commit}, params) => {
+    const res = await http.addReply(params)
+      .catch(err => {
+        throw err
+      })
+    return res 
+  },
+
+  // 获取文章回复
+  getReplyAction: async ({commit}, articleId) => {
+    const res = await http.getReply(articleId)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
 }
 const store = new Vuex.Store({
   state,

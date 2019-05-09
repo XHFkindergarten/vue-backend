@@ -9,7 +9,8 @@
         >
         <div class="search-container">
           <p>条件筛选</p>
-          <el-input v-model="filterValue" @blur="articleFilter" type="text" placeholder="请输入文章标题或内容中的字段"></el-input>
+          <input id="search" placeholder="请输入文章标题或内容中的字段" type="text">
+          <!-- <el-input v-model="filterValue" @blur="articleFilter" style="border-radius:50%;" type="text" placeholder="请输入文章标题或内容中的字段"></el-input> -->
         </div>
       </el-col>
       <el-col
@@ -53,7 +54,7 @@ export default {
       // 当前所在页码
       currentPage: 1,
       // 每页的数据量
-      pageSize: 3,
+      pageSize: 5,
       // 文章正在加载
       isLoading: false,
     }
@@ -108,6 +109,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#search{
+  font-size: 15px;
+  outline: none;
+  width: 80%;
+  background: #EEE;
+  border: none;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 20px;
+}
 .search-container{
   margin: 40px 0 20px;
   p{

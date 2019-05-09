@@ -1,8 +1,8 @@
 // 对http请求方法进行封装
 import axios from '@/axios'
-import store from '../vuex';
 import article from './article'
 import user from './user'
+import comment from './comment'
 
 
 // 上传图片
@@ -24,7 +24,8 @@ const uploadImg = async (file, type='context') => {
 const http = {
   uploadImg,
   ...user,
-  ...article
+  ...article,
+  ...comment
 }
 
 export default http

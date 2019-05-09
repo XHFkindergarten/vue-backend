@@ -117,6 +117,53 @@ const deleteArticle = async id => {
   return res
 }
 
+// 根据id获取单篇文章
+const getOneArticle = async id => {
+  if (!id) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.get('article/getOneArticle?id='+id)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 添加某个用户喜欢某个文章
+const likeArticle = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('article/likeArticle', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 查询喜欢某篇文章的用户
+const likeList = async articleId => {
+  if (!articleId) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.get('article/articleLikeList?articleId=' + articleId)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
+// 取消喜欢某篇文章
+const dislikeArticle = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('article/dislikeArticle', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
 
 const article = {
   getArticleGroup,
@@ -128,6 +175,10 @@ const article = {
   getAllArticle,
   updateArticle,
   deleteArticle,
+  getOneArticle,
+  likeArticle,
+  likeList,
+  dislikeArticle,
 }
 
 export default article

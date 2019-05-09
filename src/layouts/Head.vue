@@ -8,6 +8,13 @@
       active-text-color="#409EFF"
       router>
       <el-row>
+        <el-col class="hidden-sm-and-up" :xs={span:8,offset:8}>
+          <el-menu-item @click.native="backRoute">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-back5"></use>
+            </svg>
+          </el-menu-item>
+        </el-col>
         <el-col
           class="hidden-sm-and-up"
           :lg={span:2,offset:4}
@@ -107,24 +114,10 @@
                   </div>
                 </el-col>
               </div>
-              
             </el-collapse-transition>
           </el-row>
         </el-col>
-        
-        
-        
       </el-row>
-      
-      <!-- <el-menu-item>
-        <template>
-          <el-input
-            placeholder="search..."
-            suffix-icon="el-icon-search"></el-input>
-        </template>
-      </el-menu-item> -->
-      
-      
     </el-menu>
   </div>
 </template>
@@ -167,6 +160,11 @@ export default {
       if (window.innerWidth>768) {
         this.isCollapse = true
       }
+    },
+    // 点击返回按钮
+    backRoute() {
+      console.log('back')
+      this.$router.back()
     }
   },
   created() {

@@ -39,7 +39,7 @@
           icon="adduser"
           @click.native="register"
           :width="140"></SvgButton>
-        <a v-else :href="myWx" target="_blank">
+        <a v-else href="https://github.com/XHFkindergarten" target="_blank">
           <SvgButton
             content="Connect"
             icon="weixin"

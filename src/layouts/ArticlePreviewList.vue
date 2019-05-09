@@ -3,6 +3,7 @@
     <el-card
       class="card"
       v-for="item in articleList"
+      @click.native="toArticle(item)"
       :key="item.id"
       shadow="hover"
       :body-style="{
@@ -52,6 +53,11 @@ export default {
   data() {
     return {
 
+    }
+  },
+  methods: {
+    toArticle(item) {
+      this.$router.push({path: '/article', query: {id: item.id}})
     }
   },
   props: [

@@ -90,7 +90,12 @@ export const constantRouterMap =  [
       },{
         path: 'list',
         component: () => import('@/components/ArticleList')
-      }
+      },{
+        path: 'article',
+        alias: '/article',
+        component: () => import('@/components/ArticleOne'),
+        props: (route) => ({id: route.query.id})
+      },
     ]
   }
 ]

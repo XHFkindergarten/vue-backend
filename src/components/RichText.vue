@@ -36,7 +36,7 @@ export default {
         menubar: false,//顶部菜单栏显示
         plugins: 'link lists image code table wordcount',
         toolbar:
-          'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | ',
+          'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | wordcount',
         images_upload_handler: this.images_upload_handler
       }
     }
@@ -55,6 +55,7 @@ export default {
   },
   mounted() {
     // tinymce.init({})
+    console.log(this.$refs.tinymce)
   },
   components: {
     Editor
