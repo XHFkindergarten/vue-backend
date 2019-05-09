@@ -173,14 +173,14 @@ export const asyncRouterMap = [
         component: () => import('@/layouts/Empty'),
         hidden: false,
         children: [
-          {
-            path: 'list',
-            alias: '/articlelist',
-            label: '文章列表',
-            meta: { role: [0, 1, 2]},
-            redirect: '/article/list',
-            hidden: false
-          },
+          // {
+          //   path: 'list',
+          //   alias: '/articlelist',
+          //   label: '文章列表',
+          //   meta: { role: [0, 1, 2]},
+          //   redirect: '/article/list',
+          //   hidden: false
+          // },
           {
             path: 'addArticle',
             label: '文章管理',
@@ -201,20 +201,13 @@ export const asyncRouterMap = [
       }
     ]
   },
+  // {
+  //   path: '/article',
+  //   hidden: true,
+  //   meta: { role: [0, 1, 2]},
+  //   component: () => import('@/layouts/HeaderContainer')
+  // },
   {
-    path: '/article',
-    hidden: true,
-    meta: { role: [0, 1, 2]},
-    component: () => import('@/layouts/HeaderContainer'),
-    children: [
-      {
-        path: 'list',
-        meta: { role: [0, 1, 2]},
-        component: () => import('@/components/ArticleList')
-
-      }
-    ]
-  },{
     path: '/empty',
     hidden: true,
     meta: { role: [0, 1, 2]},

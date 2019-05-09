@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <el-header>
+      <el-header style="padding:0;height:auto;">
         <Head :userInfo="userInfo"></Head>
       </el-header>
       <el-main>

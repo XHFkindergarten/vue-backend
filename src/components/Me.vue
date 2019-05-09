@@ -6,7 +6,7 @@
         :lg={span:5,offset:4}
         :md={span:8,offset:8}
         :sm={span:10,offset:7}
-        :xs={span:10,offset:7}
+        :xs={span:24}
         >
         <el-row>
           <el-col
@@ -91,11 +91,12 @@
         :lg={span:10,offset:1}
         :md={span:12,offset:6}
         :sm={span:14,offset:5}
-        :xs={span:14,offset:5}
+        :xs={span:20,offset:2}
         >
         <div class="big-title">My Article</div>
         <div class="hr"></div>
         <ArticlePreviewList
+          v-loading="isLoading"
           :articleList="articleList"></ArticlePreviewList>
       </el-col>
       
@@ -124,7 +125,9 @@ export default {
       loadingBtn: false,
       editMoodDialog: false,
       // 个人文章列表
-      articleList: []
+      articleList: [],
+      // 加载文章时显示loading
+      isLoading: false,
     }
   },
   components: {
@@ -218,9 +221,11 @@ export default {
     },
     // 根据用户id请求用户的所有文章
     async getUserArticle() {
+      this.isLoading = true
       const res = await this.$store.dispatch('getArticleList', {
         userId: this.userInfo.id
       })
+      this.isLoading = false
       console.log(res)
       this.articleList = res.data.article
     }

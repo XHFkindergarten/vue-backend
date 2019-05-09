@@ -13,7 +13,7 @@
               :lg={span:6,offset:9}
               :md={span:6,offset:9}
               :sm={span:8,offset:8}
-              :xs={span:10,offset:7}
+              :xs={span:12,offset:6}
               >
                 <el-form-item prop="email">
                     <el-input v-model="loginForm.email" placeholder="请输入登录邮箱"></el-input>
@@ -25,14 +25,14 @@
               :lg={span:6,offset:9}
               :md={span:6,offset:9}
               :sm={span:8,offset:8}
-              :xs={span:10,offset:7}>
+              :xs={span:12,offset:6}>
                 <el-form-item prop="password">
                     <el-input type="password" autocomplete="off" v-model="loginForm.password" placeholder="请输入密码"></el-input>
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row class="row">
-            <el-col :span="6" :offset="9">
+            <el-col :span="10" :offset="7">
                 <el-button class="login-button" @keyup.enter.native="login" @click="login" type="primary" size="medium">Login</el-button>
             </el-col>
         </el-row>

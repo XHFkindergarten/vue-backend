@@ -3,6 +3,9 @@
     <el-row>
       <el-col
         :lg={span:4,offset:4}
+        :md={span:5,offset:3}
+        :sm={span:6,offset:2}
+        :xs={span:20,offset:2}
         >
         <div class="search-container">
           <p>条件筛选</p>
@@ -10,8 +13,13 @@
         </div>
       </el-col>
       <el-col
-        :lg={span:10,offset:2}>
+        :lg={span:10,offset:2}
+        :md={span:10,offset:2}
+        :sm={span:10,offset:2}
+        :xs={span:20,offset:2}
+        >
         <ArticlePreviewList
+          v-loading="isLoading"
           :articleList="currentPageArticleList"></ArticlePreviewList>
       </el-col>
     </el-row>
@@ -45,7 +53,9 @@ export default {
       // 当前所在页码
       currentPage: 1,
       // 每页的数据量
-      pageSize: 3
+      pageSize: 3,
+      // 文章正在加载
+      isLoading: false,
     }
   },
   components: {
@@ -54,7 +64,9 @@ export default {
   methods: {
     // 根据用户id请求用户的所有文章
     async getUserArticle() {
+      this.isLoading = true
       const res = await this.$store.dispatch('getAllArticleAction')
+      this.isLoading = false
       this.articleList = res.data.article
       this.showArticleList = res.data.article
     },
@@ -97,7 +109,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .search-container{
-  margin-top: 40px;
+  margin: 40px 0 20px;
   p{
     text-align: left;
   }

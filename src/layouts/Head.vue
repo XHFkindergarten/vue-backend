@@ -9,71 +9,111 @@
       router>
       <el-row>
         <el-col
+          class="hidden-sm-and-up"
           :lg={span:2,offset:4}
           :md={span:2,offset:4}
           :sm={span:3,offset:2}
           :xs={span:8,offset:8}
           >
-          <el-menu-item index="/">
+          <el-menu-item @click.native="collapseMenu">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-home"></use>
+              <use xlink:href="#icon-menu1"></use>
             </svg>
-            <span>主页</span>
-          </el-menu-item>
-          
-          
-          <!-- <RouteView></RouteView> -->
-        </el-col>
-        <el-col
-          :lg={span:2}
-          :md={span:2}
-          :sm={span:3}
-          :xs={span:8,offset:8}
-          >
-          <el-menu-item v-if="!hasLogin" index="/register">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-adduser"></use>
-            </svg>
-            <span>注册</span>
           </el-menu-item>
         </el-col>
         <el-col
-          :lg={span:2}
-          :md={span:2}
-          :sm={span:3}
-          :xs={span:8,offset:8}
+          :lg={span:24}
+          :md={span:24}
+          :sm={span:24}
+          :xs={span:12,offset:6}
           >
-          <el-menu-item v-if="!hasLogin" index="/login">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-login"></use>
-            </svg>
-            <span>登录</span>
-          </el-menu-item>
+          <el-row>
+            <el-collapse-transition>
+              <div v-show="isCollapse">
+                <el-col
+                  :lg={span:2,offset:4}
+                  :md={span:2,offset:4}
+                  :sm={span:3,offset:2}
+                  :xs={span:24}
+                  >
+                  <el-menu-item index="/">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-home"></use>
+                    </svg>
+                    <span>主页</span>
+                  </el-menu-item>
+                </el-col>
+                <el-col
+                  :lg={span:2}
+                  :md={span:2}
+                  :sm={span:3}
+                  :xs={span:24}
+                  >
+                  <el-menu-item v-if="!hasLogin" index="/register">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-adduser"></use>
+                    </svg>
+                    <span>注册</span>
+                  </el-menu-item>
+                </el-col>
+                <el-col
+                  :lg={span:2}
+                  :md={span:2}
+                  :sm={span:3}
+                  :xs={span:24}
+                  >
+                  <el-menu-item v-if="!hasLogin" index="/login">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-login"></use>
+                    </svg>
+                    <span>登录</span>
+                  </el-menu-item>
+                </el-col>
+                <el-col
+                  :lg={span:2}
+                  :md={span:2}
+                  :sm={span:3}
+                  :xs={span:24}
+                  >
+                  <el-menu-item index="/articleList">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-article-line"></use>
+                    </svg>
+                    <span>文章</span>
+                  </el-menu-item>
+                </el-col>
+                <el-col :span="4" class="hidden-xs-only">
+                  <br>
+                </el-col>
+                <el-col
+                  :lg={span:4,offset:8}
+                  :md={span:4,offset:8}
+                  :sm={span:4,offset:6}
+                  :xs={span:24}
+                  >
+                  <div class="userinfo">
+                    <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
+                    <template>
+                      <el-popover
+                        placement="bottom"
+                        title=""
+                        width="100"
+                        trigger="hover">
+                        <MeItems
+                          :hasLogin="hasLogin"></MeItems>
+                        <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button>
+                      </el-popover>
+                    </template>    
+                  </div>
+                </el-col>
+              </div>
+              
+            </el-collapse-transition>
+          </el-row>
         </el-col>
-        <el-col :span="4" class="hidden-xs-only">
-          <br>
-        </el-col>
-        <el-col
-          :lg={span:4,offset:10}
-          :md={span:4,offset:10}
-          :sm={span:4,offset:9}
-          :xs={span:8,offset:8}
-          >
-          <div class="userinfo">
-            <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
-            <template>
-              <el-popover
-                placement="bottom"
-                title=""
-                width="100"
-                trigger="hover">
-                <MeItems
-                  :hasLogin="hasLogin"></MeItems>
-                <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button>
-              </el-popover>
-            </template>    
-          </div>
-        </el-col>
+        
+        
+        
       </el-row>
       
       <!-- <el-menu-item>
@@ -103,7 +143,7 @@ export default {
   ],
   data() {
     return {
-
+      isCollapse: false
     }
   },
   computed: {
@@ -118,7 +158,20 @@ export default {
     }
   },
   methods: {
-
+    // xs尺寸下点击收放菜单
+    collapseMenu() {
+      this.isCollapse = !this.isCollapse
+    },
+    // 监听屏幕尺寸，显示tab
+    listenWidth() {
+      if (window.innerWidth>768) {
+        this.isCollapse = true
+      }
+    }
+  },
+  created() {
+    this.listenWidth()
+    window.onresize = this.listenWidth
   }
 }
 </script>

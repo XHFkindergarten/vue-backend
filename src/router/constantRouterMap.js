@@ -37,6 +37,12 @@ export const constantRouterMap =  [
         hidden: true
       },
       {
+        path: 'articleList',
+        alias: '/articleList',
+        hidden: true,
+        redirect: '/noheader/list'
+      },
+      {
         path: '403',
         alias: '/403',
         name: '没有访问权限',
@@ -81,6 +87,9 @@ export const constantRouterMap =  [
         alias: '/me',
         path: 'me',
         component: Me
+      },{
+        path: 'list',
+        component: () => import('@/components/ArticleList')
       }
     ]
   }

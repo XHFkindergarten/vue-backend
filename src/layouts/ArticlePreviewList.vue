@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height:200px;">
     <el-card
       class="card"
       v-for="item in articleList"
@@ -13,8 +13,8 @@
       <el-row>
         <el-col
           :lg="{span:12}"
-          :md="{span:12}"
-          :sm="{span:12}"
+          :md="{span:24}"
+          :sm="{span:24}"
           :xs="{span:24}"
           >
           <div class="img-container">
@@ -23,8 +23,8 @@
         </el-col>
         <el-col
           :lg="{span:12}"
-          :md="{span:12}"
-          :sm="{span:12}"
+          :md="{span:24}"
+          :sm="{span:24}"
           :xs="{span:24}"
           >
           <div class="art-container">
@@ -94,7 +94,7 @@ export default {
     overflow: hidden;
   }
   .summary{
-    margin: 0 0 0 30px;
+    margin: 0 30px;
     min-height: 110px;
     text-align: left;
     font-size: 14px;
