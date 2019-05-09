@@ -7,13 +7,26 @@
       shadow="hover"
       :body-style="{
         padding:'0',
-        height:'280px'
       }"
-          style="border-radius:10px;margin:40px 0;"
+      style="border-radius:10px;margin:40px 0;"
+      >
+      <el-row>
+        <el-col
+          :lg="{span:12}"
+          :md="{span:12}"
+          :sm="{span:12}"
+          :xs="{span:24}"
           >
           <div class="img-container">
             <img src="@/assets/demo.jpg">
           </div>
+        </el-col>
+        <el-col
+          :lg="{span:12}"
+          :md="{span:12}"
+          :sm="{span:12}"
+          :xs="{span:24}"
+          >
           <div class="art-container">
             <div class="title">{{item.title}}</div>
             <div class="summary">{{item.summary}}</div>
@@ -27,6 +40,8 @@
               <span>{{item.viewTime}}</span>
             </div>
           </div>
+        </el-col>  
+      </el-row>
         </el-card>
   </div>
 </template>
@@ -55,25 +70,28 @@ export default {
   cursor: pointer;
 }
 .img-container{
-  width: 50%;
-  height: 100%;
-  float: left;
+  width:100%;
+  height:275px;
+  overflow: hidden;
+  // float: left;
   img {
     width:100%;
     height:100%;
-    object-fit: cover
+    object-fit: cover;
   }
 }
 .art-container{
-  float: left;
-  width: 50%;
+  // float: left;
+  width: 100%;
   .title{
-    margin-top: 30px;
-    margin-left: 30px;
+    margin: 30px 0 10px 30px;
     text-align: left;
     font-size: 30px;
     font-weight: bold;
-    min-height: 60px;
+    height: 72px;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
   }
   .summary{
     margin: 0 0 0 30px;

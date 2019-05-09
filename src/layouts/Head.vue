@@ -12,6 +12,7 @@
           :lg={span:2,offset:4}
           :md={span:2,offset:4}
           :sm={span:3,offset:2}
+          :xs={span:8,offset:8}
           >
           <el-menu-item index="/">
             <svg class="icon" aria-hidden="true">
@@ -27,7 +28,7 @@
           :lg={span:2}
           :md={span:2}
           :sm={span:3}
-          style="height:0.1px"
+          :xs={span:8,offset:8}
           >
           <el-menu-item v-if="!hasLogin" index="/register">
             <svg class="icon" aria-hidden="true">
@@ -40,7 +41,7 @@
           :lg={span:2}
           :md={span:2}
           :sm={span:3}
-          style="height:0.1px"
+          :xs={span:8,offset:8}
           >
           <el-menu-item v-if="!hasLogin" index="/login">
             <svg class="icon" aria-hidden="true">
@@ -49,11 +50,14 @@
             <span>登录</span>
           </el-menu-item>
         </el-col>
+        <el-col :span="4" class="hidden-xs-only">
+          <br>
+        </el-col>
         <el-col
           :lg={span:4,offset:10}
           :md={span:4,offset:10}
           :sm={span:4,offset:9}
-          :xs={span:4,offset:10}
+          :xs={span:8,offset:8}
           >
           <div class="userinfo">
             <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
@@ -85,6 +89,7 @@
   </div>
 </template>
 <script>
+import 'element-ui/lib/theme-chalk/display.css';
 // import RouteView from '@/layouts/RouteView'
 import MeItems from '@/components/MeItems'
 export default {

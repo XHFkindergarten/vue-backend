@@ -8,13 +8,75 @@
         :sm={span:10,offset:7}
         :xs={span:10,offset:7}
         >
-
-        <div class="avatar-container" @click="editAvatar">
-          <img  v-loading="loadingBtn" style="width:100%;height:100%;" :src="userInfo.avatar" alt="头像">
-          <div class="avatar-edit">
-            <i class="el-icon-edit">Edit</i>
-          </div>
-        </div>
+        <el-row>
+          <el-col
+            :lg={span:24}
+            :md={span:24}
+            :sm={span:24}
+            :xs={span:24}
+            >
+            <div class="avatar-container" @click="editAvatar">
+              <img  v-loading="loadingBtn" style="width:100%;height:100%;" :src="userInfo.avatar" alt="头像">
+              <div class="avatar-edit">
+                <i class="el-icon-edit">Edit</i>
+              </div>
+            </div>
+          </el-col>
+          <el-col
+            :lg={span:24}
+            :md={span:24}
+            :sm={span:24}
+            :xs={span:24}
+            >
+            <el-popover
+              v-model="editMoodDialog"
+              placement="bottom"
+              width="300"
+              trigger="click">
+              <p style="padding-left: 12px;">选择你的心情：）</p>
+              <div class="mood-select-container">
+                <el-radio-group v-model="mood">
+                  <el-radio-button label="0">
+                    <SvgIcon size="mid" icon="smile"></SvgIcon>
+                  </el-radio-button>
+                  <el-radio-button label="1">
+                    <SvgIcon size="mid" icon="meh"></SvgIcon>
+                  </el-radio-button>
+                  <el-radio-button label="2">
+                    <SvgIcon size="mid" icon="frown"></SvgIcon>
+                  </el-radio-button>
+                </el-radio-group>
+              </div>
+              <p style="padding-left: 12px">一个词描述你</p>
+              <div style="text-align:center;">
+                <el-input v-model="sign" placeholder="请控制在12个字母以内" type="text" style="width: 216px;"></el-input>
+              </div> 
+              <div style="text-align:center;margin: 25px 0 0;">
+                <el-button @click="submitMood" type="primary" round>提交</el-button>
+              </div>
+              <div slot="reference" class="status-container">
+                <SvgIcon :icon="moodOption[this.mood]" size="mid" style="margin:0 5px 0 10px;"></SvgIcon>
+                <div style="display:inline-block">{{userInfo.sign}}</div>
+                <SvgIcon class="edit-icon" icon="edit" size="mid"></SvgIcon>
+              </div>
+            </el-popover>
+            
+            <div class="username-container">
+              <el-row v-if="isEditName" style="margin-top:15px;">
+                <el-col :span="17">
+                  <el-input @blur="abandonEditName" v-model="editUsername" />
+                </el-col>
+                <el-col :span="6" :offset="1">
+                  <el-button type="success" @click="updateUserName" icon="el-icon-check" circle></el-button>
+                </el-col>
+              </el-row>
+              
+              <p v-else @click="editusername" id="username">{{userInfo.username}}<i class="el-icon-edit username-icon"></i></p>
+              <p id="email">{{userInfo.email}}</p>
+            </div>
+          </el-col>
+        </el-row>
+        
         
         <el-dialog
           width="700px"
@@ -23,58 +85,13 @@
           title="修改头像">
           <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
         </el-dialog>
-        <el-popover
-          v-model="editMoodDialog"
-          placement="bottom"
-          width="300"
-          trigger="click">
-          <p style="padding-left: 12px;">选择你的心情：）</p>
-          <div class="mood-select-container">
-            <el-radio-group v-model="mood">
-              <el-radio-button label="0">
-                <SvgIcon size="mid" icon="smile"></SvgIcon>
-              </el-radio-button>
-              <el-radio-button label="1">
-                <SvgIcon size="mid" icon="meh"></SvgIcon>
-              </el-radio-button>
-              <el-radio-button label="2">
-                <SvgIcon size="mid" icon="frown"></SvgIcon>
-              </el-radio-button>
-            </el-radio-group>
-          </div>
-          <p style="padding-left: 12px">一个词描述你</p>
-          <div style="text-align:center;">
-            <el-input v-model="sign" placeholder="请控制在12个字母以内" type="text" style="width: 216px;"></el-input>
-          </div> 
-          <div style="text-align:center;margin: 25px 0 0;">
-            <el-button @click="submitMood" type="primary" round>提交</el-button>
-          </div>
-          <div slot="reference" class="status-container">
-            <SvgIcon :icon="moodOption[this.mood]" size="mid" style="margin:0 5px 0 10px;"></SvgIcon>
-            <div style="display:inline-block">{{userInfo.sign}}</div>
-            <SvgIcon class="edit-icon" icon="edit" size="mid"></SvgIcon>
-          </div>
-        </el-popover>
         
-        <div class="username-container">
-          <el-row v-if="isEditName" style="margin-top:15px;">
-            <el-col :span="17">
-              <el-input @blur="abandonEditName" v-model="editUsername" />
-            </el-col>
-            <el-col :span="6" :offset="1">
-              <el-button type="success" @click="updateUserName" icon="el-icon-check" circle></el-button>
-            </el-col>
-          </el-row>
-          
-          <p v-else @click="editusername" id="username">{{userInfo.username}}<i class="el-icon-edit username-icon"></i></p>
-          <p id="email">{{userInfo.email}}</p>
-        </div>
       </el-col>
       <el-col
         :lg={span:10,offset:1}
         :md={span:12,offset:6}
         :sm={span:14,offset:5}
-        :xs={span:16,offset:4}
+        :xs={span:14,offset:5}
         >
         <div class="big-title">My Article</div>
         <div class="hr"></div>
@@ -221,6 +238,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .big-title{
+  margin-top: 30px;
   font-size: 40px;
   text-align: left;
   font-weight: bolder;
@@ -233,6 +251,7 @@ export default {
 
 
 .avatar-container{
+  margin: 0 auto;
   width: 240px;
   height: 240px;
   border: 1px #e1e4e8 solid;
@@ -259,6 +278,7 @@ export default {
   border-radius: 5px;
 }
 .status-container{
+  margin: 0 auto;
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
@@ -292,6 +312,7 @@ export default {
   margin: 0 5px 0 10px;
 }
 .username-container{
+  margin: 0 auto;
   text-align: left;
   border-bottom: 1px #e1e4e8 solid;
   width:240px;

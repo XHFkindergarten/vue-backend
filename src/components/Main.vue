@@ -9,7 +9,7 @@
       <el-col
         type="flex"
         justify="center"
-        :xs="{span:6,offset:9}"
+        :xs="{span:20,offset:2}"
         :sm="{span:4,offset:6}"
         :lg="{span:3,offset:8}"
         :md="{span:3,offset:7}"
@@ -27,7 +27,7 @@
       <el-col
         type="flex"
         justify="center"
-        :xs="{span:6,offset:9}"
+        :xs="{span:20,offset:2}"
         :sm="{span:4,offset:4}"
         :lg="{span:3,offset:2}"
         :md="{span:3,offset:4}"
