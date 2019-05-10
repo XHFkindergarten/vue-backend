@@ -75,7 +75,7 @@ export default {
     },
     // 返回
     backto() {
-      this.$router.push('/main/')
+      this.$router.push('/')
     },
     // 提交添加分组
     async submitAddGroup() {

@@ -42,7 +42,7 @@ export default {
       Cookies.remove('login-token')
       this.$store.commit('resetRoutes')
       this.$store.dispatch('addRoutes')
-      this.$router.push('/main/')
+      this.$router.push('/')
     },
     login: function() {
       this.$router.push('/login')

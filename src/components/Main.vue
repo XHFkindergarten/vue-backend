@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     register() {
-      this.$router.push('/main/register')
+      this.$router.push('/register')
     }
   }
 }
