@@ -92,12 +92,16 @@ export default {
     judgeScreen() {
       if (window.innerWidth<800) {
         this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
       }
     }
   },
-  props: [
-    'articleList'
-  ],
+  props: {
+    articleList: {
+      default: []
+    }
+  },
   components: {
     SvgIcon,
     EditPic

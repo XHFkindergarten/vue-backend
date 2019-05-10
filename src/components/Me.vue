@@ -95,7 +95,9 @@
         >
         <div class="big-title">My Article</div>
         <div class="hr"></div>
+        <div v-if="articleList.length==0" style="font-size:18px">暂无文章</div>
         <ArticlePreviewList
+          v-if="articleList.length>0"
           @uploadLabelImg="getUserArticle"
           v-loading="isLoading"
           :articleList="articleList"></ArticlePreviewList>
@@ -156,6 +158,8 @@ export default {
     judgeScreen() {
       if (window.innerWidth<800) {
         this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
       }
     },
     editusername() {

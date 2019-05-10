@@ -13,7 +13,7 @@
               :lg={span:6,offset:9}
               :md={span:8,offset:8}
               :sm={span:8,offset:8}
-              :xs={span:16,offset:4}>
+              :xs={span:18,offset:3}>
                 <el-form-item prop="email" label="邮箱">
                     <el-input v-model="registerForm.email" placeholder="请输入注册邮箱"></el-input>
                 </el-form-item>
@@ -33,7 +33,7 @@
               :lg={span:6,offset:9}
               :md={span:8,offset:8}
               :sm={span:8,offset:8}
-              :xs={span:16,offset:4}
+              :xs={span:18,offset:3}
               >
             <el-form-item prop="emailcode" label="验证码">
               <div class="code-input-container">
@@ -52,7 +52,7 @@
               :lg={span:6,offset:9}
               :md={span:8,offset:8}
               :sm={span:8,offset:8}
-              :xs={span:16,offset:4}>
+              :xs={span:18,offset:3}>
                 <el-form-item prop="name" label="用户名">
                     <el-input v-model="registerForm.name" placeholder="请输入用户名"></el-input>
                 </el-form-item>
@@ -63,7 +63,7 @@
               :lg={span:6,offset:9}
               :md={span:8,offset:8}
               :sm={span:8,offset:8}
-              :xs={span:16,offset:4}>
+              :xs={span:18,offset:3}>
                 <el-form-item prop="password" label="密码">
                     <el-input type="password" autocomplete="off" v-model="registerForm.password" placeholder="请输入密码"></el-input>
                 </el-form-item>
@@ -74,7 +74,7 @@
               :lg={span:6,offset:9}
               :md={span:8,offset:8}
               :sm={span:8,offset:8}
-              :xs={span:16,offset:4}>
+              :xs={span:18,offset:3}>
                 <el-form-item prop="password2" label="重复输入密码">
                     <el-input type="password" autocomplete="off" v-model="registerForm.password2" placeholder="请再次输入密码"></el-input>
                 </el-form-item>
@@ -172,8 +172,6 @@ export default {
             .catch(err => {
               console.log(err)
             })
-          console.log(res)
-          return
           if(res.status==200&&res.data.success) {
             this.$message({
               message: '注册成功',

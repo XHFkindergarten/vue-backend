@@ -13,7 +13,7 @@
           :show-word-limit="true"
           type="textarea"
           :rows="4"></el-input>
-        <div class="nopermission">
+        <div v-else class="nopermission">
           请<router-link to="/login" style="color:#409Eff;text-decoration:none;">登录</router-link>后评论
         </div>
       </div>

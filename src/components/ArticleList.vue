@@ -23,14 +23,18 @@
         :sm={span:10,offset:2}
         :xs={span:20,offset:2}
         >
+        <h1 style="text-align:left;">Articles</h1>
+        <div v-if="emptyArticle" style="font-size:18px;">暂无文章</div>
         <ArticlePreviewList
+          v-if="!emptyArticle"
           v-loading="isLoading"
           :articleList="currentPageArticleList"></ArticlePreviewList>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="8" :offset="8">
+      <el-col :span="20" :offset="2">
         <el-pagination
+          v-if="!emptyArticle"
           :total="articleNum"
           :page-size="pageSize"
           :current-page="currentPage"
@@ -64,6 +68,8 @@ export default {
       isLoading: false,
       // 是否是大屏
       isBigScreen: false,
+      // 是否没有文章
+      emptyArticle: true
     }
   },
   components: {
@@ -93,6 +99,9 @@ export default {
       const res = await this.$store.dispatch('getAllArticleAction')
       this.isLoading = false
       this.articleList = res.data.article
+      if (this.articleList.length==0) {
+        this.emptyArticle = true
+      }
       this.showArticleList = res.data.article
     },
     // 条件查询筛选文章
@@ -112,8 +121,11 @@ export default {
       this.currentPage = newPage
     },
     judgeScreen() {
+      console.log('change')
       if (window.innerWidth<800) {
         this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
       }
     },
   },
