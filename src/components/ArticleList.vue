@@ -24,9 +24,9 @@
         :xs={span:20,offset:2}
         >
         <h1 style="text-align:left;">Articles</h1>
-        <div v-if="emptyArticle" style="font-size:18px;">暂无文章</div>
+        <div v-if="articleList.length==0" style="font-size:18px;height:50px;">暂无文章</div>
         <ArticlePreviewList
-          v-if="!emptyArticle"
+          v-else
           v-loading="isLoading"
           :articleList="currentPageArticleList"></ArticlePreviewList>
       </el-col>
@@ -34,7 +34,7 @@
     <el-row>
       <el-col :span="20" :offset="2">
         <el-pagination
-          v-if="!emptyArticle"
+          v-if="articleList.length>0"
           :total="articleNum"
           :page-size="pageSize"
           :current-page="currentPage"
