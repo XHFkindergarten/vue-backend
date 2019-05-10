@@ -43,7 +43,7 @@
                   :sm={span:3,offset:2}
                   :xs={span:24}
                   >
-                  <el-menu-item index="/">
+                  <el-menu-item index="/" @click.native="collapseMenu">
                     <svg class="icon" aria-hidden="true">
                       <use xlink:href="#icon-home"></use>
                     </svg>
@@ -56,7 +56,7 @@
                   :sm={span:3}
                   :xs={span:24}
                   >
-                  <el-menu-item v-if="!hasLogin" index="/register">
+                  <el-menu-item v-if="!hasLogin" index="/register" @click.native="collapseMenu">
                     <svg class="icon" aria-hidden="true">
                       <use xlink:href="#icon-adduser"></use>
                     </svg>
@@ -69,7 +69,7 @@
                   :sm={span:3}
                   :xs={span:24}
                   >
-                  <el-menu-item v-if="!hasLogin" index="/login">
+                  <el-menu-item v-if="!hasLogin" index="/login" @click.native="collapseMenu">
                     <svg class="icon" aria-hidden="true">
                       <use xlink:href="#icon-login"></use>
                     </svg>
@@ -82,7 +82,7 @@
                   :sm={span:3}
                   :xs={span:24}
                   >
-                  <el-menu-item index="/articleList">
+                  <el-menu-item index="/articleList" @click.native="collapseMenu">
                     <svg class="icon" aria-hidden="true">
                       <use xlink:href="#icon-article-line"></use>
                     </svg>
