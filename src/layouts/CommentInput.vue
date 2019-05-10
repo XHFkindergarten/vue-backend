@@ -2,16 +2,20 @@
   <div>
     <div class="comment-container">
       <div class="avatar">
-        <img class="img" :src="userInfo.avatar" alt="用户头像">
+        <img class="img" :src="status?userInfo.avatar:defaultAvatar" alt="用户头像">
       </div>
       <div class="comment-input">
         <el-input
+          v-if="status"
           @focus="beginComment"
           v-model="comment"
           placeholder="请输入宁的评论⑧"
           :show-word-limit="true"
           type="textarea"
           :rows="4"></el-input>
+        <div class="nopermission">
+          请<router-link to="/login" style="color:#409Eff;text-decoration:none;">登录</router-link>后评论
+        </div>
       </div>
     </div>
     <transition name="el-zoom-in-top">
@@ -37,6 +41,7 @@
   </div>
 </template>
 <script>
+import keys from '@/common'
 export default {
   name: 'CommentInput',
   data() {
@@ -45,6 +50,8 @@ export default {
     comment: '',
     // 是否正在评论
     isComment: false,
+    // 默认头像
+    defaultAvatar: `${keys.host}/upload/avatar/default-avatar.png`
     }
   },
   props: ['id'],
@@ -83,13 +90,27 @@ export default {
     },
   },
   computed: {
+    status() {
+      return this.$store.state.status
+    },
     userInfo() {
       return this.$store.state.userInfo
     }
+  },
+  mounted() {
+    console.log(this.$router)
+    console.log(this.$route)
   }
 }
 </script>
 <style lang="less" scoped>
+.nopermission{
+  min-height: 100px;
+  background: #EEE;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 100px;
+}
 .button{
   margin: 30px 0 0;
   width: 100%;

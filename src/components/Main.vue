@@ -1,9 +1,15 @@
 <template>
   <div>
     <Favicon style="margin-bottom:20px;"></Favicon>
-    <div class="title-container">
-      <div class="title">Backend Project</div>
+    <div class="hidden-xs-only title-container">
+      <div class="title">Public Blog</div>
+      <div class="title2">and so on(later)</div>
       <div class="title2">Produced by XHFkindergarten</div>
+    </div>
+    <div class="hidden-sm-and-up small-title-container">
+      <div class="title">Public Blog</div>
+      <div class="title2">and so on(later)</div>
+      <div class="title3">Produced by XHFkindergarten</div>
     </div>
     <el-row style="margin: 30px 0;">
       <el-col
@@ -74,14 +80,32 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.title{
-  font-size: 80px;
-  font-weight: bolder;
+.small-title-container{
+  .title{
+    font-size: 60px;
+    font-weight: bolder;
+  }
+  .title2{
+    font-size: 50px;
+    font-weight: bolder;
+  }
+  .title3{
+    font-size: 20px;
+    font-weight: bolder;
+    margin: 20px;
+  }
 }
-.title2{
-  font-size: 40px;
-  font-weight: bolder;
+.title-container{
+  .title{
+    font-size: 80px;
+    font-weight: bolder;
+  }
+  .title2{
+    font-size: 40px;
+    font-weight: bolder;
+  }
 }
+
 .favicon{
   width: 300px;
   height: 300px;

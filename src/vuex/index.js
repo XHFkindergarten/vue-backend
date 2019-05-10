@@ -107,6 +107,15 @@ let actions = {
     return res
   },
 
+  // 根据用户id获取用户基本信息
+  getOneUserAction: async ({commit}, id) => {
+    const res = await http.getOneUser(id)
+      .catch(err => {
+        throw err
+      })
+    return res
+  },
+
   // 获取用户权限
   getRoleAction: async ({commit,dispatch}, info) => {
     if (info==null) {

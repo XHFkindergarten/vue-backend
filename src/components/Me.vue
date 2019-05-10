@@ -79,7 +79,7 @@
         
         
         <el-dialog
-          width="700px"
+          :width="isBigScreen?'700px':'80%'"
           :center="false"
           :visible.sync="editAvatarDialog"
           title="修改头像">
@@ -96,6 +96,7 @@
         <div class="big-title">My Article</div>
         <div class="hr"></div>
         <ArticlePreviewList
+          @uploadLabelImg="getUserArticle"
           v-loading="isLoading"
           :articleList="articleList"></ArticlePreviewList>
       </el-col>
@@ -128,6 +129,8 @@ export default {
       articleList: [],
       // 加载文章时显示loading
       isLoading: false,
+      // 是否是电脑屏幕尺寸
+      isBigScreen: true,
     }
   },
   components: {
@@ -141,14 +144,20 @@ export default {
     }
   },
   mounted() {
+    this.judgeScreen()
     this.mood = this.userInfo.mood
     this.sign = this.userInfo.sign
     this.getUserArticle()
   },
   created() {
-    
+    window.onresize = this.judgeScreen
   },
   methods: {
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      }
+    },
     editusername() {
       this.isEditName = true
       this.editUsername = this.userInfo.username

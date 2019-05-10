@@ -30,8 +30,8 @@
 
     <div class="add-reply-container" v-if="isEdit">
       <div class="input-container">
-        <input id="reply-input" placeholder="请输入回复内容" v-model="reply" type="text">
-        <el-button @click="submitReply" style="background: #409EFF;color:#fff;" circle>ok</el-button>
+        <input id="reply-input" :disabled="!status" :placeholder="status?'请输入回复内容':'请登录后发言'" v-model="reply" type="text">
+        <el-button @click="submitReply" :disabled="!status" style="background: #409EFF;color:#fff;" circle>ok</el-button>
         <el-button @click="cancelReply" circle>no</el-button>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default {
       reply: '',
       // 是否点击了回复
       isEdit: false,
-      replyList: this.comment.reply
+      replyList: this.comment.reply,
     }
   },
   mounted() {
@@ -110,14 +110,6 @@ export default {
   },
   props: ['comment', 'index', 'articleId'],
   computed: {
-    //处理发表时间
-    // publishTime() {
-    //   const time = new Date(this.comment.time)
-    //   const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
-    //   const res = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
-    //      ${time.getHours()}:${minute}`
-    //   return res
-    // },
     // 是否登录
     status() {
       return this.$store.state.status

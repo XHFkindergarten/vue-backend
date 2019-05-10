@@ -2,11 +2,21 @@
   <div>
     <h1>Echarts入门实例</h1>
     <el-row>
-      <el-col :span="10" :offset="1">
-        <div id="echarts" ref="echarts1" style="min-height:400px;"></div>
+      <el-col
+        :lg={span:10,offset:1}
+        :md={span:18,offset:3}
+        :sm={span:18,offset:3}
+        :xs={span:24,offset:0}
+        >
+        <div id="echarts" class="chart-container" ref="echarts1"></div>
       </el-col>
-      <el-col :span="10" :offset="2">
-        <div id="echarts" ref="echarts2" style="min-height:400px;"></div>
+      <el-col
+        :lg={span:10,offset:1}
+        :md={span:18,offset:3}
+        :sm={span:18,offset:3}
+        :xs={span:24,offset:0}
+        >
+        <div id="echarts" class="chart-container" ref="echarts2" style="min-height:400px;"></div>
       </el-col>
     </el-row>
     
@@ -110,7 +120,7 @@ export default {
         {
           name: '访问来源',
           type: 'pie',
-          radius: '60%',
+          radius: '70%',
           data:[
             {value:235, name:'视频广告'},
             {value:274, name:'联盟广告'},
@@ -125,5 +135,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.chart-container{
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+}
 </style>

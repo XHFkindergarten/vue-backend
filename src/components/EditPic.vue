@@ -8,7 +8,7 @@
         :xs="{span:24}"
         >
         <div class="img-container">
-          <img id="img" ref="img" :src="editUrl" alt="">
+          <img id="img" ref="img" :src="editPic" alt="">
         </div>
         <el-upload
           style="margin: 30px 0;"
@@ -25,8 +25,6 @@
           :on-preview="onPreview"
           :limit="2"
           :auto-upload="false">
-          <!-- <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div> -->
           <el-button size="smail" round>选取图片</el-button>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
         </el-upload>
@@ -54,13 +52,11 @@ import Cropper from 'cropperjs'
 import VueCropper from 'vue-cropperjs'
 import keys from '@/common'
 export default {
-  name: 'EditAvatar',
+  name: 'EditPic',
   components: {
     VueCropper,
   },
-  props:[
-    'avatarUrl'
-  ],
+  props: ['picUrl', 'id'],
   mounted() {
     // 初始化截图工具
     this.initCropper()
@@ -76,14 +72,16 @@ export default {
         id: this.$store.state.userInfo.id
       },
       hasPic: false,
-      // 修改图片的url
-      editUrl: this.avatarUrl,
+      // // 修改图片的url
+      // editUrl: this.picUrl,
       // 上传文件列表
       fileList: [],
     }
   },
   computed: {
-
+    editPic() {
+      return this.picUrl?this.picUrl:'http://localhost:3000/scutLOGO.png'
+    }
   },
   methods: {
     initCropper() {
@@ -112,29 +110,21 @@ export default {
     // 发起上传函数
     httpRequest(params) {
       const { cropper } = this
-      console.log(cropper)
       cropper.getCroppedCanvas().toBlob((blob) => {
-        console.log(blob)
         const res = this.$store.dispatch('sendImage', {
           file: blob,
-          type: 'avatar'
+          type: 'label'
         })
           .then(res => {
-            const newAvatarUrl = res
-            const params = {
-              id: this.$store.state.userInfo.id,
-              avatar: newAvatarUrl
-            }
-            this.$store.dispatch('updateUserInfo', params)
-              .then(res => {
-                if (res.data.success) {
-                  this.$message({
-                    type: 'success',
-                    message: '更改成功'
-                  })
-                  this.$emit('editavatarsuccess')
-                }
-              })
+            const labelImg = res
+            this.$store.dispatch('updateArticleAction', {
+              id: this.id,
+              labelImg
+            }).then(res => {
+              if (res.data.success) {
+                this.$emit('uploadLabelImg')
+              }
+            })
           })
           .catch(err => {
             this.$message.error(err)
@@ -175,14 +165,7 @@ export default {
     }
   },
   created() {
-    // 获取blob格式的图片并转换成File
-    // this.$axios.get('upload/avatar/1556612757084.png',{
-    //   responseType: 'blob'
-    // })
-    //   .then(res => {
-    //     const file = new File([res.data], 'imgname', {type: res.data.type})
-    //     this.fileList.push(file)
-    //   })
+
   }
 }
 </script>
@@ -193,7 +176,7 @@ export default {
   align-items: center;
 }
 .img-container{
-  max-width: 250px;
+  height: 250px;
   display: inline-block;
   #img{
     max-width: 100%;

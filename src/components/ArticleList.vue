@@ -8,8 +8,12 @@
         :xs={span:20,offset:2}
         >
         <div class="search-container">
+          <p>Write Blog</p>
+          <button @click="writeArt" id="editArt">
+            <SvgIcon size="mid" icon="edit"></SvgIcon>
+          </button>
           <p>条件筛选</p>
-          <input id="search" placeholder="请输入文章标题或内容中的字段" type="text">
+          <input id="search" v-model="filterValue" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
           <!-- <el-input v-model="filterValue" @blur="articleFilter" style="border-radius:50%;" type="text" placeholder="请输入文章标题或内容中的字段"></el-input> -->
         </div>
       </el-col>
@@ -40,6 +44,7 @@
   </div>
 </template>
 <script>
+import SvgIcon from '@/layouts/SvgIcon'
 import ArticlePreviewList from '@/layouts/ArticlePreviewList'
 export default {
   name: 'articleList',
@@ -57,12 +62,31 @@ export default {
       pageSize: 5,
       // 文章正在加载
       isLoading: false,
+      // 是否是大屏
+      isBigScreen: false,
     }
   },
   components: {
-    ArticlePreviewList
+    ArticlePreviewList,
+    SvgIcon
   },
   methods: {
+    // 跳转到写文章页面
+    writeArt() {
+      if (this.$store.state.status) {
+        if (this.isBigScreen) {
+          this.$router.push('/articleManage')
+        } else {
+          this.$router.push('/SmallScreen')
+        }
+      } else {
+        this.$message({
+          type: '请登录后再试'
+        })
+      }
+      
+      
+    },
     // 根据用户id请求用户的所有文章
     async getUserArticle() {
       this.isLoading = true
@@ -86,7 +110,12 @@ export default {
     // 页面变化
     pageChange(newPage) {
       this.currentPage = newPage
-    }
+    },
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      }
+    },
   },
   computed: {
     userInfo() {
@@ -99,16 +128,33 @@ export default {
     // 当前页显示的文章
     currentPageArticleList() {
       const begin = (this.currentPage-1)*this.pageSize
-      const end = this.currentPage*this.pageSize - 1
+      const end = this.currentPage*this.pageSize
       return this.showArticleList.slice(begin, end)
     }
   },
   mounted() {
+    this.judgeScreen()
     this.getUserArticle()
+  },
+  created() {
+    window.onresize = this.judgeScreen
   }
 }
 </script>
 <style lang="less" scoped>
+p{
+  font-size: 18px;
+  font-weight: bold;
+}
+#editArt{
+  padding: 0 20px;
+  color: #fff;
+  width: 100px;
+  background: #409EFF;
+  height:50px;
+  border: none;
+  border-radius: 25px;
+}
 #search{
   font-size: 15px;
   outline: none;

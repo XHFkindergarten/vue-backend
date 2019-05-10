@@ -88,6 +88,11 @@ export const constantRouterMap =  [
         path: 'me',
         component: Me
       },{
+        path: 'person',
+        alias: '/person',
+        component: () => import('@/components/Person'),
+        props: (route) => ({id: route.query.id})
+      },{
         path: 'list',
         component: () => import('@/components/ArticleList')
       },{
@@ -95,7 +100,11 @@ export const constantRouterMap =  [
         alias: '/article',
         component: () => import('@/components/ArticleOne'),
         props: (route) => ({id: route.query.id})
-      },
+      },{
+        alias: '/smallscreen',
+        path: 'smallscreen',
+        component: () => import('@/layouts/SmallScreen')
+      }
     ]
   }
 ]

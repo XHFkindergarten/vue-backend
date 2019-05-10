@@ -33,12 +33,24 @@ const Login = async (email,password) => {
 
 // 获取用户信息
 const Current = async (token) => {
-  const res = axios.get('users/current', {
+  const res = await axios.get('users/current', {
     // TODO: 尝试注释这段代码，因为在axios中已经封装了使用token
     headers: {
       'Authorization': token
     }
   })
+  return res
+}
+
+// 根据id获取用户基本信息
+const getOneUser = async (id) => {
+  if (!id) {
+    throw new Error('请输入id')
+  }
+  const res = await axios.get('users/getOneUser?id='+id)
+    .catch(err => {
+      throw err
+    })
   return res
 }
 
@@ -81,6 +93,7 @@ const user = {
   Login,
   Register,
   Current,
+  getOneUser,
   Role,
   Email,
   updateUserInfo,

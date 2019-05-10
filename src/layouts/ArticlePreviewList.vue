@@ -3,7 +3,6 @@
     <el-card
       class="card"
       v-for="item in articleList"
-      @click.native="toArticle(item)"
       :key="item.id"
       shadow="hover"
       :body-style="{
@@ -18,9 +17,20 @@
           :sm="{span:24}"
           :xs="{span:24}"
           >
-          <div class="img-container">
-            <img src="@/assets/demo.jpg">
+          <div class="img-container" @click="editPic(item)">
+            <SvgIcon v-if="isMe" class="edit-pic" size="mid" icon="edit"></SvgIcon>
+            <img :src="item.labelImg">
           </div>
+
+          <el-dialog
+            :width="isBigScreen?'700px':'80%'"
+            :center="false"
+            :visible.sync="editPicDialog"
+            title="修改封面图">
+            <EditPic @uploadLabelImg="uploadLabelImg" :picUrl="editPicUrl" :id="editId"></EditPic>
+            <!-- <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar> -->
+          </el-dialog>
+
         </el-col>
         <el-col
           :lg="{span:12}"
@@ -28,7 +38,7 @@
           :sm="{span:24}"
           :xs="{span:24}"
           >
-          <div class="art-container">
+          <div class="art-container" @click="toArticle(item)">
             <div class="title">{{item.title}}</div>
             <div class="summary">{{item.summary}}</div>
             <div class="comment">
@@ -47,24 +57,61 @@
   </div>
 </template>
 <script>
+import EditPic from '@/components/EditPic'
 import SvgIcon from '@/layouts/SvgIcon'
 export default {
   name: 'ArticlePreviewList',
   data() {
     return {
-
+      editPicDialog: false,
+      // 是否是电脑屏幕尺寸
+      isBigScreen: true,
+      // 即将要编辑的图片
+      editPicUrl: '',
+      // 即将要编辑的文章id
+      editId: '',
     }
   },
   methods: {
     toArticle(item) {
       this.$router.push({path: '/article', query: {id: item.id}})
+    },
+    // 编辑封面图
+    editPic(item) {
+      if (!this.isMe)  return
+      this.editPicDialog = true
+      this.editPicUrl = item.labelImg
+      this.editId = item.id
+    },
+    // 上传封面图成功
+    uploadLabelImg() {
+      this.$message.success('修改成功')
+      this.editPicDialog = false
+      this.$emit('uploadLabelImg')
+    },
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      }
     }
   },
   props: [
     'articleList'
   ],
   components: {
-    SvgIcon
+    SvgIcon,
+    EditPic
+  },
+  computed: {
+    isMe() {
+      return this.$route.path=="/me"
+    }
+  },
+  created() {
+    window.onresize = this.judgeScreen
+  },
+  mounted() {
+    this.judgeScreen()
   }
 }
 </script>
@@ -79,7 +126,17 @@ export default {
   width:100%;
   height:275px;
   overflow: hidden;
-  // float: left;
+  position: relative;
+  .edit-pic{
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+  .edit-pic:hover{
+    color: #409EFF;
+    z-index:99;
+  }
   img {
     width:100%;
     height:100%;
