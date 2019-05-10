@@ -5,7 +5,7 @@
       <div class="user-info">
         <div class="username">{{comment.from.name}}</div>
         <div class="article-info">
-          <span>第{{index+1}}楼·{{publishTime}}</span>
+          <span>第{{index+1}}楼·{{comment.time}}</span>
         </div>
       </div>
     </div>
@@ -24,14 +24,14 @@
     <div class="add-reply-container">
       <div @click="editReply" class="add-reply">
         <SvgIcon size="mini" icon="Edit" style="position:relative;top:4px;"></SvgIcon>
-        <span>添加评论</span>
+        <span>添加回复</span>
       </div>
     </div>
 
     <div class="add-reply-container" v-if="isEdit">
       <div class="input-container">
         <input id="reply-input" placeholder="请输入回复内容" v-model="reply" type="text">
-        <el-button @click="submitReply" circle>ok</el-button>
+        <el-button @click="submitReply" style="background: #409EFF;color:#fff;" circle>ok</el-button>
         <el-button @click="cancelReply" circle>no</el-button>
       </div>
     </div>
@@ -110,15 +110,14 @@ export default {
   },
   props: ['comment', 'index', 'articleId'],
   computed: {
-    
     //处理发表时间
-    publishTime() {
-      const time = new Date(this.comment.time)
-      const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
-      const res = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
-         ${time.getHours()}:${minute}`
-      return res
-    },
+    // publishTime() {
+    //   const time = new Date(this.comment.time)
+    //   const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
+    //   const res = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
+    //      ${time.getHours()}:${minute}`
+    //   return res
+    // },
     // 是否登录
     status() {
       return this.$store.state.status

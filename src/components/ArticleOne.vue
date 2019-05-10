@@ -167,6 +167,7 @@ export default {
     },
     // 提交评论成功
     submitComment() {
+      this.getComment()
       this.getArticle()
     },
     // 获取回复列表
@@ -174,11 +175,23 @@ export default {
       const res = await this.$store.dispatch('getReplyAction', this.id)
       this.replyList = res.data.reply
     },
+    // 修改时间格式
+    formatTime(array) {
+      array.forEach(a => {
+        const time = new Date(a.time)
+        const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
+        a.time = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
+          ${time.getHours()}:${minute}`
+      })
+    },
     // 洗数据
     formatData() {
       this.commentList.forEach(comment => {
         comment.reply = []
       })
+      // 修改时间格式
+      this.formatTime(this.commentList)
+      this.formatTime(this.replyList)
       this.replyList.forEach(reply => {
         this.commentList.forEach(comment => {
           if (reply.commentId == comment.id) {
@@ -198,6 +211,11 @@ export default {
       })
       // const res = await 
       // this.formatData()
+    },
+    // 通知后端查看次数+1
+    async viewArticle() {
+      const res = await this.$store.dispatch('viewArticleAction', this.id)
+      console.log(res)
     }
   },
   // 获取文章内所有的回复
@@ -206,6 +224,7 @@ export default {
     await this.getLikeList()
     await this.getComment()
     await this.getReply()
+    await this.viewArticle()
     this.formatData()
   },
   

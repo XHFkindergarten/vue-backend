@@ -334,6 +334,15 @@ let actions = {
       })
     return res
   },
+
+  // 增加文章查看次数
+  viewArticleAction: async ({commit}, articleId) => {
+    const res = await http.viewArticle(articleId)
+      .catch(err => {
+        throw err
+      })
+    return res
+  }
 }
 const store = new Vuex.Store({
   state,

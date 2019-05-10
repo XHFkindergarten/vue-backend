@@ -165,6 +165,19 @@ const dislikeArticle = async params => {
   return res
 }
 
+// 增加文章查看次数
+const viewArticle = async id => {
+  if (!id) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.get('article/viewArticle?id='+ id)
+    .catch(err => {
+      throw err
+    })
+  console.log('http', res)
+  return res
+}
+
 const article = {
   getArticleGroup,
   addArticleGroup,
@@ -179,6 +192,7 @@ const article = {
   likeArticle,
   likeList,
   dislikeArticle,
+  viewArticle,
 }
 
 export default article
