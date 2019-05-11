@@ -109,14 +109,13 @@ export default {
       this.$router.push({ path: 'Person', query: {id: this.article.userInfo.id}})
     },
     async getArticle() {
-      console.log('??')
       const res = await this.$store.dispatch('getOneArticleAction', this.id)
       this.article = res.data.article
       console.log(this.article)
       const time = new Date(this.article.updatedAt)
       const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
       this.article.updatedAt = 
-        `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
+        `${time.getFullYear()}.${time.getUTCMonth()+1}.${time.getDate()}
          ${time.getHours()}:${minute}`
     },
     // 点击喜欢文章
@@ -184,7 +183,7 @@ export default {
       array.forEach(a => {
         const time = new Date(a.time)
         const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
-        a.time = `${time.getFullYear()}.${time.getMonth()}.${time.getDay()}
+        a.time = `${time.getFullYear()}.${time.getMonth()+1}.${time.getDate()}
           ${time.getHours()}:${minute}`
       })
     },
