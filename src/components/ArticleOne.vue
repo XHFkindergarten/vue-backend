@@ -38,7 +38,7 @@
         :xs={span:20,offset:2}
         >
         <p class="title">{{article.title}}</p>
-        <div class="user-container">
+        <div class="user-container" @click="toAuthor">
           <img id="avatar" :src="article.userInfo.avatar">
           <div class="user-info">
             <div class="username">{{article.userInfo.name}}</div>
@@ -104,6 +104,10 @@ export default {
     'id'
   ],
   methods: {
+    // 跳转作者页面
+    toAuthor() {
+      this.$router.push({ path: 'Person', query: {id: this.article.userInfo.id}})
+    },
     async getArticle() {
       console.log('??')
       const res = await this.$store.dispatch('getOneArticleAction', this.id)
