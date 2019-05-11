@@ -92,6 +92,7 @@
         :md={span:12,offset:6}
         :sm={span:14,offset:5}
         :xs={span:20,offset:2}
+        v-loading="isLoading"
         >
         <div class="big-title">My Article</div>
         <div class="hr"></div>
@@ -99,7 +100,6 @@
         <ArticlePreviewList
           v-if="articleList.length>0"
           @uploadLabelImg="getUserArticle"
-          v-loading="isLoading"
           :articleList="articleList"></ArticlePreviewList>
       </el-col>
       

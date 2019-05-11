@@ -78,7 +78,10 @@ export default {
     },
     // 编辑封面图
     editPic(item) {
-      if (!this.isMe)  return
+      if (!this.isMe){
+        this.toArticle(item)
+        return
+      }
       this.editPicDialog = true
       this.editPicUrl = item.labelImg
       this.editId = item.id

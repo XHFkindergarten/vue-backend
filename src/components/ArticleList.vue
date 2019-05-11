@@ -18,6 +18,7 @@
         </div>
       </el-col>
       <el-col
+        v-loading="isLoading"
         :lg={span:10,offset:2}
         :md={span:10,offset:2}
         :sm={span:10,offset:2}
@@ -27,7 +28,6 @@
         <div v-if="articleList.length==0" style="font-size:18px;height:50px;">暂无文章</div>
         <ArticlePreviewList
           v-else
-          v-loading="isLoading"
           :articleList="currentPageArticleList"></ArticlePreviewList>
       </el-col>
     </el-row>
@@ -87,7 +87,8 @@ export default {
         }
       } else {
         this.$message({
-          type: '请登录后再试'
+          type: 'warning',
+          message: '请登录后再试:('
         })
       }
       
