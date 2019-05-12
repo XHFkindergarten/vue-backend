@@ -136,7 +136,8 @@ export default {
   ],
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+      isBigScreen: true
     }
   },
   computed: {
@@ -153,12 +154,18 @@ export default {
   methods: {
     // xs尺寸下点击收放菜单
     collapseMenu() {
-      this.isCollapse = !this.isCollapse
+      if (this.isBigScreen) {
+        this.isCollapse = true
+      } else {
+        this.isCollapse = !this.isCollapse
+      }
     },
     // 监听屏幕尺寸，显示tab
     listenWidth() {
       if (window.innerWidth>768) {
-        this.isCollapse = true
+        this.isBigScreen = true
+      } else {
+        this.isBigScreen = false
       }
     },
     // 点击返回按钮
@@ -169,6 +176,11 @@ export default {
   },
   created() {
     this.listenWidth()
+    if (!this.isBigScreen) {
+      this.isCollapse = false
+    } else {
+      this.isCollapse = true
+    }
     window.onresize = this.listenWidth
   }
 }

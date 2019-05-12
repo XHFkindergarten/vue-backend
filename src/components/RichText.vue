@@ -23,6 +23,7 @@ import 'tinymce/plugins/textcolor'
 export default {
   name: 'RichText',
   data() {
+    const windowHeight = window.innerHeight
     return {
       editContent: this.content,
       accept: 'image/jpg, image/jpeg, image/png',
@@ -31,7 +32,7 @@ export default {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
         skin_url: '/static/tinymce/skins/ui/oxide',
-        height: 1200,
+        height: windowHeight,
         branding: false,//是否禁用“Powered by TinyMCE”
         menubar: false,//顶部菜单栏显示
         plugins: 'link lists image code table wordcount',
@@ -55,7 +56,7 @@ export default {
   },
   mounted() {
     // tinymce.init({})
-    console.log(this.$refs.tinymce)
+    console.log(window.outerHeight)
   },
   components: {
     Editor
