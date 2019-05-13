@@ -24,14 +24,6 @@ import keys from './common'
 // 引入axios
 // import axios from 'axios'
 import qs from 'qs'
-// if(process.env.NODE_ENV == 'development'){
-//   // 开发环境的后台请求URL
-//   axios.defaults.baseURL = keys.devHost
-// }else {
-//   // 线上环境的后台请求URL
-//   axios.defaults.baseURL = keys.prdHost
-// }
-// axios.defaults.timeout = 5000 // 请求超时时间
 import service from '@/axios'
 Vue.prototype.$axios = service
 Vue.prototype.$qs = qs
