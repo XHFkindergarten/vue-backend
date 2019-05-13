@@ -8,7 +8,7 @@
         :xs="{span:24}"
         >
         <div class="img-container">
-          <img id="img" ref="img" :src="editPic" alt="">
+          <img id="img" ref="img" :src="editPic">
         </div>
         <el-upload
           style="margin: 30px 0;"
@@ -61,6 +61,9 @@ export default {
     // 初始化截图工具
     this.initCropper()
   },
+  deactivated() {
+    console.log('deactivetd')
+  },
   data() {
     return {
       // 声明cropper对象
@@ -76,6 +79,12 @@ export default {
       // editUrl: this.picUrl,
       // 上传文件列表
       fileList: [],
+    }
+  },
+  watch: {
+    picUrl(newValue, oldValue) {
+      console.log('change')
+      this.initCropper()
     }
   },
   computed: {
@@ -191,7 +200,6 @@ export default {
   height: 250px;
   display: inline-block;
   .preview{
-    border-radius: 50%;
     border: 1px #b5b6b9 solid;
     width: 200px;
     height: 200px;

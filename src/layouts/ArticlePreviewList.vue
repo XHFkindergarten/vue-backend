@@ -21,16 +21,6 @@
             <SvgIcon v-if="isMe" class="edit-pic" size="mid" icon="edit"></SvgIcon>
             <img :src="item.labelImg">
           </div>
-
-          <el-dialog
-            :width="isBigScreen?'700px':'80%'"
-            :center="false"
-            :visible.sync="editPicDialog"
-            title="修改封面图">
-            <EditPic @uploadLabelImg="uploadLabelImg" :picUrl="editPicUrl" :id="editId"></EditPic>
-            <!-- <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar> -->
-          </el-dialog>
-
         </el-col>
         <el-col
           :lg="{span:12}"
@@ -53,7 +43,14 @@
           </div>
         </el-col>  
       </el-row>
-        </el-card>
+    </el-card>
+    <el-dialog
+        :width="isBigScreen?'700px':'80%'"
+        :center="false"
+        :visible.sync="editPicDialog"
+        title="修改封面图">
+        <EditPic v-if="editPicDialog" @uploadLabelImg="uploadLabelImg" :picUrl="editPicUrl" :id="editId"></EditPic>
+      </el-dialog>
   </div>
 </template>
 <script>
@@ -72,6 +69,13 @@ export default {
       editId: '',
     }
   },
+  // watch: {
+  //   editPicDialog(newValue) {
+  //     if (newValue==false) {
+  //       this.$destroy('EditPic')
+  //     }
+  //   }
+  // },
   methods: {
     toArticle(item) {
       this.$router.push({path: '/article', query: {id: item.id}})
