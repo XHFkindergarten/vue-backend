@@ -19,6 +19,8 @@ import 'tinymce/plugins/wordcount'
 import 'tinymce/plugins/colorpicker'
 import 'tinymce/plugins/textcolor'
 
+import keys from '@/common'
+import http from '@/http'
 
 export default {
   name: 'RichText',
@@ -39,7 +41,11 @@ export default {
         toolbar:
           'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | undo redo | link unlink image code | wordcount',
         images_upload_handler: this.images_upload_handler
-      }
+      },
+      // 上传七牛云token
+      qiniuToken: '',
+      // 上传后台路由
+      uploadUrl: 'http://up-z2.qiniup.com',
     }
   },
   props: {
@@ -56,7 +62,11 @@ export default {
   },
   mounted() {
     // tinymce.init({})
-    console.log(window.outerHeight)
+    console.log(window.outerHeight)    
+    // 获取七牛云上传token
+    http.getQnToken().then(res => {
+      this.qiniuToken = res
+    })
   },
   components: {
     Editor
@@ -67,15 +77,14 @@ export default {
         failure('文件体积过大')
       }
       if (this.accept.indexOf(blobInfo.blob().type) >= 0) {
-        this.$store.dispatch('sendImage', {
-          file: blobInfo.blob()
+        const form = new FormData()
+        form.append('file', blobInfo.blob())
+        form.append('key', new Date().getTime() + ''),
+        form.append('token', this.qiniuToken)
+        this.$axios.post(this.uploadUrl, form).then(res => {
+          const labelImg = `${keys.imgHost}/${res.data.key}`
+          success(labelImg)
         })
-          .then(res => {
-            success(res)
-          })
-          .catch(err => {
-            this.$message.error(err)
-          })
       } else {
         failure('图片格式错误')
       }
