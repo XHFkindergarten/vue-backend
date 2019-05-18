@@ -135,7 +135,7 @@ export default {
 }
 .img-container{
   width:100%;
-  height:275px;
+  height:300px;
   overflow: hidden;
   position: relative;
   .edit-pic{
@@ -160,7 +160,7 @@ export default {
   .title{
     margin: 30px 0 10px 30px;
     text-align: left;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
     height: 72px;
     word-wrap: break-word;

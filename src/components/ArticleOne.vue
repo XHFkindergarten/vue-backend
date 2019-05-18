@@ -178,23 +178,11 @@ export default {
       const res = await this.$store.dispatch('getReplyAction', this.id)
       this.replyList = res.data.reply
     },
-    // 修改时间格式
-    formatTime(array) {
-      array.forEach(a => {
-        const time = new Date(a.time)
-        const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
-        a.time = `${time.getFullYear()}.${time.getMonth()+1}.${time.getDate()}
-          ${time.getHours()}:${minute}`
-      })
-    },
-    // 洗数据
+    // 洗数据,将评论和回复组合起来
     formatData() {
       this.commentList.forEach(comment => {
         comment.reply = []
       })
-      // 修改时间格式
-      this.formatTime(this.commentList)
-      this.formatTime(this.replyList)
       this.replyList.forEach(reply => {
         this.commentList.forEach(comment => {
           if (reply.commentId == comment.id) {
@@ -249,6 +237,8 @@ export default {
   right: 100px;
   top: 200px;
   border: 1px #d1dede solid;
+  background: #fff;
+  border-radius: 6px;
 }
 .aside2{
   cursor: pointer;
@@ -259,6 +249,8 @@ export default {
   right: 20px;
   top: 200px;
   border: 1px #d1dede solid;
+  background: #fff;
+  border-radius: 12px;
 }
 .square{
     width: 60px;

@@ -118,6 +118,12 @@ export default {
     userInfo() {
       return this.$store.state.userInfo
     }
+  },
+  watch: {
+    // // 评论信息
+    // comment(newValue, oldValue) {
+      
+    // }
   }
 }
 </script>
