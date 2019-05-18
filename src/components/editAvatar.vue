@@ -53,6 +53,7 @@
 import Cropper from 'cropperjs'
 import VueCropper from 'vue-cropperjs'
 import keys from '@/common'
+import http from '@/http'
 export default {
   name: 'EditAvatar',
   components: {
@@ -64,13 +65,17 @@ export default {
   mounted() {
     // 初始化截图工具
     this.initCropper()
+    // 获取七牛云上传token
+    http.getQnToken().then(res => {
+      this.qiniuToken = res
+    })
   },
   data() {
     return {
       // 声明cropper对象
       cropper: '',
       // 上传后台路由
-      uploadUrl: keys.host+'/users/uploadImg',
+      uploadUrl: 'http://up-z2.qiniup.com',
       // 上传头像时附带的额外参数
       avatarParams: {
         id: this.$store.state.userInfo.id
@@ -80,6 +85,8 @@ export default {
       editUrl: this.avatarUrl,
       // 上传文件列表
       fileList: [],
+      // 七牛云上传token
+      qiniuToken: ''
     }
   },
   computed: {
@@ -112,33 +119,42 @@ export default {
     // 发起上传函数
     httpRequest(params) {
       const { cropper } = this
-      console.log(cropper)
+
       cropper.getCroppedCanvas().toBlob((blob) => {
-        console.log(blob)
-        const res = this.$store.dispatch('sendImage', {
-          file: blob,
-          type: 'avatar'
+        const form = new FormData()
+        form.append('file', blob)
+        form.append('key', new Date().getTime() + ''),
+        form.append('token', this.qiniuToken)
+        this.$axios.post(this.uploadUrl, form).then(res => {
+          const newAvatarUrl = `${keys.imgHost}/${res.data.key}`
+          const params = {
+            id: this.$store.state.userInfo.id,
+            avatar: newAvatarUrl
+          }
+          this.$store.dispatch('updateUserInfo', params)
+            .then(res => {
+              if (res.data.success) {
+                this.$message({
+                  type: 'success',
+                  message: '更改成功'
+                })
+                this.$emit('editavatarsuccess')
+              }
+            })
         })
-          .then(res => {
-            const newAvatarUrl = res
-            const params = {
-              id: this.$store.state.userInfo.id,
-              avatar: newAvatarUrl
-            }
-            this.$store.dispatch('updateUserInfo', params)
-              .then(res => {
-                if (res.data.success) {
-                  this.$message({
-                    type: 'success',
-                    message: '更改成功'
-                  })
-                  this.$emit('editavatarsuccess')
-                }
-              })
-          })
-          .catch(err => {
-            this.$message.error(err)
-          })
+        // const res = this.$store.dispatch('sendImage', {
+        //   file: blob,
+        //   type: 'avatar'
+        // })
+        //   .then(res => {
+        //     const newAvatarUrl = res
+        //     
+        //   })
+        //   .catch(err => {
+        //     this.$message.error(err)
+        //   })
+        
+
       })
     },
     clickUpload() {

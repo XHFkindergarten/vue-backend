@@ -51,6 +51,7 @@
 import Cropper from 'cropperjs'
 import VueCropper from 'vue-cropperjs'
 import keys from '@/common'
+import http from '@/http'
 export default {
   name: 'EditPic',
   components: {
@@ -60,6 +61,10 @@ export default {
   mounted() {
     // 初始化截图工具
     this.initCropper()
+    // 获取七牛云上传token
+    http.getQnToken().then(res => {
+      this.qiniuToken = res
+    })
   },
   deactivated() {
     console.log('deactivetd')
@@ -69,7 +74,7 @@ export default {
       // 声明cropper对象
       cropper: '',
       // 上传后台路由
-      uploadUrl: keys.host+'/users/uploadImg',
+      uploadUrl: 'http://up-z2.qiniup.com',
       // 上传头像时附带的额外参数
       avatarParams: {
         id: this.$store.state.userInfo.id
@@ -79,6 +84,8 @@ export default {
       // editUrl: this.picUrl,
       // 上传文件列表
       fileList: [],
+      // 七牛云上传token
+      qiniuToken: ''
     }
   },
   watch: {
@@ -120,24 +127,23 @@ export default {
     httpRequest(params) {
       const { cropper } = this
       cropper.getCroppedCanvas().toBlob((blob) => {
-        const res = this.$store.dispatch('sendImage', {
-          file: blob,
-          type: 'label'
-        })
-          .then(res => {
-            const labelImg = res
-            this.$store.dispatch('updateArticleAction', {
-              id: this.id,
-              labelImg
-            }).then(res => {
-              if (res.data.success) {
-                this.$emit('uploadLabelImg')
-              }
-            })
-          })
-          .catch(err => {
+        const form = new FormData()
+        form.append('file', blob)
+        form.append('key', new Date().getTime() + ''),
+        form.append('token', this.qiniuToken)
+        this.$axios.post(this.uploadUrl, form).then(res => {
+          const labelImg = `${keys.imgHost}/${res.data.key}`
+          this.$store.dispatch('updateArticleAction', {
+            id: this.id,
+            labelImg
+          }).then(res => {
+            if (res.data.success) {
+              this.$emit('uploadLabelImg')
+            }
+          }).catch(err => {
             this.$message.error(err)
           })
+        })
       })
     },
     clickUpload() {

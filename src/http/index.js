@@ -19,10 +19,17 @@ const uploadImg = async (file, type='context') => {
   return res.data.imgpath
 }
 
+// 获取七牛云上传token
+const getQnToken = async () => {
+  const res = await axios.get('users/getQnToken')
+  return res.data.token
+}
+
 
 
 const http = {
   uploadImg,
+  getQnToken,
   ...user,
   ...article,
   ...comment
