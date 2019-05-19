@@ -15,6 +15,10 @@ export default {
     }
   },
   mounted() {
+    this.$message({
+      type: 'warning',
+      message: '由于数据库不知道为什么消失了，请重新注册!'
+    })
     // console.log(window.innerHeight)
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="web-font">测试文字</div>
     <Favicon style="margin-bottom:20px;"></Favicon>
     <div class="hidden-xs-only title-container">
       <div class="title">Public Blog</div>
