@@ -122,7 +122,7 @@ export default {
     // },
     comfirm() {
       this.$refs.uploadFile.submit()
-      this.fileList.shift()
+      
     },
     async uploadFile(params) {
       this.loading = true
@@ -133,14 +133,14 @@ export default {
       formData.append('spd', this.spd)
       formData.append('per', this.per)
       const res = await this.$axios.post(`${keys.host}/extra/getWord`, formData)
+        this.loading = false
       if (res && res.data.audio.length>0) {
+        this.fileList.shift()
         this.index = 0
         this.audioList = res.data.audio
         console.log(this.audioList)
         // this.audioSrc = this.audioList[this.index]
-        this.loading = false
       } else {
-        this.loading = false
         this.$message({
           type: 'error',
           message: '服务器错误'
