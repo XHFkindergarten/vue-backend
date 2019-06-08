@@ -133,13 +133,20 @@ export default {
       formData.append('spd', this.spd)
       formData.append('per', this.per)
       const res = await this.$axios.post(`${keys.host}/extra/getWord`, formData)
-      if (res.data.audio.length>0) {
+      if (res && res.data.audio.length>0) {
         this.index = 0
         this.audioList = res.data.audio
         console.log(this.audioList)
         // this.audioSrc = this.audioList[this.index]
+        this.loading = false
+      } else {
+        this.loading = false
+        this.$message({
+          type: 'error',
+          message: '服务器错误'
+        })
       }
-      this.loading = false
+      
     },
     // 上传列表改变
     onChange(file, fileList) {
