@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="true">
     <el-row>
       <el-col
         :lg={span:4,offset:4}
@@ -146,6 +146,7 @@ export default {
     }
   },
   mounted() {
+    this.$message.warning('该版块即将被重构为markdown文章类型')
     this.judgeScreen()
     this.getUserArticle()
   },
