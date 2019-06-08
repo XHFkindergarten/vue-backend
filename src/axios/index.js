@@ -5,7 +5,7 @@ import keys from '@/common'
 
 const service = axios.create({
   baseURL: process.env.NODE_ENV=='development'?keys.devHost:keys.prdHost,
-  timeout: 20000 //请求超时时间20s
+  timeout: 60 * 1000 //请求超时时间60s
 })
 
 // request拦截器
