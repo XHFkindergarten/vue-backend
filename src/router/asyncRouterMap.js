@@ -173,14 +173,6 @@ export const asyncRouterMap = [
         component: () => import('@/layouts/Empty'),
         hidden: false,
         children: [
-          // {
-          //   path: 'list',
-          //   alias: '/articlelist',
-          //   label: '文章列表',
-          //   meta: { role: [0, 1, 2]},
-          //   redirect: '/article/list',
-          //   hidden: false
-          // },
           {
             path: 'addArticle',
             label: '文章管理',
@@ -220,8 +212,4 @@ export const asyncRouterMap = [
       }
     ]
   }
-  
-
-
-  
 ]

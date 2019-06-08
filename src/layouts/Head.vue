@@ -89,13 +89,26 @@
                     <span>文章</span>
                   </el-menu-item>
                 </el-col>
+                <el-col
+                  :lg={span:2}
+                  :md={span:2}
+                  :sm={span:3}
+                  :xs={span:24}
+                  >
+                  <el-menu-item index="/readFile" @click.native="collapseMenu">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-read"></use>
+                    </svg>
+                    <span>阅读文档</span>
+                  </el-menu-item>
+                </el-col>
                 <el-col :span="4" class="hidden-xs-only">
                   <br>
                 </el-col>
                 <el-col
-                  :lg={span:4,offset:4}
-                  :md={span:4,offset:4}
-                  :sm={span:4,offset:2}
+                  :lg={span:4,offset:2}
+                  :md={span:4,offset:2}
+                  :sm={span:3}
                   :xs={span:24}
                   >
                   <div class="userinfo">

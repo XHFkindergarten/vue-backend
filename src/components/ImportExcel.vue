@@ -34,7 +34,6 @@
       </el-row>
       <excel-table
         :tableData="tableData[currentSheet]"></excel-table>
-
     </div>
   </div>
 </template>

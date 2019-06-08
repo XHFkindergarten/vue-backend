@@ -50,6 +50,23 @@ export const constantRouterMap =  [
         hidden: true
       },
       {
+        path: 'read',
+        label: '朗读',
+        icon: 'read',
+        component: () => import('@/layouts/Empty'),
+        hidden: true,
+        children: [
+          {
+            path: 'readFile',
+            icon: 'read',
+            alias: '/readFile', 
+            label: '阅读文档',
+            component: () => import('@/components/ReadFile'),
+            hidden: true
+          }
+        ]
+      },
+      {
         path: 'test1',
         name: 'Test1',
         label: '0权限路由1',  // 显示的按钮名称
