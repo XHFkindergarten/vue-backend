@@ -2,6 +2,7 @@
   <div>
     <el-container>
       <ArticleGroupAside
+        v-if="isBigScreen || (!isBigScreen&&!isEditing)"
         @activeGroupChange="activeGroupChange"
         @deleteGroup="showDeleteGroupDialog"
         @editGroupName="showEditGroupNameDialog"
@@ -19,20 +20,29 @@
       </el-dialog>
 
       <ArticleListAside
+        ref="artList"
+        v-if="isBigScreen || (!isBigScreen&&!isEditing)"
         @deleteArticle="deleteArticle"
         @saveArticle="saveArticle"
         @openArticle="openArticle"
         @addArticle="addArticle"
         :articleList="articleList"></ArticleListAside>
-      <el-main class="main">
-        <div v-if="activeArt==''" class="blank">
+      <el-main class="main" v-if="isBigScreen || (!isBigScreen&&isEditing)">
+        <div v-if="!activeArt && activeArt!==0" class="blank">
           <Favicon style="margin-top:50px;" title="Article"></Favicon>
         </div>
         <div v-else>
           <input autocomplete="off" id="article-name" v-model="editArticle.title" type="text" /> 
-          <RichText
+          <div v-if="!isBigScreen" class="editor-bar">
+            <SvgIcon @click.native="smallScreenBack" icon="back5"></SvgIcon>
+            <SvgIcon class="rotate" @click.native="saveArticle" style="margin-left:40px;" icon="refresh"></SvgIcon>
+            <SvgIcon @click.native="previewArt" style="margin-left:40px;" icon="reverse"></SvgIcon>
+            <SvgIcon @click.native="deleteArticle" style="margin-left:40px;" icon="delete4"></SvgIcon>
+          </div>
+          <!-- <RichText
             :content="editArticle.content"
-            ref="richtext"></RichText>
+            ref="richtext"></RichText> -->
+          <Markdown :content="editArticle.content" ref="richtext"></Markdown>
         </div>
       </el-main>
     </el-container>
@@ -41,6 +51,7 @@
 <script>
 import Favicon from '@/layouts/Favicon'
 import RichText from '@/components/RichText'
+import Markdown from '@/components/Markdown'
 import SvgIcon from '@/layouts/SvgIcon'
 import ArticleGroupAside from '@/layouts/ArticleGroupAside'
 import ArticleListAside from '@/layouts/ArticleListAside'
@@ -51,7 +62,8 @@ export default {
     RichText,
     ArticleGroupAside,
     ArticleListAside,
-    Favicon
+    Favicon,
+    Markdown
   },
   data() {
     return {
@@ -70,9 +82,27 @@ export default {
       },
       // 被选中的文章分组index
       activeGroupIndex: '0',
+      editArticle: '',
+      isBigScreen: true,
+      // (小屏幕下)编辑文章
+      isEditing: false
     }
   },
   methods: {
+    // (小屏幕下)预览
+    previewArt() {
+      if (this.$refs.richtext.$refs.markdown.defaultOpen==='preview'){
+        this.$refs.richtext.$refs.markdown.defaultOpen='edit'
+      } else {
+        this.$refs.richtext.$refs.markdown.defaultOpen='preview'
+      }
+      
+      // this.$refs.richtext.$refs.markdown.preview = !this.$refs.markdown.$refs.markdown.preview
+    },
+    // (小屏幕下)返回
+    smallScreenBack() {
+      this.isEditing = false
+    },
     // 点击删除分组
     showDeleteGroupDialog(option) {
       if (this.groupList.length==1) {
@@ -177,13 +207,18 @@ export default {
     // 点击打开某一篇文章
     openArticle(option) {
       this.activeArt = option
-      this.$store.state.article = this.articleList[option]
+      this.editArticle = this.articleList[option]
+      if (!this.isBigScreen) {
+        this.isEditing = true
+      }
     },
     // 保存当前编辑的文章
     async saveArticle() {
+      const that = this
       const params = {
         id: this.editArticle.id,
-        content: this.$refs.richtext.editContent,
+        content: this.$refs.richtext.markdownContent,
+        html: this.$refs.richtext.htmlContent,
         title: this.editArticle.title,
       }
       const res = await this.$store.dispatch('updateArticleAction', params)
@@ -193,6 +228,9 @@ export default {
           message: '保存成功'
         })
         this.getArticleList()
+        if (this.isBigScreen) {
+          this.$refs.artList.activeArt = 0
+        }
       }
     },
     // 删除当前文章
@@ -216,18 +254,27 @@ export default {
           this.activeArt = ''
         }
       })
+    },
+    // 判断屏幕尺寸
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
+      }
     }
   },
   computed: {
     currentGroupId() {
       return this.groupList[parseInt(this.activeGroupIndex)].id
     },
-    // 正要编辑的文章obj
-    editArticle() {
-      return this.$store.state.article
-    }
+    // // 正要编辑的文章obj
+    // editArticle() {
+    //   return this.$store.state.article
+    // }
   },
   async mounted() {
+    this.judgeScreen()
     await this.getGroupList()
     await this.getArticleList()
   },
@@ -237,6 +284,36 @@ export default {
     //   console.log('??')
     //   console.log(this.currentArticleContent)
     // }
+    let that = this
+    let code1 = 0
+    document.onkeydown = function (e) {
+      let evn = e || event
+      let key = evn.keyCode || evn.which || evn.charCode;
+      // shift 16
+      // S 83
+      if (key === 17 || key === 91) {
+        code1 = 1
+        // e.preventDefault()
+      }
+      if (key === 83 && code1 === 1 && that.activeArt) {
+        // 保存文章
+        console.log('保存文章')
+        that.saveArticle()
+        e.preventDefault()
+      }
+      // if (code1 === 1 && code2 === 2) {
+      //   console.log('同时按下了shift和S')
+      //   console.log(this.activeArt)
+      //   if (this.activeArt) {
+      //     console.log('保存文章')
+      //   }
+      // }
+    }
+    document.onkeyup = function(e) {
+      if (e.keyCode === 17 || e.keyCode === 91) {
+        code1 = 0
+      }
+    }
   },
 }
 </script>
@@ -251,11 +328,25 @@ export default {
   padding: 10px 10px 10px 20px;
   font-size: 18px;
 }
+.editor-bar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  height: 40px;
+  padding: 10px 10px 10px 20px;
+  border-top: 1px solid #dfe2e5;
+}
 .blank{
   width: 100%;
   height: 900px;
   #favicon{
     width: 200px;
   }
+}
+
+.rotate{
+  transition: all 1s ease-in-out;
+  transform: rotate(360deg)
 }
 </style>

@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <div style="text-align:left;margin-bottom: 30px;" v-html="article.content"></div>
+        <div style="text-align:left;margin:20px 0 100px;" class="markdown-body" v-highlight v-html="html"></div>
         <CommentInput
           @submitComment="submitComment"
           :id="id"></CommentInput>
@@ -60,11 +60,11 @@
   </div>
 </template>
 <script>
-import 'element-ui/lib/theme-chalk/base.css';
-import 'element-ui/lib/theme-chalk/display.css'
+
 import CommentItem from '@/layouts/CommentItem'
 import CommentInput from '@/layouts/CommentInput'
 import SvgIcon from '@/layouts/SvgIcon'
+import marked from 'marked'
 export default {
   name: 'ArticleOne',
   data() {
@@ -83,7 +83,9 @@ export default {
       // 这篇文章的回复列表
       replyList: [],
       // 是否已经获得了数据
-      hasData: false
+      hasData: false,
+      // 显示的html
+      html: ''
     }
   },
   computed: {
@@ -111,7 +113,7 @@ export default {
     async getArticle() {
       const res = await this.$store.dispatch('getOneArticleAction', this.id)
       this.article = res.data.article
-      console.log(this.article)
+      this.html = marked(this.article.content)
       const time = new Date(this.article.updatedAt)
       const minute = time.getMinutes()<10 ? '0'+time.getMinutes() : time.getMinutes()
       this.article.updatedAt = 
@@ -218,10 +220,12 @@ export default {
     await this.viewArticle()
     this.formatData()
   },
-  
 }
 </script>
 <style lang="less" scoped>
+@import 'element-ui/lib/theme-chalk/base.css';
+@import 'element-ui/lib/theme-chalk/display.css';
+@import 'https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css';
 .comments-container{
   .title{
     font-size: 26px;
@@ -269,7 +273,7 @@ export default {
 }
 .title{
   text-align: left;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bolder;
   word-wrap: break-word;
   word-break: break-all;
@@ -297,6 +301,7 @@ export default {
       font-size: 14px;
       line-height: 30px;
       font-weight: bold;
+      text-align: left;
     }
     .article-info{
       color: #969696;
@@ -307,4 +312,5 @@ export default {
     }
   }
 }
+
 </style>

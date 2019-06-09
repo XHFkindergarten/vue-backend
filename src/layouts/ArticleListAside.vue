@@ -1,10 +1,11 @@
 <template>
   <div>
-    <el-aside class="aside2" width="240px">
+    <el-aside class="aside2" :width="isBigScreen?'240px':'50vw'">
       <div class="addArt-container" @click="addArticle">
         <SvgIcon style="margin:5px;" size="mini" icon="add6"></SvgIcon>
         <span>添加文章</span>
       </div>
+      <div class="addArt-container" >点击文章进入编辑</div>
       <div v-if="articleList.length==0" class="empty-tip">
         <SvgIcon style="margin:10px;" size="mid" icon="frown"></SvgIcon>
         <div>
@@ -16,7 +17,7 @@
       </div>
       <div :class="item.index==activeArt?'active-art-container':'art-container'" @click="openArticle(item)" v-for="item in articleList" :key="item.index">
         <div class="art-svg-container">
-          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="item.id==currentArticleId" icon="save" size="mid"></SvgIcon>
+          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="item.index==activeArt" icon="save" size="mid"></SvgIcon>
           <SvgIcon v-else icon="smile" size="mid" style="color:#b3b3b3"></SvgIcon>
         </div>
         <div class="art-title">
@@ -44,7 +45,9 @@ export default {
   },
   data() {
     return {
-      activeArt: ''
+      activeArt: '',
+      // 是否是大屏幕
+      isBigScreen: false,
     }
   },
   methods: {
@@ -54,8 +57,8 @@ export default {
     },
     // 点击打开文章
     openArticle(item) {
-      this.activeArt = item.index
-      this.$emit('openArticle', item.index)
+      this.activeArt = parseInt(item.index)
+      this.$emit('openArticle', parseInt(item.index))
     },
     // 点击保存文章
     saveArticle() {
@@ -64,13 +67,18 @@ export default {
     // 点击删除文章
     deleteArticle(item) {
       this.$emit('deleteArticle', item)
-    }
+    },
+    // 判断屏幕尺寸
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
+      }
+    },
   },
-  computed: {
-    // 正在编辑的文章id
-    currentArticleId() {
-      return this.$store.state.article.id
-    }
+  mounted() {
+    this.judgeScreen()
   }
 }
 </script>

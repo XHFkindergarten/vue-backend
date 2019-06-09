@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="true">
+  <div>
     <el-row>
       <el-col
         :lg={span:4,offset:4}
@@ -80,11 +80,7 @@ export default {
     // 跳转到写文章页面
     writeArt() {
       if (this.$store.state.status) {
-        if (this.isBigScreen) {
-          this.$router.push('/articleManage')
-        } else {
-          this.$router.push('/SmallScreen')
-        }
+        this.$router.push('/articleManage')
       } else {
         this.$message({
           type: 'warning',
@@ -122,7 +118,6 @@ export default {
       this.currentPage = newPage
     },
     judgeScreen() {
-      console.log('change')
       if (window.innerWidth<800) {
         this.isBigScreen = false
       } else {
@@ -146,7 +141,6 @@ export default {
     }
   },
   mounted() {
-    this.$message.warning('该版块即将被重构为markdown文章类型')
     this.judgeScreen()
     this.getUserArticle()
   },

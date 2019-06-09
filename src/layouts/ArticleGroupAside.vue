@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-aside class="aside" width="200px">
+  <div style="min-height:100vh;">
+    <el-aside class="aside" :width="isBigScreen?'200px':'50vw'">
       <div class="back-container">
         <el-button @click="backto" class="back-button" round>
           <div class="svg-container">
@@ -51,6 +51,8 @@ export default {
       isAddingGroup: false,
       // 选中的分组
       activeTab: '0',
+      // 是否是大屏幕
+      isBigScreen: false
     }
   },
   props: {
@@ -111,13 +113,30 @@ export default {
       this.$emit('activeGroupChange', {
         index: this.$refs.menu.activeIndex
       })
-    }
+    },
+    // 判断屏幕尺寸
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.isBigScreen = false
+      } else {
+        this.isBigScreen = true
+      }
+    },
   },
+  mounted() {
+    this.judgeScreen()
+  }
 }
 </script>
 
 
 <style lang="less" scoped>
+// .big-height {
+//   min-height: 100vh;
+// }
+// .small-height {
+//   min-height: 200px;
+// }
 .aside{
   height: 100%;
   background: #404040;
