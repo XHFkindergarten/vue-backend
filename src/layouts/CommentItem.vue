@@ -11,11 +11,12 @@
     </div>
     <div class="comment-content">
       {{comment.content}}
+      <SvgIcon v-if="isMyComment" @click.native="deleteComment" style="margin-left:10px;" size="mini" icon="delete3"></SvgIcon>
     </div>
     
     <div class="reply-container" v-for="item in replyList" :key="item.id">
       <div class="nametime">
-        <span>{{item.from.name}}</span>
+        <span>{{item.from.name}}:</span>
         <span class="content">{{item.content}}</span>
       </div>
       <div class="time">{{item.time}}</div>
@@ -40,6 +41,7 @@
 </template>
 <script>
 import SvgIcon from '@/layouts/SvgIcon'
+import http from '@/http/comment'
 export default {
   name: 'CommentItem',
   data() {
@@ -52,6 +54,8 @@ export default {
     }
   },
   mounted() {
+    console.log(this.comment.userId)
+    console.log(this.$store.state.userInfo.id)
   },
   watch: {
     comment: {
@@ -62,6 +66,27 @@ export default {
     }
   },
   methods: {
+    // 删除回复
+    deleteComment() {
+      const that = this
+      this.$confirm('确认删除这条评论吗宝贝儿?','', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        console.log(that.comment.id, that.comment.articleId)
+        const res = await http.deleteComment({
+          id: that.comment.id,
+          articleId: that.comment.articleId
+        })
+        console.log(res)
+        if (res.data.success) {
+          this.$emit('deleteComment')
+          this.$message.success('删除成功')
+        }
+      })
+      
+    },
     // 点击回复
     editReply() {
       this.isEdit = true
@@ -110,6 +135,16 @@ export default {
   },
   props: ['comment', 'index', 'articleId'],
   computed: {
+    // 这条评论是否是这个用户自己写的
+    isMyComment() {
+      if (!this.$store.state.status) {
+        return false
+      }
+      if (this.comment.userId === this.$store.state.userInfo.id) {
+        return true
+      }
+      return false
+    },
     // 是否登录
     status() {
       return this.$store.state.status
@@ -132,6 +167,7 @@ export default {
   border-left: 3px #969696 solid;
   padding-bottom: 20px;
   .nametime{
+    font-size: 12px;
     text-align: left;
     padding-left: 20px;
   }
@@ -175,8 +211,11 @@ export default {
 .comment-content{
   width: 100%;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   margin: 20px 0;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
 }
 .user-container{
   width: 100%;
@@ -197,8 +236,8 @@ export default {
       height: 50%;
       color: #1f2b40;
       font-size: 14px;
-      line-height: 30px;
       font-weight: bold;
+      line-height: 30px;
       text-align: left;
     }
     .article-info{

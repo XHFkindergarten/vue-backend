@@ -48,11 +48,23 @@ const getReply = async articleId => {
   return res
 }
 
+const deleteComment = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('comment/deleteComment', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
 const comment = {
   addComment,
   getComment,
   addReply,
-  getReply
+  getReply,
+  deleteComment
 }
 
 export default comment

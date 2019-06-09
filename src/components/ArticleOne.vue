@@ -53,7 +53,7 @@
           :id="id"></CommentInput>
         <div v-if="hasData" class="comments-container">
           <div class="title">评论({{commentList.length}})</div>
-          <CommentItem @addReply="addReplySuccess" v-for="(item,index) in commentList" :key="item.id" :index="index" :comment="item"></CommentItem>
+          <CommentItem @deleteComment="refreshComment" @addReply="addReplySuccess" v-for="(item,index) in commentList" :key="item.id" :index="index" :comment="item"></CommentItem>
         </div>
       </el-col>
     </el-row>
@@ -106,6 +106,10 @@ export default {
     'id'
   ],
   methods: {
+    // 重新刷新评论列表
+    refreshComment() {
+      this.getComment()
+    },
     // 跳转作者页面
     toAuthor() {
       this.$router.push({ path: 'Person', query: {id: this.article.userInfo.id}})
