@@ -9,7 +9,7 @@
       :subfield='false'
       :shortCut="true"
       :tabSize="2"
-      defaultOpen='edit'
+      :defaultOpen="all.innerWidth<800?'edit':'preview'"
       :toolbars="toolbars"
       @imgAdd="imgAdd"></mavon-editor>
   </div>
@@ -65,11 +65,11 @@ export default {
       },
     }
   },
-  // computed: {
-  //   htmlContent() {
-  //     return this.$refs.markdown.d_render
-  //   }
-  // },
+  computed: {
+    all() {
+      return window
+    }
+  },
   watch: {
     content(newValue, oldValue) {
       this.markdownContent = newValue

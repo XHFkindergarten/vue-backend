@@ -5,7 +5,7 @@
         <SvgIcon style="margin:5px;" size="mini" icon="add6"></SvgIcon>
         <span>添加文章</span>
       </div>
-      <div class="addArt-container" >点击文章进入编辑</div>
+      <div v-if="!isBigScreen" class="addArt-container" >点击文章进入编辑</div>
       <div v-if="articleList.length==0" class="empty-tip">
         <SvgIcon style="margin:10px;" size="mid" icon="frown"></SvgIcon>
         <div>
@@ -108,6 +108,7 @@ export default {
     cursor: pointer;
   }
   .art-container{
+    padding: 20px 0;
     min-height: 90px;
     border-left: 3px #2e2e2e solid;
     .art-title{
@@ -144,6 +145,7 @@ export default {
     }
   }
   .active-art-container{
+    padding: 20px 0;
     border-left: 3px #0A86AF solid;
     min-height: 90px;
     .art-title{

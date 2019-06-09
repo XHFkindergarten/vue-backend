@@ -15,10 +15,10 @@ export default {
     }
   },
   mounted() {
-    // this.$message({
-    //   type: 'warning',
-    //   message: '由于数据库不知道为什么消失了，请重新注册!'
-    // })
+    this.$message({
+      type: 'warning',
+      message: '服务器又被攻击了,请重新注册!'
+    })
     // console.log(window.innerHeight)
   }
 }
