@@ -6,7 +6,6 @@
       ref="markdown"
       style="min-height:100vh;"
       placeholder="请输入markdown代码"
-      :subfield='false'
       :shortCut="true"
       :tabSize="2"
       :defaultOpen="all.innerWidth<800?'edit':'preview'"
@@ -108,8 +107,9 @@ export default {
   },
   mounted() {
     this.judgeScreen()
-    if (this.isBigScreen) {
-      this.$refs.markdown.subfield = true
+    if (!this.isBigScreen) {
+      console.log('toggle')
+      this.$refs.markdown.subfield = false
     }
     
     http.getQnToken().then(res => {
