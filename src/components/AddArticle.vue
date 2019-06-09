@@ -322,6 +322,7 @@ export default {
   padding: 0;
 }
 #article-name{
+  border: none;
   outline: none;
   width: 100%;
   height: 40px;

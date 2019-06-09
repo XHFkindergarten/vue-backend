@@ -7,6 +7,7 @@
       style="min-height:100vh;"
       placeholder="请输入markdown代码"
       :shortCut="true"
+      :autofocus="false"
       :tabSize="2"
       :defaultOpen="all.innerWidth<800?'edit':'preview'"
       :toolbars="toolbars"
