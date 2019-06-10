@@ -40,6 +40,15 @@
             <SvgIcon @click.native="smallDeleteArticle" style="margin-left:40px;" icon="delete4"></SvgIcon>
           </div>
           <div class="tag-bar">
+            <div class="publish-container">
+              <el-switch
+                width="40"
+                v-model="isPublic"
+                active-text="public"
+                inactive-text="private"
+                @change="changePublish"
+                ></el-switch>
+            </div>
             <el-tag
               type="info"
               :key="tag"
@@ -55,14 +64,7 @@
               v-if="inputVisible"
               class="input-new-tag"></el-input>
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-            <div class="publish-container">
-              <el-switch
-                v-model="isPublic"
-                active-text="发布"
-                inactive-text="不发布"
-                @change="changePublish"
-                ></el-switch>
-            </div>
+            
           </div>
           <!-- <RichText
             :content="editArticle.content"
@@ -279,7 +281,11 @@ export default {
       this.editArticle = this.articleList[option]
       this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
-        this.editArticle.tags = this.editArticle.tags.split(keys.tabGap)
+        if (this.editArticle.tags==='') {
+          this.editArticle.tags = []
+        } else {
+          this.editArticle.tags = this.editArticle.tags.split(keys.tabGap)
+        }
       }
       if (!this.isBigScreen) {
         this.isEditing = true
