@@ -124,7 +124,7 @@ export default {
         this.editArticle.tags = []
       }
       let inputValue = this.tabInputValue
-      if (inputValue && this.editArticle.tags.indexOf(inputValue) === 0) {
+      if (inputValue && this.editArticle.tags.indexOf(inputValue) === -1) {
         this.editArticle.tags.push(inputValue)
       }
       this.inputVisible = false
