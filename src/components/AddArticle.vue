@@ -37,7 +37,24 @@
             <SvgIcon @click.native="smallScreenBack" icon="back5"></SvgIcon>
             <SvgIcon class="rotate" @click.native="saveArticle" style="margin-left:40px;" icon="refresh"></SvgIcon>
             <SvgIcon @click.native="previewArt" style="margin-left:40px;" icon="reverse"></SvgIcon>
-            <SvgIcon @click.native="deleteArticle" style="margin-left:40px;" icon="delete4"></SvgIcon>
+            <SvgIcon @click.native="smallDeleteArticle" style="margin-left:40px;" icon="delete4"></SvgIcon>
+          </div>
+          <div class="tag-bar">
+            <el-tag
+              type="info"
+              :key="tag"
+              @close="handleClose(tag)"
+              v-for="tag in editArticle.tags"
+              closable>{{tag}}</el-tag>
+            <el-input
+              v-model="tabInputValue"
+              ref="saveTagInput"
+              size="small"
+              @keyup.enter.native="handleInputComfirm"
+              @blur="handleInputComfirm"
+              v-if="inputVisible"
+              class="input-new-tag"></el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
           </div>
           <!-- <RichText
             :content="editArticle.content"
@@ -53,6 +70,7 @@ import Favicon from '@/layouts/Favicon'
 import RichText from '@/components/RichText'
 import Markdown from '@/components/Markdown'
 import SvgIcon from '@/layouts/SvgIcon'
+import keys from '@/common'
 import ArticleGroupAside from '@/layouts/ArticleGroupAside'
 import ArticleListAside from '@/layouts/ArticleListAside'
 export default {
@@ -85,10 +103,37 @@ export default {
       editArticle: '',
       isBigScreen: true,
       // (小屏幕下)编辑文章
-      isEditing: false
+      isEditing: false,
+      // 是否新建标签
+      inputVisible: false,
+      // 标签输入框value
+      tabInputValue: ''
     }
   },
   methods: {
+    // 显示标签输入框
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    // 确认添加标签
+    handleInputComfirm() {
+      if (!this.editArticle.tags) {
+        this.editArticle.tags = []
+      }
+      let inputValue = this.tabInputValue
+      if (inputValue && this.editArticle.tags.indexOf(inputValue) === 0) {
+        this.editArticle.tags.push(inputValue)
+      }
+      this.inputVisible = false
+      this.tabInputValue = ''
+    },
+    // 删除标签
+    handleClose(tag) {
+      this.editArticle.tags.splice(this.editArticle.tags.indexOf(tag), 1)
+    },
     // (小屏幕下)预览
     previewArt() {
       if (this.$refs.richtext.$refs.markdown.defaultOpen==='preview'){
@@ -102,6 +147,8 @@ export default {
     // (小屏幕下)返回
     smallScreenBack() {
       this.isEditing = false
+      this.activeArt = ''
+      this.editArticle = ''
     },
     // 点击删除分组
     showDeleteGroupDialog(option) {
@@ -208,6 +255,9 @@ export default {
     openArticle(option) {
       this.activeArt = option
       this.editArticle = this.articleList[option]
+      if (typeof(this.editArticle.tags) === 'string') {
+        this.editArticle.tags = this.editArticle.tags.split(keys.tabGap)
+      }
       if (!this.isBigScreen) {
         this.isEditing = true
       }
@@ -220,6 +270,7 @@ export default {
         content: this.$refs.richtext.markdownContent,
         html: this.$refs.richtext.htmlContent,
         title: this.editArticle.title,
+        tags: this.editArticle.tags.join(keys.tabGap)
       }
       const res = await this.$store.dispatch('updateArticleAction', params)
       if (res.data.success) {
@@ -233,9 +284,16 @@ export default {
         }
       }
     },
+    // 小屏幕下点击删除文章
+    async smallDeleteArticle() {
+      await this.deleteArticle({
+        id: this.editArticle.id
+      })
+      this.smallScreenBack()
+    },
     // 删除当前文章
     async deleteArticle(option) {
-      this.$confirm('是否确认要删除这篇文章?', 'warning', {
+      await this.$confirm('是否确认要删除这篇文章?', 'warning', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -318,6 +376,24 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.el-tag{
+  margin-left: 10px;
+}
+.el-tag:first-child{
+  margin-left: 0;
+}
+.button-new-tag{
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
 .main{
   padding: 0;
 }
@@ -328,6 +404,16 @@ export default {
   height: 40px;
   padding: 10px 10px 10px 20px;
   font-size: 18px;
+}
+.tag-bar{
+  overflow-x: auto;
+  height: 40px;
+  width: 90%;
+  padding: 10px 10px 10px 20px;
+  border-top: 1px solid #dfe2e5;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 .editor-bar{
   display: flex;

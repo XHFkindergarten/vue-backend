@@ -2,7 +2,7 @@
   <div style="min-height:200px;">
     <el-card
       class="card"
-      v-for="item in articleList"
+      v-for="item in artList"
       :key="item.id"
       shadow="hover"
       :body-style="{
@@ -30,6 +30,16 @@
           >
           <div class="art-container" @click="toArticle(item)">
             <div class="title">{{item.title}}</div>
+            <div class="tags-container">
+              <div class="tags" v-if="item.tags">
+                <el-tag
+                  :key="tag"
+                  :closable="false"
+                  v-for="tag in item.tags"
+                  type="info">{{tag}}</el-tag>
+              </div>
+            </div>
+            
             <div class="summary">{{item.summary}}</div>
             <div class="comment">
               <span>{{item.userInfo.name}}</span>
@@ -67,6 +77,8 @@ export default {
       editPicUrl: '',
       // 即将要编辑的文章id
       editId: '',
+      // 文章列表
+      artList: this.articleList
     }
   },
   // watch: {
@@ -77,6 +89,7 @@ export default {
   //   }
   // },
   methods: {
+    
     toArticle(item) {
       this.$router.push({path: '/article', query: {id: item.id}})
     },
@@ -158,14 +171,22 @@ export default {
   // float: left;
   width: 100%;
   .title{
-    margin: 30px 0 10px 30px;
+    margin: 30px 0 20px 30px;
     text-align: left;
     font-size: 26px;
     font-weight: bold;
-    height: 72px;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
+  }
+  .tags-container{
+    white-space: nowrap;
+    overflow-x: auto;
+    .tags{
+      display: flex;
+      justify-content: flex-start;
+      margin: 10px 0 10px 30px;
+    }
   }
   .summary{
     margin: 0 30px;
@@ -184,5 +205,11 @@ export default {
     margin-left: 30px;
     min-height: 50px;
   }
+}
+.el-tag{
+  margin-left: 10px;
+}
+.el-tag:first-child{
+  margin-left: 0px;
 }
 </style>

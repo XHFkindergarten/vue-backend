@@ -52,7 +52,7 @@
           @submitComment="submitComment"
           :id="id"></CommentInput>
         <div v-if="hasData" class="comments-container">
-          <div class="title">评论({{commentList.length}})</div>
+          <div class="title">评论({{commentList.length+replyList.length}})</div>
           <CommentItem @deleteComment="refreshComment" @addReply="addReplySuccess" v-for="(item,index) in commentList" :key="item.id" :index="index" :comment="item"></CommentItem>
         </div>
       </el-col>

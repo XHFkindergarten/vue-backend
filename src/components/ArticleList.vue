@@ -48,6 +48,7 @@
   </div>
 </template>
 <script>
+import keys from '@/common'
 import SvgIcon from '@/layouts/SvgIcon'
 import ArticlePreviewList from '@/layouts/ArticlePreviewList'
 export default {
@@ -90,12 +91,22 @@ export default {
       
       
     },
+    // 洗数据(tags)
+    formatTags() {
+      this.articleList.forEach(art => {
+        if (art.tags&&art.tags.length > 0) {
+          art.tags = art.tags.split(keys.tabGap)
+        }
+      })
+      console.log(this.articleList)
+    },
     // 根据用户id请求用户的所有文章
     async getUserArticle() {
       this.isLoading = true
       const res = await this.$store.dispatch('getAllArticleAction')
       this.isLoading = false
       this.articleList = res.data.article
+      this.formatTags()
       if (this.articleList.length==0) {
         this.emptyArticle = true
       }
