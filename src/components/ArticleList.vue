@@ -100,7 +100,7 @@ export default {
       })
       console.log(this.articleList)
     },
-    // 根据用户id请求用户的所有文章
+    // 获取所有文章
     async getUserArticle() {
       this.isLoading = true
       const res = await this.$store.dispatch('getAllArticleAction')

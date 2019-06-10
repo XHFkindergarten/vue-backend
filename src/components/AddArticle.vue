@@ -55,6 +55,14 @@
               v-if="inputVisible"
               class="input-new-tag"></el-input>
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+            <div class="publish-container">
+              <el-switch
+                v-model="isPublic"
+                active-text="发布"
+                inactive-text="不发布"
+                @change="changePublish"
+                ></el-switch>
+            </div>
           </div>
           <!-- <RichText
             :content="editArticle.content"
@@ -107,10 +115,24 @@ export default {
       // 是否新建标签
       inputVisible: false,
       // 标签输入框value
-      tabInputValue: ''
+      tabInputValue: '',
+      // 是否发布
+      isPublic: false
     }
   },
   methods: {
+    // 更改发布状态
+    async changePublish(value) {
+      let res
+      if (!value) {
+        res = await this.$axios.get('/article/unPublishArticle?id='+this.editArticle.id)
+      } else {
+        res = await this.$axios.get('/article/publishArticle?id='+this.editArticle.id)
+      }
+      if (res.data.success) {
+        this.$message.success(value?'发布成功':'取消发布成功')
+      }
+    },
     // 显示标签输入框
     showInput() {
       this.inputVisible = true;
@@ -255,6 +277,7 @@ export default {
     openArticle(option) {
       this.activeArt = option
       this.editArticle = this.articleList[option]
+      this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
         this.editArticle.tags = this.editArticle.tags.split(keys.tabGap)
       }
@@ -325,7 +348,7 @@ export default {
   computed: {
     currentGroupId() {
       return this.groupList[parseInt(this.activeGroupIndex)].id
-    },
+    }
     // // 正要编辑的文章obj
     // editArticle() {
     //   return this.$store.state.article
@@ -432,8 +455,7 @@ export default {
   }
 }
 
-.rotate{
-  transition: all 1s ease-in-out;
-  transform: rotate(360deg)
+.publish-container{
+  margin-left: 20px;
 }
 </style>
