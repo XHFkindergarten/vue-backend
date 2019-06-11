@@ -118,7 +118,7 @@
                         placement="bottom"
                         title=""
                         width="100"
-                        trigger="hover">
+                        trigger="click">
                         <MeItems
                           :hasLogin="hasLogin"></MeItems>
                         <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button>
