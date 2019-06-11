@@ -107,6 +107,7 @@
   </div>
 </template>
 <script>
+import keys from '@/common'
 import ArticlePreviewList from '@/layouts/ArticlePreviewList'
 import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
@@ -241,6 +242,13 @@ export default {
       this.isLoading = false
       console.log(res)
       this.articleList = res.data.article
+      this.articleList.forEach(art => {
+        if (art.tags === '') {
+          art.tags = []
+        } else {
+          art.tags = art.tags.split(keys.tabGap)
+        }
+      })
     }
   },
   directives: {
