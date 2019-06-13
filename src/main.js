@@ -21,6 +21,8 @@ Vue.use(mavonEditor)
 // 引入全局配置(请求地址)
 import keys from './common'
 
+import $ from 'jquery'
+
 // 引入axios
 // import axios from 'axios'
 import qs from 'qs'
