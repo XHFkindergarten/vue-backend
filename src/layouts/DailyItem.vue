@@ -39,7 +39,7 @@
         class="col"
         v-for="(src, i) in pics"
         :key="i"
-        :span="8">
+        :span="picWidth">
         <showPic :picSrc="src"></showPic>
       </el-col>
     </el-row>
@@ -78,7 +78,9 @@ export default {
     },
     // 调整自适应正方形的高度=宽度
     adjustSquare() {
-      $('.col').height($('.col').width())
+      $('.el-col-8').height($('.el-col-8').width())
+      $('.el-col-12').height($('.el-col-12').width())
+      $('.el-col-20').height($('.el-col-20').width())
     }
   },
   mounted() {
@@ -114,6 +116,16 @@ export default {
         return this.dailyInfo.pics.split(keys.tagGap)
       } else {
         return []
+      }
+    },
+    picWidth() {
+      const length = this.pics.length
+      if (length === 1) {
+        return 20
+      } else if (length>1&&length<5) {
+        return 12
+      } else {
+        return 8
       }
     }
   }

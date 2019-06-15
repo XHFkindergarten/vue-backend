@@ -2,9 +2,9 @@
   <div>
     <el-row>
       <el-col
-        :lg={span:4,offset:4}
-        :md={span:5,offset:3}
-        :sm={span:6,offset:2}
+        :lg={span:6,offset:2}
+        :md={span:7,offset:1}
+        :sm={span:8}
         :xs={span:20,offset:2}
         >
         <h1 style="margin-top:40px;">write daily</h1>
@@ -68,7 +68,7 @@
         :sm={span:10,offset:2}
         :xs={span:20,offset:2}
         >
-        <h1 style="margin-top:30px;">动态列表</h1>
+        <div style="margin-top:30px;font-weight:bolder;font-size:30px;text-align:left;">Daily list</div>
         <div class="toggle-container">
           <button @click="showAll=true" :class="['button1',showAll?'active-btn':'inactive-btn',{'button2':!hasLogin}]">All</button>
           <button v-if="hasLogin" @click="showAll=false" :class="['button2',showAll?'inactive-btn':'active-btn']">myDaily</button>
@@ -274,7 +274,9 @@ export default {
     },
     // 调整自适应正方形的高度=宽度
     adjustSquare() {
-      $('.col').height($('.col').width())
+      $('.el-col-8').height($('.el-col-8').width())
+      $('.el-col-12').height($('.el-col-12').width())
+      $('.el-col-20').height($('.el-col-20').width())
     }
   },
   computed: {

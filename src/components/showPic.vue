@@ -42,11 +42,11 @@ export default {
   align-items: center;
   img{
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
   }
   .cancel{
     position:absolute;
-    top: 30px;
+    bottom: 60px;
     right: 30px;
     z-index: 60;
     cursor: pointer;
