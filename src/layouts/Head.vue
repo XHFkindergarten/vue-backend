@@ -119,9 +119,9 @@
                   <br>
                 </el-col> -->
                 <el-col
-                  :lg={span:4,offset:6}
-                  :md={span:4,offset:6}
-                  :sm={span:3,offset:5}
+                  :lg={span:4,offset:0}
+                  :md={span:4,offset:0}
+                  :sm={span:3,offset:0}
                   :xs={span:24}
                   >
                   <div class="userinfo">
