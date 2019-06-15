@@ -7,6 +7,7 @@
         <span class="span2">{{time}}</span>
       </div>
       <el-popover
+      v-model="openDelete"
       placement="bottom"
       width="20"
       trigger="click">
@@ -51,6 +52,9 @@ import showPic from '@/components/showPic'
 export default {
   data() {
     return {
+      // 打开删除弹框
+      openDelete: false,
+      // 确认删除弹框
       comfirmDelete: false
     }
   },
@@ -68,6 +72,8 @@ export default {
           message: '删除成功!'
         });
         this.$emit('deleteOne')
+        this.comfirmDelete = false
+        this.openDelete = false
       }
     },
     // 调整自适应正方形的高度=宽度

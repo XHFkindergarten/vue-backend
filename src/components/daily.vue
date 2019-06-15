@@ -76,7 +76,7 @@
         <el-timeline>
           <el-timeline-item v-for="item in pastDaily" :key="item.id">
             <el-card>
-              <DailyItem @deleteOne="getDaily" :dailyInfo="item"></DailyItem>
+              <DailyItem @deleteOne="deleteOne" :dailyInfo="item"></DailyItem>
             </el-card>
           </el-timeline-item>
         </el-timeline>
@@ -142,6 +142,12 @@ export default {
     }
   },
   methods: {
+    // 删除动态后重新获取
+    deleteOne() {
+      this.index = 0
+      this.getDaily()
+    },
+    // 处理滑动事件
     handleScroll(){
       if (this.loadMoreDisable || this.toEnd) {
         return
