@@ -70,8 +70,8 @@
         >
         <h1 style="margin-top:30px;">动态列表</h1>
         <div class="toggle-container">
-          <button @click="showAll=true" :class="['button1',showAll?'active-btn':'inactive-btn']">All</button>
-          <button @click="showAll=false" :class="['button2',showAll?'inactive-btn':'active-btn']">myDaily</button>
+          <button @click="showAll=true" :class="['button1',showAll?'active-btn':'inactive-btn',{'button2':!hasLogin}]">All</button>
+          <button v-if="hasLogin" @click="showAll=false" :class="['button2',showAll?'inactive-btn':'active-btn']">myDaily</button>
         </div>
         <el-timeline>
           <el-timeline-item v-for="item in pastDaily" :key="item.id">
@@ -159,6 +159,7 @@ export default {
     // 加载更多
     loadMore() {
       console.log('loadmore')
+      this.loadMoreDisable = true
       setTimeout(() => {
         this.getDaily()
       }, 500)
@@ -277,6 +278,9 @@ export default {
     }
   },
   computed: {
+    hasLogin() {
+      return this.$store.state.status
+    },
     userInfo() {
       return this.$store.state.userInfo
     }

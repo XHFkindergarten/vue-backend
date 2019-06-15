@@ -144,6 +144,7 @@ export default {
     position: absolute;
     right: 0;
     top: 10px;
+    outline: none;
   }
   img{
     cursor: pointer;
