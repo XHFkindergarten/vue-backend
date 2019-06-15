@@ -284,7 +284,7 @@ export default {
         if (this.editArticle.tags==='') {
           this.editArticle.tags = []
         } else {
-          this.editArticle.tags = this.editArticle.tags.split(keys.tabGap)
+          this.editArticle.tags = this.editArticle.tags.split(keys.tagGap)
         }
       }
       if (!this.isBigScreen) {
@@ -299,7 +299,7 @@ export default {
         content: this.$refs.richtext.markdownContent,
         html: this.$refs.richtext.htmlContent,
         title: this.editArticle.title,
-        tags: this.editArticle.tags.join(keys.tabGap)
+        tags: this.editArticle.tags.join(keys.tagGap)
       }
       const res = await this.$store.dispatch('updateArticleAction', params)
       if (res.data.success) {

@@ -26,7 +26,6 @@ router.beforeEach( async (to, from, next) => {
   if (store.state.Roles.length==0&&Cookies.get('login-token')) {
     // 有Cookie但是没有role
     store.commit('setToken', Cookies.get('login-token'))
-    
     try {
       const current = await store.dispatch('currentAction')
       store.commit('setUserInfo', current.data)

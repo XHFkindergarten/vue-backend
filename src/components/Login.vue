@@ -79,14 +79,21 @@ export default {
                 .then (res => {
                   if (res.status==200&&res.data.success) {
                     Cookies.set('login-token', res.data.token, { expires: 1 })
+                    console.log(res.data.token === Cookies.get('login-token'))
                     this.$router.push('/')
                   } else {
+                    console.log(res.data)
                     this.$message.error(res.data.msg)
                   }
                 })
                 .catch (err => {
+                  console.log(err)
                   this.$message.error(err.message)
-                  this.$refs.loginForm.resetFields()
+                  if (err.message !== 'password wrong') {
+                    this.$refs.loginForm.resetFields()
+                  } else {
+                    this.loginForm.password = ''
+                  }
                 })
             }else {
               // TODO 未通过校验

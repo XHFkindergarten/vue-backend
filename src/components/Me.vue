@@ -246,7 +246,7 @@ export default {
         if (art.tags === '') {
           art.tags = []
         } else {
-          art.tags = art.tags.split(keys.tabGap)
+          art.tags = art.tags.split(keys.tagGap)
         }
       })
     }

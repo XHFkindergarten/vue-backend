@@ -65,6 +65,11 @@ export const constantRouterMap =  [
             hidden: true
           }
         ]
+      },{
+        path: 'daily',
+        alias: '/daily',
+        component: () => import('@/components/daily'),
+        hidden: true
       },
       {
         path: 'test1',

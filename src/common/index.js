@@ -21,7 +21,7 @@ const whiteList = [
 const sendEmailWaitTime = 60
 
 // 标签的组合字符
-const tabGap = 'gapline'
+const tagGap = 'gapline'
 
 const keys = {
   host,
@@ -31,7 +31,7 @@ const keys = {
   status,
   whiteList,
   sendEmailWaitTime,
-  tabGap
+  tagGap
 }
 
 export default keys

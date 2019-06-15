@@ -48,7 +48,12 @@
           v-loading="isLoading"
           :articleList="showList"></ArticlePreviewList>
       </el-col>
-      <el-col :span="8" :offset="8">
+      <el-col
+        :lg={span:8,offset:8}
+        :md={span:8,offset:8}
+        :sm={span:8,offset:8}
+        :xs={span:24}
+        >
         <el-pagination
           :total="articleNum"
           :page-size="pageSize"
@@ -121,7 +126,8 @@ export default {
     async getUserArticle() {
       this.isLoading = true
       const res = await this.$store.dispatch('getArticleList', {
-        userId: this.id
+        userId: this.id,
+        isPublic: 1
       })
       this.isLoading = false
       console.log(res)

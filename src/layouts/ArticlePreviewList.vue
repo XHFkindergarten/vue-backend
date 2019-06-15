@@ -17,7 +17,7 @@
           :sm="{span:24}"
           :xs="{span:24}"
           >
-          <div class="img-container" @click="editPic(item)">
+          <div class="img-container" :style="!isBigScreen?'height:240px;':''" @click="editPic(item)">
             <SvgIcon v-if="isMe" class="edit-pic" size="mid" icon="edit"></SvgIcon>
             <img :src="item.labelImg">
           </div>
@@ -66,6 +66,7 @@
 <script>
 import EditPic from '@/components/EditPic'
 import SvgIcon from '@/layouts/SvgIcon'
+import keys from '@/common'
 export default {
   name: 'ArticlePreviewList',
   data() {
@@ -81,17 +82,23 @@ export default {
       artList: this.articleList
     }
   },
-  // watch: {
-  //   editPicDialog(newValue) {
-  //     if (newValue==false) {
-  //       this.$destroy('EditPic')
-  //     }
-  //   }
-  // },
+  watch: {
+    articleList: {
+      handler(newValue) {
+        this.artList = newValue
+        this.formatTags()
+      },
+      deep: true
+    }
+  },
   methods: {
-    
     toArticle(item) {
       this.$router.push({path: '/article', query: {id: item.id}})
+    },
+    formatTags() {
+      this.artList.forEach(art => {
+        art.tags = art.tags.split(keys.tagGap)
+      })
     },
     // 编辑封面图
     editPic(item) {
@@ -171,7 +178,7 @@ export default {
   // float: left;
   width: 100%;
   .title{
-    margin: 30px 0 20px 30px;
+    margin: 20px 30px 0;
     text-align: left;
     font-size: 26px;
     font-weight: bold;

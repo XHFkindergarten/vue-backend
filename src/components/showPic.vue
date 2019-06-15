@@ -29,10 +29,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-div, img{
-  transition: all 0.8s ease-in-out;
-}
 .full-screen{
+  z-index: 100;
   position: fixed;
   top: 0;
   left: 0;
@@ -43,8 +41,8 @@ div, img{
   justify-content: center;
   align-items: center;
   img{
-    width: 80%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 400px;
   }
   .cancel{
     position:absolute;
@@ -57,10 +55,12 @@ div, img{
 .pic-container{
   height: 100%;
   img {
-    border: 2px solid transparent;
+    cursor: pointer;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
     border-radius: 10px;
     width: 90%;
     height: 90%;
+    object-fit: cover;
   }
 }
 </style>

@@ -95,7 +95,7 @@ export default {
     formatTags() {
       this.articleList.forEach(art => {
         if (art.tags&&art.tags.length > 0) {
-          art.tags = art.tags.split(keys.tabGap)
+          art.tags = art.tags.split(keys.tagGap)
         }
       })
       console.log(this.articleList)

@@ -20,10 +20,7 @@
           </el-col>
           <el-col
             class="col"
-            :lg={span:8}
-            :md={span:8}
-            :sm={span:8}
-            :xs={span:8}
+            :span="8"
             >
             <div class="add-pic">
               <div class="inside ">

@@ -38,8 +38,8 @@
             <el-collapse-transition>
               <div v-show="isCollapse">
                 <el-col
-                  :lg={span:2,offset:4}
-                  :md={span:2,offset:4}
+                  :lg={span:3,offset:1}
+                  :md={span:3,offset:1}
                   :sm={span:3,offset:2}
                   :xs={span:24}
                   >
@@ -51,8 +51,8 @@
                   </el-menu-item>
                 </el-col>
                 <el-col
-                  :lg={span:2}
-                  :md={span:2}
+                  :lg={span:3}
+                  :md={span:3}
                   :sm={span:3}
                   :xs={span:24}
                   >
@@ -64,8 +64,8 @@
                   </el-menu-item>
                 </el-col>
                 <el-col
-                  :lg={span:2}
-                  :md={span:2}
+                  :lg={span:3}
+                  :md={span:3}
                   :sm={span:3}
                   :xs={span:24}
                   >
@@ -77,8 +77,8 @@
                   </el-menu-item>
                 </el-col>
                 <el-col
-                  :lg={span:2}
-                  :md={span:2}
+                  :lg={span:3}
+                  :md={span:3}
                   :sm={span:3}
                   :xs={span:24}
                   >
@@ -90,25 +90,38 @@
                   </el-menu-item>
                 </el-col>
                 <el-col
-                  :lg={span:2}
-                  :md={span:2}
+                  :lg={span:3}
+                  :md={span:3}
                   :sm={span:3}
                   :xs={span:24}
                   >
                   <el-menu-item index="/readFile" @click.native="collapseMenu">
                     <svg class="icon" aria-hidden="true">
-                      <use xlink:href="#icon-read"></use>
+                      <use xlink:href="#icon-icon7"></use>
                     </svg>
                     <span>阅读文档</span>
                   </el-menu-item>
                 </el-col>
-                <el-col :span="4" class="hidden-xs-only">
-                  <br>
-                </el-col>
                 <el-col
-                  :lg={span:4,offset:2}
-                  :md={span:4,offset:2}
+                  :lg={span:3}
+                  :md={span:3}
                   :sm={span:3}
+                  :xs={span:24}
+                  >
+                  <el-menu-item index="/daily" @click.native="collapseMenu">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-iconfontcha"></use>
+                    </svg>
+                    <span>动态</span>
+                  </el-menu-item>
+                </el-col>
+                <!-- <el-col :span="4" class="hidden-xs-only">
+                  <br>
+                </el-col> -->
+                <el-col
+                  :lg={span:4,offset:6}
+                  :md={span:4,offset:6}
+                  :sm={span:3,offset:5}
                   :xs={span:24}
                   >
                   <div class="userinfo">
