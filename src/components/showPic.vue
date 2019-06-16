@@ -1,7 +1,12 @@
 <template>
-  <div id="container" :class="isFullScreen?'full-screen':'pic-container'" @click="fullScreen">
-    <SvgIcon @click.native.stop="cancelFullScreen" class="cancel" v-if="isFullScreen" icon="add3-wrong"></SvgIcon>
+  <div id="container" class="pic-container" @click="fullScreen">
     <img :src="picSrc" alt="图片">
+    <div v-if="isFullScreen" class="full-screen">
+      <SvgIcon @click.native.stop="cancelFullScreen" class="cancel" v-if="isFullScreen" icon="add3-wrong"></SvgIcon>
+      <div class="img-container">
+        <img :src="picSrc" alt="图片">
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -36,16 +41,29 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  // min-height: 100vh;
   background-color:rgba(0,0,0,0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  img{
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  overflow-x: auto;
+  .img-container{
     width: 100%;
-    max-width: 500px;
+    min-height: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    // overflow-x: auto;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 100%;
+      max-width: 500px;
+    }
   }
+
   .cancel{
-    position:absolute;
+    position: fixed;
     bottom: 60px;
     right: 30px;
     z-index: 60;
