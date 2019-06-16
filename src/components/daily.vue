@@ -254,7 +254,8 @@ export default {
         })
         return false
       }
-      this.qiniuData.key = file.name
+      const time = new Date()
+      this.qiniuData.key = `${file.name}${time.getFullYear()}/${time.getMonth+1}/${time.getDate()}/${time.getHours()}/${time.getMinutes()}${time.getSeconds()}`
       this.qiniuData.token = this.qiniuToken
     },
     toggleInput() {
