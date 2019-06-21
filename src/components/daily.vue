@@ -80,10 +80,14 @@
             </el-card>
           </el-timeline-item>
         </el-timeline>
-        <div v-if="loadMoreDisable" class="loading">lzk is trying...</div>
-        <div v-if="toEnd" class="loading">没有惹⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
+        <!-- <div v-if="loadMoreDisable" class="loading">lzk is trying...</div>
+        <div v-if="toEnd" class="loading">没有惹⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div> -->
       </el-col>
     </el-row>
+
+    <infiniteLoading ref="infinite" direction="bottom" :distance="0" @infinite="infiniteHandler">
+      <div class="loading" slot="no-more">mo有了哦⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
+    </infiniteLoading>
   </div>
 </template>
 <script>
@@ -93,6 +97,7 @@ import SvgIcon from '@/layouts/SvgIcon'
 import showPic from '@/components/showPic'
 import DailyItem from '@/layouts/DailyItem'
 import keys from '@/common'
+import infiniteLoading from 'vue-infinite-loading'
 // import exif from '@/exif'
 export default {
   data() {
@@ -127,13 +132,15 @@ export default {
   components: {
     SvgIcon,
     showPic,
-    DailyItem
+    DailyItem,
+    infiniteLoading
   },
   watch: {
     showAll(newValue, oldValue) {
       this.index = 0
       this.pastDaily = []
-      this.getDaily()
+      // this.getDaily()
+      this.$refs.infinite.$emit('$InfiniteLoading:reset')
     },
     isEditing(newValue) {
       if (newValue) {
@@ -144,6 +151,41 @@ export default {
     }
   },
   methods: {
+    async infiniteHandler($state) {
+      // console.log(this.$refs.infinite)
+      // if (this.loadMoreDisable) {
+      //   console.log('no')
+      //   return
+      // }
+      // this.loadMoreDisable = true
+      console.log('1')
+      const offset = this.index || 0
+      let res
+      if (this.showAll) {
+        res = await this.$axios.get(`${keys.host}/daily/getAll?offset=${offset}`)
+      } else {
+        // 只请求一个人的
+        const userId = this.$store.state.userInfo.id
+        res = await this.$axios.get(`${keys.host}/daily/getAll?offset=${offset}&userId=${userId}`)
+      }
+      if (res.data.success) {
+        if (this.index === 0) {
+          this.pastDaily = res.data.daily
+        } else {
+          this.pastDaily = this.pastDaily.concat(res.data.daily)
+        }
+        this.index++
+        $state.loaded()
+        
+        // this.$nextTick(() => {
+        //   this.loadMoreDisable = false
+        // })
+      } else {
+        this.toEnd = true
+        $state.complete()
+      }
+      
+    },
     // 删除动态后重新获取
     deleteOne() {
       this.index = 0
@@ -303,9 +345,9 @@ export default {
     http.getQnToken().then(res => {
       this.qiniuToken = res
     })
-    this.getDaily()
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('touchmove', this.handleScroll1)
+    // this.getDaily()
+    // window.addEventListener('scroll', this.handleScroll)
+    // window.addEventListener('touchmove', this.handleScroll1)
   }
 }
 </script>
