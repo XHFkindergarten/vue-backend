@@ -87,12 +87,13 @@
   </div>
 </template>
 <script>
+
 import http from '@/http'
 import SvgIcon from '@/layouts/SvgIcon'
 import showPic from '@/components/showPic'
 import DailyItem from '@/layouts/DailyItem'
 import keys from '@/common'
-import exif from '@/exif'
+// import exif from '@/exif'
 export default {
   data() {
     return {
@@ -153,6 +154,15 @@ export default {
       if (this.loadMoreDisable || this.toEnd) {
         return
       }
+      if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
+        this.loadMore()
+      }
+    },
+    handleScroll1(){
+      if (this.loadMoreDisable || this.toEnd) {
+        return
+      }
+      console.log('touchmove')
       if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
         this.loadMore()
       }
@@ -295,6 +305,7 @@ export default {
     })
     this.getDaily()
     window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('touchmove', this.handleScroll1)
   }
 }
 </script>
