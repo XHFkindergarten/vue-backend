@@ -92,6 +92,7 @@ import SvgIcon from '@/layouts/SvgIcon'
 import showPic from '@/components/showPic'
 import DailyItem from '@/layouts/DailyItem'
 import keys from '@/common'
+import exif from '@/exif'
 export default {
   data() {
     return {
@@ -152,7 +153,7 @@ export default {
       if (this.loadMoreDisable || this.toEnd) {
         return
       }
-      if (window.screen.height + document.documentElement.scrollTop >= document.body.clientHeight) {
+      if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
         this.loadMore()
       }
     },

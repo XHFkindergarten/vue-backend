@@ -4,7 +4,7 @@ import store from '@/vuex'
 import keys from '@/common'
 
 const service = axios.create({
-  baseURL: process.env.NODE_ENV=='development'?keys.devHost:keys.prdHost,
+  baseURL: keys.host,
   timeout: 600000 //请求超时时间60s
 })
 

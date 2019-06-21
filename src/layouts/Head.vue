@@ -115,9 +115,9 @@
                     <span>动态</span>
                   </el-menu-item>
                 </el-col>
-                <!-- <el-col :span="4" class="hidden-xs-only">
+                <el-col v-if="isBigScreen&&hasLogin" :span="4" class="hidden-xs-only">
                   <br>
-                </el-col> -->
+                </el-col>
                 <el-col
                   :lg={span:4,offset:0}
                   :md={span:4,offset:0}
