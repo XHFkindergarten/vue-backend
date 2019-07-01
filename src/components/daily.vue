@@ -82,12 +82,11 @@
         </el-timeline>
         <!-- <div v-if="loadMoreDisable" class="loading">lzk is trying...</div>
         <div v-if="toEnd" class="loading">没有惹⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div> -->
+        <infiniteLoading ref="infinite" direction="bottom" :distance="0" @infinite="infiniteHandler">
+          <div class="loading" slot="no-more">mo有了哦⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
+        </infiniteLoading>
       </el-col>
     </el-row>
-
-    <infiniteLoading ref="infinite" direction="bottom" :distance="0" @infinite="infiniteHandler">
-      <div class="loading" slot="no-more">mo有了哦⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
-    </infiniteLoading>
   </div>
 </template>
 <script>
@@ -126,7 +125,7 @@ export default {
       loadMoreDisable: false,
       toEnd: false,
       // 是在看所有人的动态吗
-      showAll: true
+      showAll: false
     }
   },
   components: {
@@ -158,7 +157,6 @@ export default {
       //   return
       // }
       // this.loadMoreDisable = true
-      console.log('1')
       const offset = this.index || 0
       let res
       if (this.showAll) {
@@ -184,7 +182,6 @@ export default {
         this.toEnd = true
         $state.complete()
       }
-      
     },
     // 删除动态后重新获取
     deleteOne() {
@@ -270,7 +267,8 @@ export default {
         })
         this.cancelEdit()
         this.index = 0
-        this.getDaily()
+        this.$refs.infinite.$emit('$InfiniteLoading:reset')
+        // this.getDaily()
       }
     },
     // 取消编辑
