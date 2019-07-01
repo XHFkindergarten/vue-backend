@@ -125,7 +125,7 @@ export default {
       loadMoreDisable: false,
       toEnd: false,
       // 是在看所有人的动态吗
-      showAll: false
+      showAll: true
     }
   },
   components: {
@@ -343,6 +343,9 @@ export default {
     http.getQnToken().then(res => {
       this.qiniuToken = res
     })
+    if (this.hasLogin) {
+      this.showAll = false
+    }
     // this.getDaily()
     // window.addEventListener('scroll', this.handleScroll)
     // window.addEventListener('touchmove', this.handleScroll1)
