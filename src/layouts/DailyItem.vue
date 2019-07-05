@@ -34,15 +34,18 @@
       
     </div>
     <div class="content" v-html="content"></div>
-    <el-row>
-      <el-col
-        class="col"
-        v-for="(src, i) in pics"
-        :key="i"
-        :span="picWidth">
-        <showPic :picSrc="src"></showPic>
-      </el-col>
-    </el-row>
+    <div :style="`max-width:500px`">
+      <el-row>
+        <el-col
+          class="col"
+          v-for="(src, i) in pics"
+          :key="i"
+          :span="picWidth">
+          <showPic :picSrc="src"></showPic>
+        </el-col>
+      </el-row>
+    </div>
+    
   </div>
 </template>
 <script>

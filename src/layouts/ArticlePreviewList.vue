@@ -29,7 +29,7 @@
           :xs="{span:24}"
           >
           <div class="art-container" @click="toArticle(item)">
-            <div class="title">{{item.title}}</div>
+            <div :class="['title',{'min-title':isBigScreen}]">{{item.title}}</div>
             <div class="tags-container">
               <div class="tags" v-if="item.tags">
                 <el-tag
@@ -40,7 +40,7 @@
               </div>
             </div>
             
-            <div class="summary">{{item.summary}}</div>
+            <div :class="['summary',{'min-summary':isBigScreen}]">{{item.summary}}</div>
             <div class="comment">
               <span>{{item.userInfo.name}}</span>
               <SvgIcon class="info-icon" size="mini" icon="like3"></SvgIcon>
@@ -195,9 +195,14 @@ export default {
       margin: 10px 0 10px 30px;
     }
   }
+  .min-title{
+    min-height: 70px;
+  }
+  .min-summary{
+    min-height: 150px;
+  }
   .summary{
     margin: 0 30px;
-    min-height: 110px;
     text-align: left;
     font-size: 14px;
     color: #717a84;

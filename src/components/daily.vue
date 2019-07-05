@@ -82,8 +82,9 @@
         </el-timeline>
         <!-- <div v-if="loadMoreDisable" class="loading">lzk is trying...</div>
         <div v-if="toEnd" class="loading">没有惹⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div> -->
-        <infiniteLoading ref="infinite" direction="bottom" :distance="0" @infinite="infiniteHandler">
+        <infiniteLoading ref="infinite" @infinite="infiniteHandler" spinner="default">
           <div class="loading" slot="no-more">mo有了哦⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
+          <!-- <div class="loading" slot="spinner">Ծ‸ Ծ lzk is trying</div> -->
         </infiniteLoading>
       </el-col>
     </el-row>
@@ -173,11 +174,9 @@ export default {
           this.pastDaily = this.pastDaily.concat(res.data.daily)
         }
         this.index++
-        $state.loaded()
-        
-        // this.$nextTick(() => {
-        //   this.loadMoreDisable = false
-        // })
+        setTimeout(() => {
+          $state.loaded()
+        }, 2000)
       } else {
         this.toEnd = true
         $state.complete()
@@ -188,24 +187,24 @@ export default {
       this.index = 0
       this.getDaily()
     },
-    // 处理滑动事件
-    handleScroll(){
-      if (this.loadMoreDisable || this.toEnd) {
-        return
-      }
-      if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
-        this.loadMore()
-      }
-    },
-    handleScroll1(){
-      if (this.loadMoreDisable || this.toEnd) {
-        return
-      }
-      console.log('touchmove')
-      if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
-        this.loadMore()
-      }
-    },
+    // // 处理滑动事件
+    // handleScroll(){
+    //   if (this.loadMoreDisable || this.toEnd) {
+    //     return
+    //   }
+    //   if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
+    //     this.loadMore()
+    //   }
+    // },
+    // handleScroll1(){
+    //   if (this.loadMoreDisable || this.toEnd) {
+    //     return
+    //   }
+    //   console.log('touchmove')
+    //   if (window.screen.height + document.documentElement.scrollTop + 20 >= document.body.clientHeight) {
+    //     this.loadMore()
+    //   }
+    // },
     // 加载更多
     loadMore() {
       console.log('loadmore')

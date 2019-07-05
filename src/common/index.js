@@ -3,8 +3,8 @@ const devHost = 'http://127.0.0.1:3000'
 // 生产环境的后端IP
 const prdHost = 'http://www.xhfkindergarten.cn:3000'
 // 后端IP
-const host = process.env.NODE_ENV=='development'?devHost:prdHost
-// const host = prdHost
+// const host = process.env.NODE_ENV=='development'?devHost:prdHost
+const host = prdHost
 
 // 图片服务器IP
 const imgHost = 'http://img.xhfkindergarten.cn'
