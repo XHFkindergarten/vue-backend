@@ -45,7 +45,7 @@
           icon="adduser"
           @click.native="register"
           :width="140"></SvgButton>
-        <a v-else href="https://github.com/XHFkindergarten" target="_blank">
+        <a v-else href="https://img.xhfkindergarten.cn/WechatIMG3.jpeg" target="_blank">
           <SvgButton
             content="Connect"
             icon="weixin"
