@@ -42,7 +42,7 @@
           <div class="tag-bar">
             <div class="publish-container">
               <el-switch
-                width="40"
+                :width="40"
                 v-model="isPublic"
                 active-text="public"
                 inactive-text="private"
@@ -294,6 +294,9 @@ export default {
     // 保存当前编辑的文章
     async saveArticle() {
       const that = this
+      if (!this.editArticle.tags) {
+        this.editArticle.tags = []
+      }
       const params = {
         id: this.editArticle.id,
         content: this.$refs.richtext.markdownContent,
