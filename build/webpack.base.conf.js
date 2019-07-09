@@ -4,6 +4,8 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -107,6 +109,10 @@ module.exports = {
       $: "jquery", 
       jQuery:"jquery", 
       "windows.jQuery":"jquery"
-    }) 
+    }),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: utils.assetsPath('css/[name].[contenthash].css')
+    }),
   ]
 }
