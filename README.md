@@ -95,8 +95,7 @@ npm run build
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 #vue-backend
 
-::: hljs-right
 
-WechatID:lzk100511130612
 
-:::
+### WechatID:lzk100511130612
+
