@@ -19,7 +19,7 @@
           <el-select
             clearable
             @change="tagSearch"
-            style="width:100%;"
+            style="width:94%;"
             v-model="selectValue"
             placeholder="请选择标签">
             <el-option

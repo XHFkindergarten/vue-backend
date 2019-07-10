@@ -301,7 +301,8 @@ export default {
         content: this.$refs.richtext.markdownContent,
         html: this.$refs.richtext.htmlContent,
         title: this.editArticle.title,
-        tags: this.editArticle.tags.join(keys.tagGap)
+        tags: this.editArticle.tags.join(keys.tagGap),
+        groupId: this.editArticle.groupId
       }
       const res = await this.$store.dispatch('updateArticleAction', params)
       if (res.data.success) {
