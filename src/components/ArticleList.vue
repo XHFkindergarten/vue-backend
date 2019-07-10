@@ -13,8 +13,22 @@
             <SvgIcon size="mid" icon="edit"></SvgIcon>
           </button>
           <p>条件筛选</p>
-          <input id="search" v-model="filterValue" @focus="onSearching" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
+          <input id="search" v-model="filterValue" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
           <!-- <el-input v-model="filterValue" @blur="articleFilter" style="border-radius:50%;" type="text" placeholder="请输入文章标题或内容中的字段"></el-input> -->
+          <p>标签筛选</p>
+          <el-select
+            clearable
+            @change="tagSearch"
+            style="width:100%;"
+            v-model="selectValue"
+            placeholder="请选择标签">
+            <el-option
+              v-for="item in tagOptions"
+              :key="item"
+              :value="item"
+              :label="item"
+              ></el-option>
+          </el-select>
         </div>
       </el-col>
       <el-col
@@ -61,6 +75,8 @@ export default {
       showArticleList: [],
       // 文章筛选文字
       filterValue: '',
+      // 文章筛选标签
+      selectValue: '',
       // 当前所在页码
       currentPage: 1,
       // 每页的数据量
@@ -70,7 +86,9 @@ export default {
       // 是否没有文章
       emptyArticle: true,
       // 是否正在搜索
-      isSearching: false
+      isSearching: false,
+      // 标签选项
+      tagOptions: []
     }
   },
   components: {
@@ -78,41 +96,17 @@ export default {
     SvgIcon
   },
   methods: {
-    // 开始条件筛选
-    onSearching() {
-      this.isSearching = true
-    },
-    // 跳转到写文章页面
-    writeArt() {
-      if (this.$store.state.status) {
-        this.$router.push('/articleManage')
-      } else {
-        this.$message({
-          type: 'warning',
-          message: '请登录后再试:('
-        })
+    // 根据标签筛选
+    tagSearch() {
+      if (this.selectValue===null) {
+        this.showArticleList = this.articleList
+        return
       }
-    },
-    // 洗数据(tags)
-    formatTags() {
-      this.articleList.forEach(art => {
-        if (art.tags&&art.tags.length > 0) {
-          art.tags = art.tags.split(keys.tagGap)
-        }
+      const target = this.selectValue
+      this.showArticleList = this.articleList.filter(item => {
+        return item.tags.indexOf(target) !== -1
       })
-      console.log(this.articleList)
-    },
-    // 获取所有文章
-    async getUserArticle() {
-      this.isLoading = true
-      const res = await this.$store.dispatch('getAllArticleAction')
-      this.isLoading = false
-      this.articleList = res.data.article
-      this.formatTags()
-      if (this.articleList.length==0) {
-        this.emptyArticle = true
-      }
-      this.showArticleList = res.data.article
+
     },
     // 条件查询筛选文章
     articleFilter() {
@@ -127,6 +121,43 @@ export default {
         return Reg.test(item.title) || Reg.test(item.content)
       })
     },
+    // 跳转到写文章页面
+    writeArt() {
+      if (this.$store.state.status) {
+        this.$router.push('/articleManage')
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '请登录后再试:('
+        })
+      }
+    },
+    // 洗数据(tags)
+    formatTags() {
+      let tagOptions = []
+      
+      this.articleList.forEach(art => {
+        if (art.tags&&art.tags.length > 0) {
+          art.tags = art.tags.split(keys.tagGap)
+          tagOptions = tagOptions.concat(art.tags).unique()
+        }
+      })
+      this.tagOptions = tagOptions
+      // console.log(this.articleList)
+    },
+    // 获取所有文章
+    async getUserArticle() {
+      this.isLoading = true
+      const res = await this.$store.dispatch('getAllArticleAction')
+      this.isLoading = false
+      this.articleList = res.data.article
+      this.formatTags()
+      if (this.articleList.length==0) {
+        this.emptyArticle = true
+      }
+      this.showArticleList = res.data.article
+    },
+    
     // 页面变化
     pageChange(newPage) {
       this.currentPage = newPage
@@ -151,6 +182,17 @@ export default {
     }
   },
   mounted() {
+    Array.prototype.unique = function(){
+      var a = {};
+      for(var i = 0; i < this.length; i++){
+        if(typeof a[this[i]] == "undefined")
+          a[this[i]] = 1;
+      }
+      this.length = 0;
+      for(var i in a)
+        this[this.length] = i;
+      return this;
+    }
     // this.judgeScreen()
     this.getUserArticle()
   },

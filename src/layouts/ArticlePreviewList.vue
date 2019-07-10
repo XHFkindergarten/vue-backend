@@ -98,7 +98,9 @@ export default {
     },
     formatTags() {
       this.artList.forEach(art => {
-        art.tags = art.tags.split(keys.tagGap)
+        if (typeof(art.tags)==='string') {
+          art.tags = art.tags.split(keys.tagGap)
+        }
       })
     },
     // 编辑封面图
