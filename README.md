@@ -1,5 +1,5 @@
 <div style="text-align:center;" >
-  <img src="http://35.241.100.176:3000/upload/context/1556968902289.png" width="300" />
+  <img src="https://img.xhfkindergarten.cn/default-bird.png" width="300" />
 </div>
 
 
@@ -9,9 +9,9 @@ by XHFkindergarten@gmail.com
 
 
 
-## 包含功能
-``` bash
+## 用户模块
 
+``` 
 登录
 # 密码加密
 # token验证
@@ -27,7 +27,37 @@ by XHFkindergarten@gmail.com
 # 根据用户权限动态挂载路由
 # 自动生成路由侧边栏
 # 支持管理员动态添加路由权限（未完成）
+```
 
+## 正式功能
+
+```
+文章
+
+依赖simpleMde组件
+# Markdown语法实时预览
+# 文章分组
+# 实时预览
+# 控制发布状态
+# 评论回复模块
+# 阅读页面
+
+doc/wpf格式实时朗读
+
+依赖百度AI语音引擎
+# 允许导入4M以内的文件(过大的文件会timeout)
+# 提供音量、音色（男女）等选项
+
+动态发布功能
+
+# 时间线发布形式
+# 支持九图
+
+```
+
+## 测试模块
+
+```
 富文本编辑器
 # tinymce
 
@@ -65,8 +95,7 @@ npm run build
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 #vue-backend
 
-::: hljs-right
 
-WechatID:lzk100511130612
 
-:::
+### WechatID:lzk100511130612
+
