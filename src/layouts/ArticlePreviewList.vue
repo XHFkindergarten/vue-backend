@@ -205,7 +205,7 @@ export default {
     min-height: 70px;
   }
   .min-summary{
-    min-height: 150px;
+    min-height: 106px;
   }
   .summary{
     margin: 0 30px;
