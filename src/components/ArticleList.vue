@@ -13,7 +13,7 @@
             <SvgIcon size="mid" icon="edit"></SvgIcon>
           </button>
           <p>条件筛选</p>
-          <input id="search" v-model="filterValue" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
+          <input id="search" v-model="filterValue" @focus="onSearching" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
           <!-- <el-input v-model="filterValue" @blur="articleFilter" style="border-radius:50%;" type="text" placeholder="请输入文章标题或内容中的字段"></el-input> -->
         </div>
       </el-col>
@@ -67,10 +67,10 @@ export default {
       pageSize: 5,
       // 文章正在加载
       isLoading: false,
-      // 是否是大屏
-      isBigScreen: false,
       // 是否没有文章
-      emptyArticle: true
+      emptyArticle: true,
+      // 是否正在搜索
+      isSearching: false
     }
   },
   components: {
@@ -78,6 +78,10 @@ export default {
     SvgIcon
   },
   methods: {
+    // 开始条件筛选
+    onSearching() {
+      this.isSearching = true
+    },
     // 跳转到写文章页面
     writeArt() {
       if (this.$store.state.status) {
@@ -88,8 +92,6 @@ export default {
           message: '请登录后再试:('
         })
       }
-      
-      
     },
     // 洗数据(tags)
     formatTags() {
@@ -114,6 +116,7 @@ export default {
     },
     // 条件查询筛选文章
     articleFilter() {
+      this.isSearching = false
       if (!this.filterValue) {
         this.showArticleList = this.articleList
         return
@@ -127,14 +130,7 @@ export default {
     // 页面变化
     pageChange(newPage) {
       this.currentPage = newPage
-    },
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
-    },
+    }
   },
   computed: {
     userInfo() {
@@ -149,10 +145,13 @@ export default {
       const begin = (this.currentPage-1)*this.pageSize
       const end = this.currentPage*this.pageSize
       return this.showArticleList.slice(begin, end)
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
     this.getUserArticle()
   },
   created() {

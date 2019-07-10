@@ -14,7 +14,16 @@ export default {
 
     }
   },
+  methods: {
+    // 判断屏幕大小
+    judgeScreen() {
+      if (window.innerWidth<800) {
+        this.$store.commit('notBigScreen')
+      }
+    },
+  },
   mounted() {
+    this.judgeScreen()
     // this.$message({
     //   type: 'warning',
     //   message: '服务器又被攻击了,请重新注册!'

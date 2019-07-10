@@ -7,6 +7,7 @@ const Test = () => import('@/components/Test')
 const Test2 = () => import('@/components/Test2')
 const AppContainer = () => import('@/layouts/AppContainer')
 const HeaderContainer = () => import('@/layouts/HeaderContainer')
+const GrayContainer = () => import('@/layouts/GrayContainer')
 const Me = () => import('@/components/Me')
 
 export const constantRouterMap =  [
@@ -117,15 +118,29 @@ export const constantRouterMap =  [
       },{
         path: 'list',
         component: () => import('@/components/ArticleList')
-      },{
+      },
+      // {
+      //   path: 'article',
+      //   alias: '/article',
+      //   component: () => import('@/components/ArticleOne'),
+      //   props: (route) => ({id: route.query.id})
+      // },
+      {
+        alias: '/smallscreen',
+        path: 'smallscreen',
+        component: () => import('@/layouts/SmallScreen')
+      }
+    ]
+  },{
+    path: '/grayheader',
+    name: 'grayheader',
+    component: GrayContainer,
+    children: [
+      {
         path: 'article',
         alias: '/article',
         component: () => import('@/components/ArticleOne'),
         props: (route) => ({id: route.query.id})
-      },{
-        alias: '/smallscreen',
-        path: 'smallscreen',
-        component: () => import('@/layouts/SmallScreen')
       }
     ]
   }

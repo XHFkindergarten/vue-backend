@@ -90,7 +90,6 @@ export default {
       // 每页显示的条数
       pageSize: 4,
       currentPage: 1,
-      isBigScreen: false
     }
   },
   props: ['id'],
@@ -109,13 +108,13 @@ export default {
     }
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
     this.getUserInfo()
     this.getUserArticle()
   },
-  created() {
-    window.onresize = this.judgeScreen
-  },
+  // created() {
+  //   window.onresize = this.judgeScreen
+  // },
   methods: {
     // 获取用户信息
     async getUserInfo() {
@@ -135,13 +134,6 @@ export default {
     },
     pageChange(index) {
       this.currentPage = index
-    },
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
     }
   },
   directives: {

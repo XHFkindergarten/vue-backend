@@ -111,7 +111,6 @@ export default {
       // 被选中的文章分组index
       activeGroupIndex: '0',
       editArticle: '',
-      isBigScreen: true,
       // (小屏幕下)编辑文章
       isEditing: false,
       // 是否新建标签
@@ -344,19 +343,14 @@ export default {
           this.activeArt = ''
         }
       })
-    },
-    // 判断屏幕尺寸
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
     }
   },
   computed: {
     currentGroupId() {
       return this.groupList[parseInt(this.activeGroupIndex)].id
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
     // // 正要编辑的文章obj
     // editArticle() {
@@ -364,7 +358,7 @@ export default {
     // }
   },
   async mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
     await this.getGroupList()
     await this.getArticleList()
   },

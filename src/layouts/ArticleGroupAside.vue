@@ -50,9 +50,7 @@ export default {
       // 是否正在添加分组
       isAddingGroup: false,
       // 选中的分组
-      activeTab: '0',
-      // 是否是大屏幕
-      isBigScreen: false
+      activeTab: '0'
     }
   },
   props: {
@@ -62,6 +60,11 @@ export default {
   },
   components: {
     SvgIcon
+  },
+  computed: {
+    isBigScreen() {
+      return this.$store.state.isBigScreen
+    }
   },
   methods: {
     // 分组模式完成
@@ -114,17 +117,17 @@ export default {
         index: this.$refs.menu.activeIndex
       })
     },
-    // 判断屏幕尺寸
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
-    },
+    // // 判断屏幕尺寸
+    // judgeScreen() {
+    //   if (window.innerWidth<800) {
+    //     this.isBigScreen = false
+    //   } else {
+    //     this.isBigScreen = true
+    //   }
+    // },
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
   }
 }
 </script>

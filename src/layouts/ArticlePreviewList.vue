@@ -72,8 +72,6 @@ export default {
   data() {
     return {
       editPicDialog: false,
-      // 是否是电脑屏幕尺寸
-      isBigScreen: true,
       // 即将要编辑的图片
       editPicUrl: '',
       // 即将要编辑的文章id
@@ -84,7 +82,10 @@ export default {
   },
   watch: {
     articleList: {
-      handler(newValue) {
+      handler(newValue, oldValue) {
+        if (newValue.length === oldValue.length) {
+          return
+        }
         this.artList = newValue
         this.formatTags()
       },
@@ -115,14 +116,14 @@ export default {
       this.$message.success('修改成功')
       this.editPicDialog = false
       this.$emit('uploadLabelImg')
-    },
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
     }
+    // judgeScreen() {
+    //   if (window.innerWidth<800) {
+    //     this.isBigScreen = false
+    //   } else {
+    //     this.isBigScreen = true
+    //   }
+    // }
   },
   props: {
     articleList: {
@@ -136,13 +137,16 @@ export default {
   computed: {
     isMe() {
       return this.$route.path=="/me"
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   created() {
     window.onresize = this.judgeScreen
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
   }
 }
 </script>
@@ -178,7 +182,7 @@ export default {
   // float: left;
   width: 100%;
   .title{
-    margin: 20px 30px 0;
+    margin: 18px 30px 0;
     text-align: left;
     font-size: 26px;
     font-weight: bold;

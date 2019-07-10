@@ -26,8 +26,6 @@ export default {
       qiniuToken: '',
       // 上传后台路由
       uploadUrl: 'http://up-z2.qiniup.com',
-      // 是否是大屏幕
-      isBigScreen: true,
       // 工具栏配置
       toolbars: {
         bold: true, // 粗体
@@ -68,6 +66,9 @@ export default {
   computed: {
     all() {
       return window
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   watch: {
@@ -97,17 +98,8 @@ export default {
       //   })
       
     },
-    // 判断屏幕尺寸
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
-    },
   },
   mounted() {
-    this.judgeScreen()
     if (!this.isBigScreen) {
       console.log('toggle')
       this.$refs.markdown.subfield = false

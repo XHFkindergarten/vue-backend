@@ -45,9 +45,7 @@ export default {
   },
   data() {
     return {
-      activeArt: '',
-      // 是否是大屏幕
-      isBigScreen: false,
+      activeArt: ''
     }
   },
   methods: {
@@ -68,17 +66,22 @@ export default {
     deleteArticle(item) {
       this.$emit('deleteArticle', item)
     },
-    // 判断屏幕尺寸
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
-    },
+    // // 判断屏幕尺寸
+    // judgeScreen() {
+    //   if (window.innerWidth<800) {
+    //     this.isBigScreen = false
+    //   } else {
+    //     this.isBigScreen = true
+    //   }
+    // },
+  },
+  computed: {
+    isBigScreen() {
+      return this.$store.state.isBigScreen
+    }
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
   }
 }
 </script>

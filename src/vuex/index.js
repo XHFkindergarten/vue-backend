@@ -20,7 +20,8 @@ let state = {
   Roles: [], // 用户权限
   routes: [], // 允许显示的路由表
   group: {}, // 当前选中的文章分组
-  article: {},  // 当前正在被编辑的文章
+  article: {},  // 当前正在被编辑的文章,
+  isBigScreen: true  // 是否是大屏幕
 }
 // mutations
 let mutations = {
@@ -52,6 +53,10 @@ let mutations = {
   // 将邮箱验证码储存到localStorage
   setEmailCode: (state, code) => {
     localStorage.setItem('email-code', code)
+  },
+  // 如果是小屏幕
+  notBigScreen: (state) => {
+    state.isBigScreen = false
   }
 }
 // getters

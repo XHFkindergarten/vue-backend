@@ -131,9 +131,7 @@ export default {
       // 个人文章列表
       articleList: [],
       // 加载文章时显示loading
-      isLoading: false,
-      // 是否是电脑屏幕尺寸
-      isBigScreen: true,
+      isLoading: false
     }
   },
   components: {
@@ -144,25 +142,25 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.userInfo
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   mounted() {
-    this.judgeScreen()
+    // this.judgeScreen()
     this.mood = this.userInfo.mood
     this.sign = this.userInfo.sign
     this.getUserArticle()
   },
-  created() {
-    window.onresize = this.judgeScreen
-  },
   methods: {
-    judgeScreen() {
-      if (window.innerWidth<800) {
-        this.isBigScreen = false
-      } else {
-        this.isBigScreen = true
-      }
-    },
+    // judgeScreen() {
+    //   if (window.innerWidth<800) {
+    //     this.isBigScreen = false
+    //   } else {
+    //     this.isBigScreen = true
+    //   }
+    // },
     editusername() {
       this.isEditName = true
       this.editUsername = this.userInfo.username

@@ -1,60 +1,70 @@
 <template>
-  <div>
-    <div class="aside hidden-xs-only">
-      <div class="square">
-        <SvgIcon v-if="!hasLike" @click.native="likeArticle" class="icon" size="mid" icon="like3"></SvgIcon>
-        <SvgIcon v-else @click.native="dislikeArticle" class="icon" size="mid" icon="like3-active"></SvgIcon>
-        <div>{{article.likeNum}}</div>
-      </div>
-      <div class="square">
-        <SvgIcon class="icon" size="mid" icon="Comment"></SvgIcon>
-        <div>{{article.commentNum}}</div>
-      </div>
-      <div class="square">
-        <SvgIcon class="icon" size="mid" icon="eyes"></SvgIcon>
-        <div>{{article.viewTime}}</div>
-      </div>
-    </div>
-    <div class="aside2 hidden-sm-and-up">
-      <div class="square">
-        <SvgIcon v-if="!hasLike" @click.native="likeArticle" class="icon" size="mid" icon="like3"></SvgIcon>
-        <SvgIcon v-else @click.native="dislikeArticle" class="icon" size="mid" icon="like3-active"></SvgIcon>
-        <div>{{article.likeNum}}</div>
-      </div>
-      <div class="square">
-        <SvgIcon class="icon" size="mid" icon="Comment"></SvgIcon>
-        <div>{{article.commentNum}}</div>
-      </div>
-      <div class="square">
-        <SvgIcon class="icon" size="mid" icon="eyes"></SvgIcon>
-        <div>{{article.viewTime}}</div>
-      </div>
-    </div>
+  <div class="bg-gray" v-loading="isLoading">
     <el-row>
       <el-col
-        :lg={span:8,offset:8}
+        class="bg-white round"
+        :lg={span:12,offset:6}
         :md={span:10,offset:7}
         :sm={span:12,offset:6}
-        :xs={span:20,offset:2}
+        :xs={span:24}
         >
-        <p class="title">{{article.title}}</p>
-        <div class="user-container" @click="toAuthor">
-          <img id="avatar" :src="article.userInfo.avatar">
-          <div class="user-info">
-            <div class="username">{{article.userInfo.name}}</div>
-            <div class="article-info">
-              <span>{{article.updatedAt}}</span>
+        <div v-if="isBigScreen" class="aside">
+          <div class="square">
+            <div class="circle">
+              <SvgIcon v-if="!hasLike" @click.native="likeArticle" class="icon" size="mini" icon="like3"></SvgIcon>
+              <SvgIcon v-else @click.native="dislikeArticle" class="icon" size="mini" icon="like3-active"></SvgIcon>
+              <div class="side-num">{{article.likeNum}}</div>
+            </div>
+          </div>
+          <div class="square">
+            <div class="circle">
+              <SvgIcon class="icon" size="mini" icon="Comment"></SvgIcon>
+              <div class="side-num">{{article.commentNum}}</div>
+            </div>
+          </div>
+          <div class="square">
+            <div class="circle">
+              <SvgIcon class="icon" size="mini" icon="eyes"></SvgIcon>
+              <div class="side-num">{{article.viewTime}}</div>
             </div>
           </div>
         </div>
-        <div style="text-align:left;margin:20px 0 100px;" class="markdown-body" v-highlight v-html="html"></div>
-        <CommentInput
-          @submitComment="submitComment"
-          :id="id"></CommentInput>
-        <div v-if="hasData" class="comments-container">
-          <div class="title">评论({{commentList.length+replyList.length}})</div>
-          <CommentItem @deleteComment="refreshComment" @addReply="addReplySuccess" v-for="(item,index) in commentList" :key="item.id" :index="index" :comment="item"></CommentItem>
+        <div :style="`padding: 0 ${paddingAside}px`">
+          <p class="title">{{article.title}}</p>
+          <div class="user-container" @click="toAuthor">
+            <img id="avatar" :src="article.userInfo.avatar">
+            <div class="user-info">
+              <div class="username">{{article.userInfo.name}}</div>
+              <div class="article-info">
+                <span>{{article.updatedAt}}</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:left;margin:20px 0 100px;" class="markdown-body" v-highlight v-html="html"></div>
+          <div v-if="!isBigScreen" class="bottom-info" :style="`margin: 2rem -${isBigScreen?'50':'20'}px`">
+            <div class="circle">
+              <SvgIcon v-if="!hasLike" @click.native="likeArticle" class="icon" size="mini" icon="like3"></SvgIcon>
+              <SvgIcon v-else @click.native="dislikeArticle" class="icon" size="mini" icon="like3-active"></SvgIcon>
+              <div class="side-num">{{article.likeNum}}</div>
+            </div>
+            <div class="circle">
+              <SvgIcon class="icon" size="mini" icon="Comment"></SvgIcon>
+              <div class="side-num">{{article.commentNum}}</div>
+            </div>
+            <div class="circle">
+              <SvgIcon class="icon" size="mini" icon="eyes"></SvgIcon>
+              <div class="side-num">{{article.viewTime}}</div>
+            </div>
+          </div>
+          <CommentInput
+            @submitComment="submitComment"
+            :id="id"></CommentInput>
+          <div v-if="hasData" class="comments-container">
+            <div class="title">评论({{commentList.length+replyList.length}})</div>
+            <CommentItem @deleteComment="refreshComment" @addReply="addReplySuccess" v-for="(item,index) in commentList" :key="item.id" :index="index" :comment="item"></CommentItem>
+          </div>
         </div>
+        
       </el-col>
     </el-row>
   </div>
@@ -85,7 +95,9 @@ export default {
       // 是否已经获得了数据
       hasData: false,
       // 显示的html
-      html: ''
+      html: '',
+      // 显示加载ing
+      isLoading: false,
     }
   },
   computed: {
@@ -95,6 +107,16 @@ export default {
     },
     userInfo() {
       return this.$store.state.userInfo
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
+    },
+    paddingAside() {
+      if (this.isBigScreen) {
+        return 50
+      } else {
+        return 0
+      }
     }
   },
   components: {
@@ -217,12 +239,15 @@ export default {
   },
   // 获取文章内所有的回复
   async mounted() {
+    // this.judgeScreen()
+    this.isLoading = true
     await this.getArticle()
     await this.getLikeList()
     await this.getComment()
     await this.getReply()
     await this.viewArticle()
     this.formatData()
+    this.isLoading = false
   },
 }
 </script>
@@ -230,51 +255,97 @@ export default {
 @import 'element-ui/lib/theme-chalk/base.css';
 @import 'element-ui/lib/theme-chalk/display.css';
 @import 'https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css';
+@circle: 40px;
+.aside{
+  cursor: pointer;
+  z-index:10;
+  height: @circle*4;
+  width: @circle;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: fixed;
+  margin-left: -7rem;
+  top: 16rem;
+  // border: 1px #d1dede solid;
+  // border-radius: 6px;
+  .square{
+    height: @circle;
+    width: @circle;
+    .circle{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #FFF;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .side-num{
+        position: absolute;
+        left: 75%;
+        line-height: 1;
+        top: 0;
+        background: #b2bac2;
+        transform-origin: left top;
+        font-size: 1rem;
+        transform: scale(0.75);
+        border-radius: .7rem;
+        color: #FFF;
+        padding: .1rem .4rem;
+      }
+    }
+  }
+}
+.round{
+  border-radius: 6px;
+}
+.bg-gray {
+  background: #F4F5F5;
+}
+.bg-white {
+  background: #FFF;
+}
 .comments-container{
   .title{
     font-size: 26px;
     font-weight: bold;
   }
 }
-.aside{
-  cursor: pointer;
-  z-index:10;
-  height: 180px;
-  width: 60px;
-  position: fixed;
-  right: 100px;
-  top: 200px;
-  border: 1px #d1dede solid;
-  background: #fff;
-  border-radius: 6px;
-}
-.aside2{
-  cursor: pointer;
-  z-index:10;
-  height: 180px;
-  width: 60px;
-  position: fixed;
-  right: 20px;
-  top: 200px;
-  border: 1px #d1dede solid;
-  background: #fff;
-  border-radius: 12px;
-}
-.square{
-    width: 60px;
-    height: 60px;
-    border-bottom: 1px #d1dede solid;
-    .icon{
-      margin-top:5px;
-      display:inline-block;
+.bottom-info {
+  height: 5rem;
+  background: #F4F5F5;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .circle{
+      width: @circle;
+      height: @circle;
+      border-radius: 50%;
+      background: #FFF;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .side-num{
+        position: absolute;
+        left: 75%;
+        line-height: 1;
+        top: 0;
+        background: #b2bac2;
+        transform-origin: left top;
+        font-size: 1rem;
+        transform: scale(0.75);
+        border-radius: .7rem;
+        color: #FFF;
+        padding: .1rem .4rem;
+      }
     }
-    .icon:hover{
-      color: #409EFF;
-    }
-  }
-.square:last-child{
-  border: none;
 }
+
 .title{
   text-align: left;
   font-size: 40px;

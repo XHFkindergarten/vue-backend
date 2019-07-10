@@ -162,8 +162,7 @@ export default {
   ],
   data() {
     return {
-      isCollapse: false,
-      isBigScreen: true
+      isCollapse: false
     }
   },
   computed: {
@@ -175,6 +174,9 @@ export default {
     },
     currentRoute() {
       return this.$route.path
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   methods: {
@@ -186,14 +188,6 @@ export default {
         this.isCollapse = !this.isCollapse
       }
     },
-    // 监听屏幕尺寸，显示tab
-    listenWidth() {
-      if (window.innerWidth>768) {
-        this.isBigScreen = true
-      } else {
-        this.isBigScreen = false
-      }
-    },
     // 点击返回按钮
     backRoute() {
       console.log('back')
@@ -201,7 +195,7 @@ export default {
     }
   },
   created() {
-    this.listenWidth()
+    // this.listenWidth()
     if (!this.isBigScreen) {
       this.isCollapse = false
     } else {
