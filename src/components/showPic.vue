@@ -5,9 +5,9 @@
     </div>
     <div v-if="isFullScreen" class="full-screen">
       <div class="full-pic-container">
-        <img :src="picSrc" alt="大图">
+        <img @click="cancelFullScreen" :src="picSrc" alt="大图">
       </div>
-      <SvgIcon @click.native.stop="cancelFullScreen" class="cancel" v-if="isFullScreen" icon="add3-wrong"></SvgIcon>
+      <!-- <SvgIcon @click.native.stop="cancelFullScreen" class="cancel" v-if="isFullScreen" icon="add3-wrong"></SvgIcon> -->
     </div>
   </div>
   
@@ -24,6 +24,9 @@ export default {
     SvgIcon
   },
   methods: {
+    swipeLeft() {
+      console.log('swipe left')
+    },
     fullScreen() {
       this.isFullScreen = true
     },
