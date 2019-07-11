@@ -174,7 +174,6 @@ const viewArticle = async id => {
     .catch(err => {
       throw err
     })
-  console.log('http', res)
   return res
 }
 

@@ -22,14 +22,14 @@
       <div class="time">{{item.time}}</div>
     </div>
 
-    <div class="add-reply-container">
+    <div class="add-reply-container" v-if="!isEdit">
       <div @click="editReply" class="add-reply">
         <SvgIcon size="mini" icon="Edit" style="position:relative;top:4px;"></SvgIcon>
         <span>添加回复</span>
       </div>
     </div>
 
-    <div class="add-reply-container" v-if="isEdit">
+    <div class="add-reply-container" v-else>
       <div class="input-container">
         <input id="reply-input" :disabled="!status" :placeholder="status?'请输入回复内容':'请登录后发言'" v-model="reply" type="text">
         <el-button @click="submitReply" :disabled="!status" style="background: #409EFF;color:#fff;" circle>ok</el-button>

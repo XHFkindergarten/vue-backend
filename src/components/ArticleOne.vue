@@ -67,12 +67,25 @@
         
       </el-col>
     </el-row>
+    <el-row :style="`margin-top:${isBigScreen?'40':'0'}px;`">
+      <el-col
+        class="bg-white round"
+        :lg={span:12,offset:6}
+        :md={span:10,offset:7}
+        :sm={span:12,offset:6}
+        :xs={span:24}>
+        <div :style="`padding: 30px ${paddingAside}px`">
+          <Recommend :id="id" :tagstring="article.tags"></Recommend>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
 
 import CommentItem from '@/layouts/CommentItem'
 import CommentInput from '@/layouts/CommentInput'
+import Recommend from '@/components/recommend'
 import SvgIcon from '@/layouts/SvgIcon'
 import marked from 'marked'
 export default {
@@ -122,7 +135,8 @@ export default {
   components: {
     SvgIcon,
     CommentInput,
-    CommentItem
+    CommentItem,
+    Recommend
   },
   props: [
     'id'
@@ -167,7 +181,6 @@ export default {
     // 获取喜欢这篇文章的所有用户id
     async getLikeList() {
       const res = await this.$store.dispatch('likeListAction', this.article.id)
-      console.log(res)
       const likeList = res.data.likeList
       if (this.status && likeList.indexOf(this.userInfo.id)>=0) {
         this.hasLike = true
@@ -222,7 +235,6 @@ export default {
     },
     // 发起回复成功
     addReplySuccess() {
-      console.log('?')
       this.getArticle().then(res => {
         this.getReply().then(res => {
           this.formatData()
@@ -234,7 +246,6 @@ export default {
     // 通知后端查看次数+1
     async viewArticle() {
       const res = await this.$store.dispatch('viewArticleAction', this.id)
-      console.log(res)
     }
   },
   // 获取文章内所有的回复
@@ -348,7 +359,7 @@ export default {
 
 .title{
   text-align: left;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bolder;
   word-wrap: break-word;
   word-break: break-all;

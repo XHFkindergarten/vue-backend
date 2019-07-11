@@ -69,6 +69,10 @@ router.beforeEach( async (to, from, next) => {
   }
 })
 
+router.afterEach((to,from,next) => {
+  window.scrollTo(0,0);
+})
+
 // 错误处理函数（主要处理Loding chunk 加载js文件失败）
 router.onError((error) => {
   const pattern = /Loading chunk (\d)+ failed/g;

@@ -152,12 +152,6 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
-      // console.log(this.$refs.infinite)
-      // if (this.loadMoreDisable) {
-      //   console.log('no')
-      //   return
-      // }
-      // this.loadMoreDisable = true
       const offset = this.index || 0
       let res
       if (this.showAll) {
