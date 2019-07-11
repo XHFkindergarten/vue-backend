@@ -75,7 +75,7 @@ export default {
       // 声明cropper对象
       cropper: '',
       // 上传后台路由
-      uploadUrl: 'http://up-z2.qiniup.com',
+      uploadUrl: 'https://up-z2.qiniup.com',
       // 上传头像时附带的额外参数
       avatarParams: {
         id: this.$store.state.userInfo.id
