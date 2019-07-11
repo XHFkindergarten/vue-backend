@@ -1,13 +1,13 @@
 // 测试环境的后端IP
 const devHost = 'http://127.0.0.1:3000'
 // 生产环境的后端IP
-const prdHost = 'http://www.xhfkindergarten.cn:3000'
+const prdHost = 'https://www.xhfkindergarten.cn:3000'
 // 后端IP
 const host = process.env.NODE_ENV=='development'?devHost:prdHost
 // const host = prdHost
 
 // 图片服务器IP
-const imgHost = 'http://img.xhfkindergarten.cn'
+const imgHost = 'https://img.xhfkindergarten.cn'
 
 // 当前登录状态
 const status = {

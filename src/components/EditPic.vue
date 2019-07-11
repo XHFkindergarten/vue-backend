@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     editPic() {
-      return this.picUrl?this.picUrl:'http://localhost:3000/scutLOGO.png'
+      return this.picUrl
     }
   },
   methods: {
