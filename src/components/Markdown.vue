@@ -25,7 +25,7 @@ export default {
       // 七牛云token
       qiniuToken: '',
       // 上传后台路由
-      uploadUrl: 'http://up-z2.qiniup.com',
+      uploadUrl: 'https://up-z2.qiniup.com',
       // 工具栏配置
       toolbars: {
         bold: true, // 粗体

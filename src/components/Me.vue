@@ -233,12 +233,13 @@ export default {
     },
     // 根据用户id请求用户的所有文章
     async getUserArticle() {
+      console.log('getUserArticle')
       this.isLoading = true
+      console.log(this.isLoading)
       const res = await this.$store.dispatch('getArticleList', {
         userId: this.userInfo.id
       })
       this.isLoading = false
-      console.log(res)
       this.articleList = res.data.article
       this.articleList.forEach(art => {
         if (art.tags === '') {

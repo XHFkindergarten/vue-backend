@@ -138,7 +138,7 @@ export default {
             labelImg
           }).then(res => {
             if (res.data.success) {
-              this.$emit('uploadLabelImg')
+              this.$emit('uploadLabelImg', labelImg)
             }
           }).catch(err => {
             this.$message.error(err)

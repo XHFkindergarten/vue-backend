@@ -2,7 +2,7 @@
   <div style="min-height:200px;">
     <el-card
       class="card"
-      v-for="item in artList"
+      v-for="(item, index) in artList"
       :key="item.id"
       shadow="hover"
       :body-style="{
@@ -17,7 +17,7 @@
           :sm="{span:24}"
           :xs="{span:24}"
           >
-          <div class="img-container" :style="!isBigScreen?'height:240px;':''" @click="editPic(item)">
+          <div class="img-container" :style="!isBigScreen?'height:240px;':''" @click="editPic(item, index)">
             <SvgIcon v-if="isMe" class="edit-pic" size="mid" icon="edit"></SvgIcon>
             <img :src="item.labelImg">
           </div>
@@ -77,7 +77,9 @@ export default {
       // 即将要编辑的文章id
       editId: '',
       // 文章列表
-      artList: this.articleList
+      artList: this.articleList,
+      // 编辑图片中
+      editIndex: ''
     }
   },
   watch: {
@@ -104,20 +106,22 @@ export default {
       })
     },
     // 编辑封面图
-    editPic(item) {
+    editPic(item, index) {
       if (!this.isMe){
         this.toArticle(item)
         return
       }
+      this.editIndex = index
       this.editPicDialog = true
       this.editPicUrl = item.labelImg
       this.editId = item.id
     },
     // 上传封面图成功
-    uploadLabelImg() {
+    uploadLabelImg(options) {
       this.$message.success('修改成功')
       this.editPicDialog = false
-      this.$emit('uploadLabelImg')
+      // this.$emit('uploadLabelImg', options)
+      this.artList[this.editIndex].labelImg = options
     }
     // judgeScreen() {
     //   if (window.innerWidth<800) {
