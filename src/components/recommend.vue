@@ -24,6 +24,10 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
+      if (this.recommendList.length>10) {
+        $state.complete()
+        return
+      }
       setTimeout(async () => {
         if (this.index === this.tags.length) {
           $state.complete()
