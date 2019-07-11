@@ -75,7 +75,7 @@
         :sm={span:12,offset:6}
         :xs={span:24}>
         <div :style="`padding: 30px ${paddingAside}px`">
-          <Recommend :id="id" :tagstring="article.tags"></Recommend>
+          <Recommend ref="recommend" :id="id" :tagstring="article.tags"></Recommend>
         </div>
       </el-col>
     </el-row>
@@ -142,8 +142,9 @@ export default {
     'id'
   ],
   watch: {
-    $route(to, from) {
-      this.initPage()
+    async $route(to, from) {
+      await this.initPage()
+      this.$refs.recommend.resetLoader()
     }
   },
   methods: {

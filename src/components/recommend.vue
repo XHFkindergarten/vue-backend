@@ -23,6 +23,12 @@ export default {
     }
   },
   methods: {
+    resetLoader() {
+      console.log('reset infinite loader')
+      this.recommendList = []
+      this.index = 0
+      this.$refs.infinite.$emit('$InfiniteLoading:reset')
+    },
     infiniteHandler($state) {
       if (this.recommendList.length>10) {
         $state.complete()
@@ -38,14 +44,15 @@ export default {
         this.index++
         $state.loaded()
       }, 1000)
-      
     },
     // 使用axios根据标签和文章idGET请求获取推荐列表
     async getRecommend(tag) {
+      console.log('get Recommend axios')
       const res = await this.$axios(`${keys.host}/article/getRecommend?id=${this.id}&tag=${tag}`)
       if (res.data.success) {
         this.recommendList = this.recommendList.concat(res.data.arts)
         this.formatList()
+        console.log(res.data)
       }
       console.log(res.data.arts)
     },
@@ -65,7 +72,11 @@ export default {
     },
   },
   watch: {
+    id(newValue) {
+      console.log('article change', newValue)
+    },
     tagstring(newValue) {
+      console.log('new tag now')
       this.tags = newValue.split(keys.tagGap)
       console.log('tags', this.tags)
     }
