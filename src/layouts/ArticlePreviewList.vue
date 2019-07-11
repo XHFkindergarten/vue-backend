@@ -85,9 +85,9 @@ export default {
   watch: {
     articleList: {
       handler(newValue, oldValue) {
-        if (newValue.length === oldValue.length) {
-          return
-        }
+        // if (newValue.length === oldValue.length) {
+        //   return
+        // }
         this.artList = newValue
         this.formatTags()
       },

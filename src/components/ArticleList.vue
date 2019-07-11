@@ -46,7 +46,12 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="20" :offset="2">
+      <el-col
+        :lg={span:20,offset:2}
+        :md={span:24}
+        :sm={span:24}
+        :xs={span:24}
+        >
         <el-pagination
           v-if="articleList.length>0"
           :total="articleNum"
@@ -88,7 +93,9 @@ export default {
       // 是否正在搜索
       isSearching: false,
       // 标签选项
-      tagOptions: []
+      tagOptions: [],
+      // 当前页的文章列表
+      currentPageArticleList: []
     }
   },
   components: {
@@ -156,11 +163,19 @@ export default {
         this.emptyArticle = true
       }
       this.showArticleList = res.data.article
+      this.getCurrentArts()
     },
     
     // 页面变化
     pageChange(newPage) {
       this.currentPage = newPage
+      window.scrollTo(0,0)
+    },
+    // 计算显示的页面
+    getCurrentArts() {
+      const begin = (this.currentPage-1)*this.pageSize
+      const end = this.currentPage*this.pageSize
+      this.currentPageArticleList = this.showArticleList.slice(begin, end)
     }
   },
   computed: {
@@ -171,17 +186,23 @@ export default {
     articleNum() {
       return this.showArticleList.length
     },
-    // 当前页显示的文章
-    currentPageArticleList() {
-      const begin = (this.currentPage-1)*this.pageSize
-      const end = this.currentPage*this.pageSize
-      return this.showArticleList.slice(begin, end)
-    },
+    // // 当前页显示的文章
+    // currentPageArticleList() {
+    //   const begin = (this.currentPage-1)*this.pageSize
+    //   const end = this.currentPage*this.pageSize
+    //   return this.showArticleList.slice(begin, end)
+    // },
     isBigScreen() {
       return this.$store.state.isBigScreen
     }
   },
+  watch: {
+    currentPage(newValue, oldValue) {
+      this.getCurrentArts()
+    }
+  },
   mounted() {
+    // 数组原型链新增去重方法unique
     Array.prototype.unique = function(){
       var a = {};
       for(var i = 0; i < this.length; i++){

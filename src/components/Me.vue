@@ -100,9 +100,27 @@
         <ArticlePreviewList
           v-if="articleList.length>0"
           @uploadLabelImg="getUserArticle"
-          :articleList="articleList"></ArticlePreviewList>
+          :articleList="showArticleList"></ArticlePreviewList>
       </el-col>
-      
+    </el-row>
+    <el-row>
+      <el-col
+        :lg={span:20,offset:2}
+        :md={span:24}
+        :sm={span:24}
+        :xs={span:24}
+        >
+        <el-pagination
+          v-if="articleList.length>0"
+          :total="articleNum"
+          :page-size="pageSize"
+          :current-page="currentPage"
+          @current-change="pageChange"
+          background
+          layout="prev, pager, next"
+          >
+        </el-pagination>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -131,7 +149,13 @@ export default {
       // 个人文章列表
       articleList: [],
       // 加载文章时显示loading
-      isLoading: false
+      isLoading: false,
+      // 每页显示条数
+      pageSize: 5,
+      // 当前页
+      currentPage: 1,
+      // 展示出来的文章列表
+      showArticleList: []
     }
   },
   components: {
@@ -145,6 +169,14 @@ export default {
     },
     isBigScreen() {
       return this.$store.state.isBigScreen
+    },
+    articleNum() {
+      return this.articleList.length
+    }
+  },  
+  watch: {
+    currentPage(newValue, oldValue) {
+      this.getCurrentArts()
     }
   },
   mounted() {
@@ -154,6 +186,17 @@ export default {
     this.getUserArticle()
   },
   methods: {
+    // 计算显示的页面
+    getCurrentArts() {
+      const begin = (this.currentPage-1)*this.pageSize
+      const end = this.currentPage*this.pageSize
+      this.showArticleList = this.articleList.slice(begin, end)
+    },
+    // 页码改变
+    pageChange(newPage) {
+      this.currentPage = newPage
+      window.scrollTo(0,0)
+    },
     // judgeScreen() {
     //   if (window.innerWidth<800) {
     //     this.isBigScreen = false
@@ -248,6 +291,7 @@ export default {
           art.tags = art.tags.split(keys.tagGap)
         }
       })
+      this.getCurrentArts()
     }
   },
   directives: {
