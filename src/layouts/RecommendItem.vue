@@ -61,7 +61,7 @@ export default {
   border-top: 1px solid rgba(178,186,194,.15);
 }
 .rec-container{
-  padding: 1rem 0;
+  padding: .4rem 0;
 }
 .info{
   font-size: 0.5rem;

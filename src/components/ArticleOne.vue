@@ -141,6 +141,11 @@ export default {
   props: [
     'id'
   ],
+  watch: {
+    $route(to, from) {
+      this.initPage()
+    }
+  },
   methods: {
     // 重新刷新评论列表
     refreshComment() {
@@ -246,19 +251,22 @@ export default {
     // 通知后端查看次数+1
     async viewArticle() {
       const res = await this.$store.dispatch('viewArticleAction', this.id)
+    },
+    async initPage() {
+      this.isLoading = true
+      await this.getArticle()
+      await this.getLikeList()
+      await this.getComment()
+      await this.getReply()
+      await this.viewArticle()
+      this.formatData()
+      this.isLoading = false
     }
   },
   // 获取文章内所有的回复
   async mounted() {
     // this.judgeScreen()
-    this.isLoading = true
-    await this.getArticle()
-    await this.getLikeList()
-    await this.getComment()
-    await this.getReply()
-    await this.viewArticle()
-    this.formatData()
-    this.isLoading = false
+    this.initPage()
   },
 }
 </script>

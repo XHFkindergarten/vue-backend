@@ -5,7 +5,7 @@
         <Head :userInfo="userInfo"></Head>
       </el-header>
       <el-main :style="`background: ${isBigScreen?'#F4F5F5':'#FFF'};`">
-        <router-view :key="key"></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
@@ -26,9 +26,9 @@ export default {
     isBigScreen() {
       return this.$store.state.isBigScreen
     },
-    key() {
-      return this.$route + new Date()
-    }
+    // key() {
+    //   return this.$route + new Date()
+    // }
   },
   components: {
     Head

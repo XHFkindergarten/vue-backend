@@ -5,7 +5,7 @@
         <Head :userInfo="userInfo"></Head>
       </el-header>
       <el-main>
-        <router-view :key="key"></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
@@ -23,9 +23,9 @@ export default {
     userInfo() {
       return this.$store.state.userInfo
     },
-    key() {
-      return this.$route+new Date()
-    }
+    // key() {
+    //   return this.$route+new Date()
+    // }
   },
   components: {
     Head
