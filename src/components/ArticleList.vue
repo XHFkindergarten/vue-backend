@@ -107,13 +107,14 @@ export default {
     tagSearch() {
       if (this.selectValue===null) {
         this.showArticleList = this.articleList
+        this.getCurrentArts()
         return
       }
       const target = this.selectValue
       this.showArticleList = this.articleList.filter(item => {
         return item.tags.indexOf(target) !== -1
       })
-
+      this.getCurrentArts()
     },
     // 条件查询筛选文章
     articleFilter() {
