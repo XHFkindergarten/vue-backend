@@ -285,7 +285,7 @@ export default {
       this.isLoading = false
       this.articleList = res.data.article
       this.articleList.forEach(art => {
-        if (art.tags === '') {
+        if (!art.tags) {
           art.tags = []
         } else {
           art.tags = art.tags.split(keys.tagGap)
