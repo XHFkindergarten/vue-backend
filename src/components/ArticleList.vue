@@ -111,8 +111,10 @@ export default {
         return
       }
       const target = this.selectValue
+      console.log('target', target)
+      console.log(this.articleList)
       this.showArticleList = this.articleList.filter(item => {
-        return item.tags.indexOf(target) !== -1
+        return item.tags&&item.tags.indexOf(target) !== -1
       })
       this.getCurrentArts()
     },
