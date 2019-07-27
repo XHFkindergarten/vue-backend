@@ -11,7 +11,15 @@
         :xs="{span:24}"
         style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
         >
+        <div class="toggle-container">
+          <button @click="inputWord=true" :class="['button1',inputWord?'active-btn':'inactive-btn']">文字</button>
+          <button @click="inputWord=false" :class="['button2',inputWord?'inactive-btn':'active-btn']">文件</button>
+        </div>
+        <div v-if="inputWord" style="width:360px">
+          <el-input v-model="words"></el-input>
+        </div>
         <el-upload
+          v-else
           ref="uploadFile"
           :http-request="uploadFile"
           action=""
@@ -100,7 +108,20 @@ export default {
           label: '情感合成女声',
           value: 4
         },
-      ]
+      ],
+      // 文字输入/文件输入
+      inputWord: true,
+      // 直接输入的文字
+      words: ''
+    }
+  },
+  watch: {
+    inputWord(newValue, oldValue) {
+      if (newValue) {
+        this.fileList = []
+      } else {
+        this.words = ''
+      }
     }
   },
   methods: {
@@ -121,13 +142,41 @@ export default {
     //   audio.play()
     // },
     comfirm() {
-      this.$refs.uploadFile.submit()
-      
+      if (this.inputWord&&!this.words) {
+        this.$message.warning('请输入文字')
+        return
+      } else if (this.inputWord) {
+        this.uploadWords()
+      } else {
+        this.$refs.uploadFile.submit()
+      }
+    },
+    async uploadWords() {
+      this.loading = true
+      const formData = new FormData()
+      formData.append('words', this.words)
+      formData.append('vol', this.vol)
+      formData.append('spd', this.spd)
+      formData.append('per', this.per)
+      const res = await this.$axios.post(`${keys.host}/extra/getWord`, formData)
+        this.loading = false
+      if (res && res.data.audio.length>0) {
+        this.fileList = []
+        this.index = 0
+        this.audioList = res.data.audio
+        console.log(this.audioList)
+        // this.audioSrc = this.audioList[this.index]
+      } else {
+        this.$message({
+          type: 'error',
+          message: '服务器错误'
+        })
+      }
     },
     async uploadFile(params) {
       this.loading = true
-      const file = params.file
       const formData = new FormData()
+      const file = params.file
       formData.append('file', file)
       formData.append('vol', this.vol)
       formData.append('spd', this.spd)
@@ -176,6 +225,37 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.toggle-container{
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  .active-btn{
+    background: #409EFF;
+    color: #FFF;
+  }
+  .inactive-btn{
+    background: #FFF;
+    color: #000;
+  }
+  button{
+    height: 30px;
+    width: 80px;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid #409EFF;
+  }
+  .button1 {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-right: none;
+  }
+  .button2 {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+  }
+}
 .comfirm-btn{
   margin: 40px 0;
 }
