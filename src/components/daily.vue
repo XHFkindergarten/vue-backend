@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-padding">
     <el-row>
       <el-col
         :lg={span:6,offset:2}
@@ -346,6 +346,18 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@big-header-height: 80px;
+@small-header-height: 60px;
+@media screen and (min-width: 992px) {
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+}
+@media screen and (max-width: 992px) {
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+}
 .toggle-container{
   margin: 20px 0;
   display: flex;

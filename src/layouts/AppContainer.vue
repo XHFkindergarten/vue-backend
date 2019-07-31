@@ -1,26 +1,13 @@
 <template>
   <div>
-    <el-container>
-      <el-header style="padding:0;height:auto;">
-        <Head
-          :userInfo="userInfo"></Head>
-      </el-header>
-      <el-container style="margin-top:1px;">
-        <el-aside
-          class="hidden-sm-and-down"
-          :width="(collapse?'201':'65'+'px')">
-          <Side @altCollapse="altCollapse"></Side>
-        </el-aside>
-        <el-main>
-          <router-view/>
-        </el-main>
-      </el-container>
-    </el-container>
+    <NewHead></NewHead>
+    <router-view/>
   </div>
 </template>
 <script>
 import 'element-ui/lib/theme-chalk/display.css';
 import Head from '@/layouts/Head'
+import NewHead from '@/layouts/NewHead'
 import Side from '@/layouts/Sidebar'
 
 export default {
@@ -38,9 +25,11 @@ export default {
   },
   components: {
     Head,
-    Side
+    Side,
+    NewHead
   },
   methods: {
+
     altCollapse() {
       !this.sideWidth
     }
@@ -48,7 +37,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+
 body {
   margin: 8px;
+}
+.el-main{
+  padding: 0;
 }
 </style>

@@ -11,12 +11,14 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
-// // 引入 markdown编辑器 mevon-editor
+// 引入 markdown编辑器 mevon-editor
 import mavonEditor from 'mavon-editor'
-// // 引入样式
+// 引入样式
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
 
+// 引入字体
+import './style/font.less'
 
 // 引入全局配置(请求地址)
 import keys from './common'
