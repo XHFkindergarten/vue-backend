@@ -2,7 +2,8 @@
   <div>
     <el-container>
       <el-header style="padding:0;height:auto;">
-        <Head :userInfo="userInfo"></Head>
+        <!-- <Head :userInfo="userInfo"></Head> -->
+        <NewHead></NewHead>
       </el-header>
       <el-main :style="`background: ${isBigScreen?'#F4F5F5':'#FFF'};`">
         <router-view></router-view>
@@ -12,6 +13,7 @@
 </template>
 <script>
 import Head from '@/layouts/Head'
+import NewHead from '@/layouts/NewHead'
 export default {
   name: 'HeaderContainer',
   data() {
@@ -31,7 +33,8 @@ export default {
     // }
   },
   components: {
-    Head
+    Head,
+    NewHead
   }
 }
 </script>

@@ -119,7 +119,7 @@
       <div @click="CollapseRouteChange('/register')" :class="isCollapse?'show-words':'none-words'" class="nav-words" v-if="!hasLogin" style="animation-delay: 85ms;">Sign up</div>
     </div>
     <el-button
-      v-if="!isCollapse"
+      v-if="!isCollapse&&!isBigScreen"
       @click="isCollapse=true"
       :class="isCollapse?'noOpacity':'showOpacity'"
       class="openCollapse"
@@ -129,7 +129,7 @@
       </svg>
     </el-button>
     <el-button
-      v-if="isCollapse"
+      v-if="isCollapse&&!isBigScreen"
       @click="isCollapse=false"
       :class="isCollapse?'showOpacity':'noOpacity'"
       class="openCollapse"

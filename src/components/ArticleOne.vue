@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-gray" v-loading="isLoading">
-    <el-row>
+  <div class="header-padding">
+    <el-row v-loading="isLoading">
       <el-col
         class="bg-white round"
         :lg={span:12,offset:6}
@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div :style="`padding: 0 ${paddingAside}px`">
+        <div class="padding-aside" style="padding-top:0;padding-bottom:0;">
           <p class="title">{{article.title}}</p>
           <div class="user-container" @click="toAuthor">
             <img id="avatar" :src="article.userInfo.avatar">
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div style="text-align:left;margin:20px 0 100px;" class="markdown-body" v-highlight v-html="html"></div>
-          <div v-if="!isBigScreen" class="bottom-info" :style="`margin: 2rem -${isBigScreen?'50':'20'}px`">
+          <div v-if="!isBigScreen" class="bottom-info">
             <div class="circle">
               <SvgIcon v-if="!hasLike" @click.native="likeArticle" class="icon" size="mini" icon="like3"></SvgIcon>
               <SvgIcon v-else @click.native="dislikeArticle" class="icon" size="mini" icon="like3-active"></SvgIcon>
@@ -67,14 +67,14 @@
         
       </el-col>
     </el-row>
-    <el-row :style="`margin-top:${isBigScreen?'40':'0'}px;`">
+    <el-row class="recommend-container">
       <el-col
         class="bg-white round"
         :lg={span:12,offset:6}
         :md={span:10,offset:7}
         :sm={span:12,offset:6}
         :xs={span:24}>
-        <div :style="`padding: 30px ${paddingAside}px`">
+        <div class="padding-aside" style="padding-top:30px;padding-bottom:30px;">
           <Recommend ref="recommend" :id="id" :tagstring="article.tags"></Recommend>
         </div>
       </el-col>
@@ -276,6 +276,36 @@ export default {
 @import 'element-ui/lib/theme-chalk/display.css';
 @import 'https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css';
 @circle: 40px;
+@big-header-height: 80px;
+@small-header-height: 60px;
+@media screen and (min-width: 992px) {
+  .padding-aside {
+    padding: 0 50px;
+  }
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+  .bottom-info {
+    margin: 2rem -50px;
+  }
+  .recommend-container {
+    margin-top: 40px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .padding-aside {
+    padding: 0;
+  }
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+  .bottom-info {
+    margin: 2rem -20px;
+  }
+  .recommend-container {
+    margin-top: 0;
+  }
+}
 .aside{
   cursor: pointer;
   z-index:10;
