@@ -16,9 +16,9 @@
             :xs="{span:24}"
             >
             <a href="https://github.com/XHFkindergarten/vue-backend" target="_blank">
-              <el-button type="primary" round>
-                <span class="github">G i t H u b</span>
-              </el-button>
+              <button class="btn">
+                GitHub
+              </button>
             </a>
           </el-col>
           <el-col
@@ -29,9 +29,9 @@
             :xs="{span:24}"
             >
             <a href="https://img.xhfkindergarten.cn/WechatIMG3.jpeg" target="_blank">
-              <el-button round>
-                <span class="github">C o n t a c t  m e</span>
-              </el-button>
+              <button class="white-btn">
+                Contack me
+              </button>
             </a>
           </el-col>
         </el-row>
@@ -118,6 +118,28 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.btn {
+  width: 10rem;
+  height: 2.8rem;
+  border-radius: 1.4rem;
+  background: #1DB954;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  color: #FFF;
+  font-family: Circular_black;
+}
+.white-btn {
+  width: 10rem;
+  height: 2.8rem;
+  border-radius: 1.4rem;
+  background: #FFF;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  color: #d64d1b;
+  font-family: Circular_black;
+}
 .main-container{
   display: flex;
   flex-direction: column;
@@ -136,7 +158,6 @@ export default {
       font-family: Circular_black;
     }
     .explain {
-      transition: all 1s ease-in-out;
       color: #FFF;
       font-family: CoreSans;
       font-size: 20px;

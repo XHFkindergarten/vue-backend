@@ -5,9 +5,7 @@
         <!-- <Head :userInfo="userInfo"></Head> -->
         <NewHead></NewHead>
       </el-header>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
+      <router-view></router-view>
     </el-container>
   </div>
 </template>

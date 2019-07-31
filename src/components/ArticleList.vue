@@ -1,75 +1,67 @@
 <template>
-  <div class="header-padding">
-    <el-row>
+  <div class="header-padding" style="position:relative;">
+    <!-- <img class="bg" src="https://img.xhfkindergarten.cn/desk.jpeg" alt="background"> -->
+    <div class="banner">
+      <div class="banner-word">Programming is like sex,</div>
+      <div class="banner-word">One mistake and you have to support it for the rest of your life.</div>
+    </div>
+    <el-row class="form">
       <el-col
-        :lg={span:4,offset:4}
+        :lg={span:5,offset:5}
         :md={span:5,offset:3}
         :sm={span:6,offset:2}
         :xs={span:20,offset:2}
         >
-        <div class="search-container">
-          <p>Write Blog</p>
-          <button @click="writeArt" id="editArt">
-            <SvgIcon size="mid" icon="edit"></SvgIcon>
-          </button>
-          <p>条件筛选</p>
-          <input id="search" v-model="filterValue" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
-          <!-- <el-input v-model="filterValue" @blur="articleFilter" style="border-radius:50%;" type="text" placeholder="请输入文章标题或内容中的字段"></el-input> -->
-          <p>标签筛选</p>
-          <el-select
-            clearable
-            @change="tagSearch"
-            style="width:94%;"
-            v-model="selectValue"
-            placeholder="请选择标签">
-            <el-option
-              v-for="item in tagOptions"
-              :key="item"
-              :value="item"
-              :label="item"
-              ></el-option>
-          </el-select>
-        </div>
+        <div class="label">Tag Filter</div>
+        <el-select
+          clearable
+          @change="tagSearch"
+          style="width:94%;"
+          v-model="selectValue"
+          placeholder="请选择标签">
+          <el-option
+            v-for="item in tagOptions"
+            :key="item"
+            :value="item"
+            :label="item"
+            ></el-option>
+        </el-select>
       </el-col>
       <el-col
-        v-loading="isLoading"
-        :lg={span:10,offset:2}
-        :md={span:10,offset:2}
-        :sm={span:10,offset:2}
+        :lg={span:5,offset:4}
+        :md={span:5,offset:3}
+        :sm={span:6,offset:2}
         :xs={span:20,offset:2}
         >
-        <h1 style="text-align:left;">Articles</h1>
-        <div v-if="articleList.length==0" style="font-size:18px;height:50px;">暂无文章</div>
-        <ArticlePreviewList
-          v-else
-          :articleList="currentPageArticleList"></ArticlePreviewList>
+        <div class="label">Word Filter</div>
+        <input id="search" v-model="filterValue" @blur="articleFilter" placeholder="请输入查询关键字" type="text">
       </el-col>
     </el-row>
     <el-row>
       <el-col
-        :lg={span:20,offset:2}
-        :md={span:24}
-        :sm={span:24}
-        :xs={span:24}
+        :lg={span:14,offset:5}
+        :md={span:5,offset:3}
+        :sm={span:6,offset:2}
+        :xs={span:24,offset:0}
         >
-        <el-pagination
-          v-if="articleList.length>0"
-          :total="articleNum"
-          :page-size="pageSize"
-          :current-page="currentPage"
-          @current-change="pageChange"
-          background
-          layout="prev, pager, next"
-          >
-        </el-pagination>
+        <div style="height:80px;">
+          <Pagination
+            @current-change="pageChange"
+            :total="70"
+            :page-size="pageSize"
+            :current-page="currentPage"
+            ></Pagination>
+        </div>
       </el-col>
     </el-row>
+    <NewArticlePreviewList :articleList="currentPageArticleList"></NewArticlePreviewList>
   </div>
 </template>
 <script>
 import keys from '@/common'
 import SvgIcon from '@/layouts/SvgIcon'
-import ArticlePreviewList from '@/layouts/ArticlePreviewList'
+import NewArticlePreviewList from '@/layouts/NewArticlePreviewList'
+import Pagination from '@/layouts/Pagination'
 export default {
   name: 'articleList',
   data() {
@@ -99,8 +91,9 @@ export default {
     }
   },
   components: {
-    ArticlePreviewList,
-    SvgIcon
+    NewArticlePreviewList,
+    SvgIcon,
+    Pagination
   },
   methods: {
     // 根据标签筛选
@@ -123,6 +116,7 @@ export default {
       this.isSearching = false
       if (!this.filterValue) {
         this.showArticleList = this.articleList
+        this.getCurrentArts()
         return
       }
       this.currentPage = 1
@@ -172,8 +166,9 @@ export default {
     
     // 页面变化
     pageChange(newPage) {
+      console.log('page change')
       this.currentPage = newPage
-      window.scrollTo(0,0)
+      // window.scrollTo(0,0)
     },
     // 计算显示的页面
     getCurrentArts() {
@@ -243,10 +238,53 @@ export default {
   .header-padding {
     padding-top: @big-header-height;
   }
+  .banner {
+    width: 100vw;
+    min-height: 100vh;
+    background: url('https://img.xhfkindergarten.cn/desk.jpeg') no-repeat;
+    background-size: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .banner-word {
+      max-width: 50vw;
+      font-size: 60px;
+      font-family: Circular_black;
+      color: #FFF;
+    }
+  }
 }
 @media screen and (max-width: 992px) {
   .header-padding {
-    padding-top: @big-header-height;
+    padding-top: @small-header-height;
+  }
+  .banner {
+    width: 100vw;
+    height: 800px;
+    max-height: 60vh;
+    background: url('https://img.xhfkindergarten.cn/B60BDCD2-1876-4FD1-B6F2-2F7858C81240.jpeg') no-repeat;
+    background-size: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .banner-word {
+      max-width: 80vw;
+      font-size: 26px;
+      font-family: Circular_black;
+      color: #FFF;
+    }
+  }
+}
+
+.form {
+  margin: 4rem 0;
+  .label {
+    font-family: Circular_black;
+    font-size: 20px;
+    text-align: left;
+    margin: 10px 10px;
   }
 }
 
@@ -264,6 +302,7 @@ p{
   border-radius: 25px;
 }
 #search{
+  float: right;
   font-size: 15px;
   outline: none;
   width: 80%;

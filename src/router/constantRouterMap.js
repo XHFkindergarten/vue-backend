@@ -2,6 +2,7 @@
 const Main = () => import('@/components/Main')
 const Login = () => import('@/components/Login')
 const Register = () => import('@/components/Register')
+const NewRegister = () => import('@/components/NewRegister')
 const NoPermission = () => import('@/layouts/403')
 const Test = () => import('@/components/Test')
 const Test2 = () => import('@/components/Test2')

@@ -375,29 +375,29 @@ export default {
   justify-content: space-around;
   align-items: center;
   .circle{
-      width: @circle;
-      height: @circle;
-      border-radius: 50%;
-      background: #FFF;
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      .side-num{
-        position: absolute;
-        left: 75%;
-        line-height: 1;
-        top: 0;
-        background: #b2bac2;
-        transform-origin: left top;
-        font-size: 1rem;
-        transform: scale(0.75);
-        border-radius: .7rem;
-        color: #FFF;
-        padding: .1rem .4rem;
-      }
+    width: @circle;
+    height: @circle;
+    border-radius: 50%;
+    background: #FFF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .side-num{
+      position: absolute;
+      left: 75%;
+      line-height: 1;
+      top: 0;
+      background: #b2bac2;
+      transform-origin: left top;
+      font-size: 1rem;
+      transform: scale(0.75);
+      border-radius: .7rem;
+      color: #FFF;
+      padding: .1rem .4rem;
     }
+  }
 }
 
 .title{

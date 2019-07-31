@@ -1,5 +1,5 @@
 <template>
-  <div class="route-header">
+  <div :class="isBigScreen&&BlackHeader?'black-header':'route-header'">
     <el-row>
       <el-col
         :lg={span:4,offset:2}
@@ -12,18 +12,8 @@
       </el-col>
       <el-col
         class="hidden-md-and-down"
-        :lg={span:2,offset:hasLogin?8:5}
-        :md={span:2,offset:4}
-        :sm={span:3,offset:2}
-        :xs={span:8,offset:8}
-        @click.native="RoutePush('/readFile')"
-        >
-        <div class="header-item">Read</div>
-      </el-col>
-      <el-col
-        class="hidden-md-and-down"
         @click.native="RoutePush('/articleList')"
-        :lg={span:2,offset:0}
+        :lg={span:2,offset:hasLogin?8:5}
         :md={span:2,offset:4}
         :sm={span:3,offset:2}
         :xs={span:8,offset:8}
@@ -39,6 +29,16 @@
         @click.native="RoutePush('/daily')"
         >
         <div class="header-item">Daily</div>
+      </el-col>
+      <el-col
+        class="hidden-md-and-down"
+        :lg={span:2,offset:0}
+        :md={span:2,offset:4}
+        :sm={span:3,offset:2}
+        :xs={span:8,offset:8}
+        @click.native="RoutePush('/readFile')"
+        >
+        <div class="header-item">Read</div>
       </el-col>
       <el-col
         class="hidden-md-and-down"
@@ -122,7 +122,7 @@
       <div @click="CollapseRouteChange('/register')" :class="isCollapse?'show-words':'none-words'" class="nav-words" v-if="!hasLogin" style="animation-delay: 85ms;">Sign up</div>
     </div>
     <el-button
-      v-if="!isCollapse&&!isBigScreen"
+      v-if="!isCollapse"
       @click="isCollapse=true"
       :class="isCollapse?'noOpacity':'showOpacity'"
       class="openCollapse"
@@ -132,7 +132,7 @@
       </svg>
     </el-button>
     <el-button
-      v-if="isCollapse&&!isBigScreen"
+      v-if="isCollapse"
       @click="isCollapse=false"
       :class="isCollapse?'showOpacity':'noOpacity'"
       class="openCollapse"
@@ -145,6 +145,7 @@
 </template>
 <script>
 import MeItems from '@/components/MeItems'
+import Cookies from 'js-cookie'
 // import FavIcon from '@/layouts/FavIcon'
 export default {
   data() {
@@ -159,7 +160,7 @@ export default {
     // 点击侧边栏路由跳转
     CollapseRouteChange(path) {
       this.isCollapse = false
-      this.RoutePush(path)
+      this.$router.push(path)
     },
     // 登出
     logout() {
@@ -190,6 +191,9 @@ export default {
     },
     isBigScreen() {
       return this.$store.state.isBigScreen
+    },
+    BlackHeader() {
+      return ['/articleList'].indexOf(this.$route.path)!=-1
     }
   }
 }
@@ -343,13 +347,26 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  // height: @big-header-height;
-  // opacity: 0.5;
   .title{
     font-family: Circular_black;
     color: white;
-    // line-height: @big-header-height;
     cursor: pointer;
+  }
+}
+.black-header{
+  z-index: 110;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: @big-header-height;
+  background-color: rgba(0, 0, 0, 1);
+  .title{
+    font-family: Circular_black;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: @big-header-height;
   }
 }
 @media screen and (min-width: 992px) {
@@ -364,6 +381,9 @@ export default {
       font-size: 20px;
       line-height: @big-header-height;
     }
+  }
+  .openCollapse {
+    display: none;
   }
 }
 
