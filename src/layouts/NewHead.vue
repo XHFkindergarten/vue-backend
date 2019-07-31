@@ -176,6 +176,7 @@ export default {
       if (path==='/' && !this.isBigScreen) {
         return
       }
+      console.log('go')
       this.$router.push(path)
     },
     toUser() {

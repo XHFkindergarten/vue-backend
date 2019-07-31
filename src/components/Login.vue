@@ -143,7 +143,6 @@ export default {
 <style lang="less" scoped>
 @big-header-height: 80px;
 @small-header-height: 60px;
-
 @media screen and (min-width: 992px) {
   .header-padding {
     padding-top: @big-header-height;
