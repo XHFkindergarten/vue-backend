@@ -1,6 +1,6 @@
 <template>
-  <div class="header-padding">
-    <el-row v-loading="isLoading">
+  <div class="header-padding between-padding" v-loading="isLoading">
+    <el-row>
       <el-col
         class="bg-white round"
         :lg={span:12,offset:6}
@@ -283,7 +283,7 @@ export default {
     padding: 0 50px;
   }
   .header-padding {
-    padding-top: @big-header-height;
+    padding-top: @big-header-height+40px;
   }
   .bottom-info {
     margin: 2rem -50px;
@@ -305,6 +305,10 @@ export default {
   .recommend-container {
     margin-top: 0;
   }
+}
+.between-padding {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .aside{
   cursor: pointer;
@@ -366,7 +370,7 @@ export default {
 .bottom-info {
   height: 5rem;
   background: #F4F5F5;
-  margin: 2rem 0;
+  // margin: 2rem 0;
   display: flex;
   justify-content: space-around;
   align-items: center;

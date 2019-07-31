@@ -5,9 +5,12 @@
         <!-- <Head :userInfo="userInfo"></Head> -->
         <NewHead></NewHead>
       </el-header>
-      <el-main :style="`background: ${isBigScreen?'#F4F5F5':'#FFF'};`">
+      <!-- <el-main :style="`background: ${isBigScreen?'#F4F5F5':'#FFF'};`"> -->
+      <div class="bg">
         <router-view></router-view>
-      </el-main>
+      </div>
+      
+      <!-- </el-main> -->
     </el-container>
   </div>
 </template>
@@ -39,5 +42,14 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+@media screen and (min-width:992px) {
+  .bg {
+    background: #F4F5F5;
+  }
+}
+@media screen and (max-width:992px) {
+  .bg {
+    background: #FFF;
+  }
+}
 </style>

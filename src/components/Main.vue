@@ -136,6 +136,7 @@ export default {
       font-family: Circular_black;
     }
     .explain {
+      transition: all 1s ease-in-out;
       color: #FFF;
       font-family: CoreSans;
       font-size: 20px;

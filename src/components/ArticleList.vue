@@ -130,6 +130,7 @@ export default {
       this.showArticleList = this.articleList.filter((item) => {
         return Reg.test(item.title) || Reg.test(item.content)
       })
+      this.getCurrentArts()
     },
     // 跳转到写文章页面
     writeArt() {
@@ -176,12 +177,22 @@ export default {
     },
     // 计算显示的页面
     getCurrentArts() {
+      console.log('filter')
       const begin = (this.currentPage-1)*this.pageSize
       const end = this.currentPage*this.pageSize
       this.currentPageArticleList = this.showArticleList.slice(begin, end)
+      console.log(this.currentPageArticleList)
     }
   },
   computed: {
+    // currentPageArticleList() {
+    //   if (this.showArticleList.length==0) {
+    //     return []
+    //   }
+    //   const begin = (this.currentPage-1)*this.pageSize
+    //   const end = this.currentPage*this.pageSize
+    //   return this.showArticleList.slice(begin, end)
+    // },
     userInfo() {
       return this.$store.state.userInfo
     },

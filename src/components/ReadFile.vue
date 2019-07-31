@@ -1,5 +1,6 @@
 <template>
   <div
+    class="header-padding"
     element-loading-text="音频生成中"
     v-loading="loading">
     <h1>Word/Pdf Reader</h1>
@@ -34,6 +35,7 @@
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div slot="tip" class="el-upload__tip">只能上传doxc/pdf文件</div>
+          <div slot="tip" class="el-upload__tip">文件大小请勿超过3MB</div>
         </el-upload>
         <div style="margin-top:50px">
           <span>音色</span>
@@ -225,6 +227,18 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@big-header-height: 80px;
+@small-header-height: 60px;
+@media screen and (min-width: 992px) {
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+}
+@media screen and (max-width: 992px) {
+  .header-padding {
+    padding-top: @big-header-height;
+  }
+}
 .toggle-container{
   margin: 20px 0;
   display: flex;

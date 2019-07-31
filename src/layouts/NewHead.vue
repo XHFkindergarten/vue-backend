@@ -16,6 +16,7 @@
         :md={span:2,offset:4}
         :sm={span:3,offset:2}
         :xs={span:8,offset:8}
+        @click.native="RoutePush('/readFile')"
         >
         <div class="header-item">Read</div>
       </el-col>
@@ -100,8 +101,10 @@
         @click="CollapseRouteChange('/me')"
         class="user-container"
         :class="isCollapse?'show-words':'none-words'">
-        <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
-        {{userInfo.username}}
+        <div class="username">
+          <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
+          {{userInfo.username}}
+        </div>
         <el-button @click.stop="logout" class="logout-btn" round>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-logout-white"></use>
@@ -225,13 +228,19 @@ export default {
   .user-container {
     margin: 16px 0;
     padding-left: 40px;
-    color: #FFF;
-    font-size: 14px;
     cursor: pointer;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     position: relative;
+    .username {
+      color: #FFF;
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .avatar {
       width:30px;
       height: 30px;
@@ -243,8 +252,8 @@ export default {
       // animation-delay: 200ms;
       background: #000;
       border: none;
-      position: absolute;
-      right: 0;
+      // position: absolute;
+      // right: 0;
     }
   }
   .divider {
