@@ -1,6 +1,51 @@
 <template>
   <div class="header-padding">
-    <el-row
+    <div class="img-container">
+      <img class="avatar-bg" :src="userInfo.avatar" alt="用户头像">
+      <img class="avatar-img" :src="userInfo.avatar" alt="用户头像">
+      <div @click="editusername" class="username">{{userInfo.username}}</div>
+      <!-- <div class="email">{{userInfo.email}}</div> -->
+      <el-popover
+        v-model="editMoodDialog"
+        placement="bottom"
+        width="300"
+        trigger="click">
+        <p style="padding-left: 12px;">选择你的心情：）</p>
+        <div class="mood-select-container">
+          <el-radio-group v-model="mood">
+            <el-radio-button label="0">
+              <SvgIcon size="mid" icon="smile"></SvgIcon>
+            </el-radio-button>
+            <el-radio-button label="1">
+              <SvgIcon size="mid" icon="meh"></SvgIcon>
+            </el-radio-button>
+            <el-radio-button label="2">
+              <SvgIcon size="mid" icon="frown"></SvgIcon>
+            </el-radio-button>
+          </el-radio-group>
+        </div>
+        <p style="padding-left: 12px">一个词描述你</p>
+        <div style="text-align:center;">
+          <el-input v-model="sign" placeholder="请控制在12个字母以内" type="text" style="width: 216px;"></el-input>
+        </div> 
+        <div style="text-align:center;margin: 25px 0 0;">
+          <el-button @click="submitMood" type="primary" round>提交</el-button>
+        </div>
+        <div slot="reference" class="status-container">
+          <SvgIcon :icon="moodOption[this.mood]" size="mid" style="margin:0 5px 0 10px;"></SvgIcon>
+          <div style="display:inline-block">{{userInfo.sign}}</div>
+        </div>
+      </el-popover>
+      <Pagination
+        class="pagination"
+        @current-change="pageChange"
+        :total="articleNum"
+        :page-size="pageSize"
+        :current-page="currentPage"
+        ></Pagination>
+    </div>
+    <NewArticlePreviewList :articleList="showArticleList"></NewArticlePreviewList>
+    <!-- <el-row
       style="margin-top:50px;">
       <el-col
         :lg={span:5,offset:4}
@@ -121,14 +166,15 @@
           >
         </el-pagination>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 <script>
 import keys from '@/common'
-import ArticlePreviewList from '@/layouts/ArticlePreviewList'
+import NewArticlePreviewList from '@/layouts/NewArticlePreviewList'
 import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
+import Pagination from '@/layouts/Pagination'
 export default {
   name: 'me',
   data() {
@@ -159,9 +205,10 @@ export default {
     }
   },
   components: {
-    ArticlePreviewList,
+    NewArticlePreviewList,
     EditAvatar,
-    SvgIcon
+    SvgIcon,
+    Pagination
   },
   computed: {
     userInfo() {
@@ -195,7 +242,7 @@ export default {
     // 页码改变
     pageChange(newPage) {
       this.currentPage = newPage
-      window.scrollTo(0,0)
+      // window.scrollTo(0,0)
     },
     // judgeScreen() {
     //   if (window.innerWidth<800) {
@@ -310,14 +357,67 @@ export default {
 @small-header-height: 60px;
 @media screen and (min-width: 992px) {
   .header-padding {
-    padding-top: @big-header-height;
+    padding-top: 0;
   }
 }
 @media screen and (max-width: 992px) {
   .header-padding {
-    padding-top: @big-header-height;
+    padding-top: @small-header-height;
   }
 }
+.pagination {
+  position: absolute;
+  bottom: 40px;
+}
+.img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @avatar-size: 200px;
+  min-height: 100vh;
+  .status-container{
+    margin: 0 auto;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    position: relative;
+    .edit-icon{
+      display: none;
+    }
+  }
+  .username {
+    font-size: 50px;
+    margin: 10px;
+  }
+  .email {
+    font-size: 20px;
+    font-family: Circular_book;
+  }
+  .avatar-img {
+    width: @avatar-size;
+    height: @avatar-size;
+    border-radius: @avatar-size/2;
+  }
+  .avatar-bg {
+    width: 100vw;
+    object-fit: cover;
+    filter: blur(16px);
+    max-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }
+}
+
+
+// ============原有style===========
+
+
 .big-title{
   margin-top: 30px;
   font-size: 40px;
@@ -358,26 +458,7 @@ export default {
   padding-left: 10px;
   border-radius: 5px;
 }
-.status-container{
-  margin: 0 auto;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 40px;
-  width: 240px;
-  border-bottom: 1px #e1e4e8 solid;
-  border-left: 1px #e1e4e8 solid;
-  border-right: 1px #e1e4e8 solid;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  text-align: left;
-  line-height: 40px;
-  position: relative;
-  .edit-icon{
-    display: none;
-  }
-}
+
 .status-container:hover{
   .edit-icon{
     display: block;

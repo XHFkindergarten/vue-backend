@@ -258,12 +258,10 @@ export default {
         top: 0,
         behavior: 'smooth'
       })
-      setTimeout(()=> {
-        this.pastDaily = []
-        this.index = 0
-        // this.getDaily()
-        this.$refs.infinite.$emit('$InfiniteLoading:reset')
-      },1000)
+      this.pastDaily = []
+      this.index = 0
+      // this.getDaily()
+      this.$refs.infinite.$emit('$InfiniteLoading:reset')
       
     },
     isEditing(newValue) {
@@ -276,6 +274,7 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
+      console.log('infinite')
       const offset = this.index || 0
       let res
       if (this.showAll) {
@@ -384,6 +383,7 @@ export default {
         })
         this.cancelEdit()
         this.index = 0
+        console.log('reset')
         this.$refs.infinite.$emit('$InfiniteLoading:reset')
         // this.getDaily()
       }
@@ -495,6 +495,8 @@ export default {
 <style lang="less" scoped>
 @big-header-height: 80px;
 @small-header-height: 60px;
+@circle: 80px;
+@small-circle: 60px;
 .flex {
   display: flex;
   justify-content: center;
@@ -511,6 +513,13 @@ export default {
   .daily-container {
     padding-top: 100px;
   }
+  .write-circle {
+    width: @circle;
+    height: @circle;
+    border-radius: @circle/2;
+    bottom: -@circle/2;
+    margin-left: -@circle/2;
+  }
 }
 @media screen and (max-width: 992px) {
   .header-padding {
@@ -523,6 +532,13 @@ export default {
   .daily-container {
     padding-top: 60px;
   }
+  .write-circle {
+    width: @small-circle;
+    height: @small-circle;
+    border-radius: @small-circle/2;
+    bottom: -@small-circle/2;
+    margin-left: -@small-circle/2;
+  }
 }
 .img-container {
   position: relative;
@@ -532,15 +548,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    @circle: 80px;
-    width: @circle;
-    height: @circle;
-    border-radius: @circle/2;
     background: red;
     position: absolute;
-    bottom: -@circle/2;
     left: 50%;
-    margin-left: -@circle/2;
   }
   .rotate {
     transform: rotate(45deg);
