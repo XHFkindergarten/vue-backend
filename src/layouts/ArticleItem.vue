@@ -45,6 +45,22 @@ export default {
           bg: '#F9CE8C',
           font: '#000'
         },
+        {
+          bg: '#18927B',
+          font: '#FFF'
+        },
+        {
+          bg: '#02206D',
+          font: '#FFF'
+        },
+        {
+          bg: '#7BA1C7',
+          font: '#FFF'
+        },
+        {
+          bg: '#DAE1EB',
+          font: '#000'
+        },
       ]
     }
   },

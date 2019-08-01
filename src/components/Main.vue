@@ -30,7 +30,7 @@
             >
             <a href="https://img.xhfkindergarten.cn/WechatIMG3.jpeg" target="_blank">
               <button class="white-btn">
-                Contack me
+                Contact me
               </button>
             </a>
           </el-col>

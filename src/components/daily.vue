@@ -543,6 +543,7 @@ export default {
 .img-container {
   position: relative;
   .write-circle {
+    outline: none;
     transition: transform 0.5s ease-in-out;
     cursor: pointer;
     display: flex;

@@ -3,7 +3,7 @@
     <ArticleItem
       v-for="(item,index) in articleList"
       :artInfo="item"
-      :index="index"
+      :index="index + random"
       :key="item.id"
       ></ArticleItem>
     <!-- <el-card
@@ -86,7 +86,9 @@ export default {
       // 文章列表
       artList: this.articleList,
       // 编辑图片中
-      editIndex: ''
+      editIndex: '',
+      // 随机数
+      random: 0
     }
   },
   watch: {
@@ -95,6 +97,7 @@ export default {
         // if (newValue.length === oldValue.length) {
         //   return
         // }
+        this.random = Math.ceil(Math.random()*10)
         this.artList = newValue
         this.formatTags()
       },
@@ -161,6 +164,7 @@ export default {
   },
   mounted() {
     // this.judgeScreen()
+    this.random =  Math.ceil(Math.random()*10)
   }
 }
 </script>

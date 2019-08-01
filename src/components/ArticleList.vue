@@ -4,6 +4,9 @@
     <div class="banner">
       <div class="banner-word">Programming is like sex,</div>
       <div class="banner-word">One mistake and you have to support it for the rest of your life.</div>
+      <div v-if="hasStatus" @click="addArticle" class="write-circle">
+        <SvgIcon icon="add-white"></SvgIcon>
+      </div>
     </div>
     <el-row class="form">
       <el-col
@@ -96,6 +99,10 @@ export default {
     Pagination
   },
   methods: {
+    // 跳转到文章编辑页面
+    addArticle() {
+      this.$router.push('/articleManage')
+    },
     // 根据标签筛选
     tagSearch() {
       if (this.selectValue===null) {
@@ -191,6 +198,9 @@ export default {
     userInfo() {
       return this.$store.state.userInfo
     },
+    hasStatus() {
+      return this.$store.state.status
+    },
     // 总的数据量
     articleNum() {
       return this.showArticleList.length
@@ -234,6 +244,8 @@ export default {
 <style lang="less" scoped>
 @big-header-height: 80px;
 @small-header-height: 60px;
+@circle: 80px;
+@small-circle: 60px;
 @media screen and (min-width: 992px) {
   .header-padding {
     padding-top: @big-header-height;
@@ -247,6 +259,23 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    .write-circle {
+      width: @circle;
+      height: @circle;
+      border-radius: @circle/2;
+      bottom: -@circle/2;
+      margin-left: -@circle/2;
+      outline: none;
+      transition: transform 0.5s ease-in-out;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;;
+      position: absolute;
+      left: 50%;
+    }
     .banner-word {
       max-width: 50vw;
       font-size: 60px;
@@ -269,6 +298,23 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    .write-circle {
+      width: @small-circle;
+      height: @small-circle;
+      border-radius: @small-circle/2;
+      bottom: -@small-circle/2;
+      margin-left: -@small-circle/2;
+      outline: none;
+      transition: transform 0.5s ease-in-out;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      position: absolute;
+      left: 50%;
+    }
     .banner-word {
       max-width: 80vw;
       font-size: 26px;
