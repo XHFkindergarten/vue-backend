@@ -1,7 +1,7 @@
 <template>
   <div class="header-padding" style="position:relative;">
     <div class="img-container">
-      <div @click="toggleInput" class="write-circle">
+      <div @click="toggleInput" :class="['write-circle',{'rotate':isEditing}]">
         <SvgIcon icon="add-white"></SvgIcon>
       </div>
       <img class="bg" src="https://img.xhfkindergarten.cn/IMG_2073.jpg" alt="bg">
@@ -177,14 +177,14 @@
           >
           <div
             class="daily-item"
-            style="margin-right:20px;"
-            v-for="item in leftDaily"
+            :style="isBigScreen?'margin-right:20px;':''"
+            v-for="item in isBigScreen ? leftDaily : pastDaily"
             :key="item.id">
             <DailyItem @deleteOne="deleteOne" :dailyInfo="item"></DailyItem>
           </div>
-          
         </el-col>
         <el-col
+          class="hidden-md-and-down"
           style="margin-top:30px;"
           :lg={span:7,offset:0}
           :md={span:6,offset:6}
@@ -439,6 +439,8 @@ export default {
         setTimeout(() => {
           this.adjustSquare()
         }, 200);
+      } else {
+        this.cancelEdit()
       }
     },
     // 调整自适应正方形的高度=宽度
@@ -472,6 +474,9 @@ export default {
     },
     userInfo() {
       return this.$store.state.userInfo
+    },
+    isBigScreen() {
+      return this.$store.state.isBigScreen
     }
   },
   mounted() {
@@ -502,10 +507,9 @@ export default {
   .bg {
     width: 100%;
     object-fit: cover;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // right: 0;
+  }
+  .daily-container {
+    padding-top: 100px;
   }
 }
 @media screen and (max-width: 992px) {
@@ -516,10 +520,14 @@ export default {
     width: 100%;
     object-fit: cover;
   }
+  .daily-container {
+    padding-top: 60px;
+  }
 }
 .img-container {
   position: relative;
   .write-circle {
+    transition: transform 0.5s ease-in-out;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -534,14 +542,18 @@ export default {
     left: 50%;
     margin-left: -@circle/2;
   }
+  .rotate {
+    transform: rotate(45deg);
+  }
 }
 @keyframes expand {
   from {max-height: 0;}
   to {max-height: 500px;}
 }
 @keyframes fallen {
-  from {position: relative;top:-400px;opacity: 0;}
-  to {position: relative;top:0;opacity: 1;}
+  0% {position: relative;top:-400px;opacity: 0;}
+  80% {position: relative;top:-80px;opacity: 0;}
+  100% {position: relative;top:0;opacity: 1;}
 }
 @expandTime: 0.6s;
 .write-container {
@@ -566,7 +578,6 @@ export default {
     overflow: auto;
     word-break: break-all;
     width: 80%;
-    opacity: 0.6;
     font-size: 16px;
   }
   .add-pic{
@@ -618,7 +629,6 @@ export default {
   // }
 }
 .daily-container {
-  padding-top: 100px;
   background: #F4F5F5;
   .daily-item {
     border-radius: 10px;
