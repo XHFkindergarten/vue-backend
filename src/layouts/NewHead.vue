@@ -1,5 +1,5 @@
 <template>
-  <div :class="isBigScreen&&BlackHeader?'black-header':'route-header'">
+  <div :class="HeaderClass">
     <el-row>
       <el-col
         :lg={span:4,offset:2}
@@ -176,7 +176,6 @@ export default {
       if (path==='/' && !this.isBigScreen) {
         return
       }
-      console.log('go')
       this.$router.push(path)
     },
     toUser() {
@@ -193,9 +192,18 @@ export default {
     isBigScreen() {
       return this.$store.state.isBigScreen
     },
-    BlackHeader() {
-      return ['/articleList'].indexOf(this.$route.path)!=-1
+    HeaderClass() {
+      if (['/articleList'].indexOf(this.$route.path)!=-1&&this.isBigScreen) {
+        return 'black-header'
+      } else if (['/login','/main/login'].indexOf(this.$route.path)!=-1&&this.isBigScreen) {
+        return 'opacity-header'
+      } else {
+        return 'route-header'
+      }
     }
+  },
+  mounted() {
+    console.log(this.$route.path)
   }
 }
 </script>
@@ -354,21 +362,30 @@ export default {
     cursor: pointer;
   }
 }
-.black-header{
+.color-header (@color1, @color2) {
   z-index: 110;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: @big-header-height;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: @color1;
   .title{
     font-family: Circular_black;
-    color: white;
+    color: @color2;
     cursor: pointer;
     font-size: 20px;
     line-height: @big-header-height;
   }
+  .header-item {
+    color: @color2;
+  }
+}
+.opacity-header{
+  .color-header(rgba(0,0,0,0), #000);
+}
+.black-header{
+  .color-header(rgba(0,0,0,1), #FFF);
 }
 @media screen and (min-width: 992px) {
   .header-user{

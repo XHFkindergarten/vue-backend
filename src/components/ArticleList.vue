@@ -47,7 +47,7 @@
         <div style="height:80px;">
           <Pagination
             @current-change="pageChange"
-            :total="70"
+            :total="articleNum"
             :page-size="pageSize"
             :current-page="currentPage"
             ></Pagination>
