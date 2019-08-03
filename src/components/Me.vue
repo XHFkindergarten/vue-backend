@@ -37,6 +37,7 @@
         </div>
       </el-popover>
       <Pagination
+        id="target"
         class="pagination"
         @current-change="pageChange"
         :total="articleNum"
@@ -52,6 +53,12 @@
       title="修改头像">
       <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
     </el-dialog>
+    <ToTop
+      :target="'#target'"
+      :bg="'#000'"
+      :opacity="opacity"
+      :show="showToTop"
+      ></ToTop>
     <!-- <el-row
       style="margin-top:50px;">
       <el-col
@@ -182,6 +189,7 @@ import NewArticlePreviewList from '@/layouts/NewArticlePreviewList'
 import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
 import Pagination from '@/layouts/Pagination'
+import ToTop from '@/layouts/ToTop'
 export default {
   name: 'me',
   data() {
@@ -208,14 +216,19 @@ export default {
       // 当前页
       currentPage: 1,
       // 展示出来的文章列表
-      showArticleList: []
+      showArticleList: [],
+      // 展示to顶端按钮
+      showToTop: false,
+      // 按钮透明度
+      opacity: 0
     }
   },
   components: {
     NewArticlePreviewList,
     EditAvatar,
     SvgIcon,
-    Pagination
+    Pagination,
+    ToTop
   },
   computed: {
     userInfo() {
@@ -234,6 +247,16 @@ export default {
     }
   },
   mounted() {
+    // 监听页面高度是否需要显示 回到顶部按钮
+    const vuecom = this
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > $('#target')[0].offsetTop) {
+        vuecom.showToTop = true
+        vuecom.opacity = (window.pageYOffset - $('#target')[0].offsetTop) / $('#target')[0].clientHeight
+      } else {
+        vuecom.showToTop = false
+      }
+    })
     // this.judgeScreen()
     this.mood = this.userInfo.mood
     this.sign = this.userInfo.sign

@@ -58,13 +58,21 @@
       </el-col>
     </el-row>
     <NewArticlePreviewList :articleList="currentPageArticleList"></NewArticlePreviewList>
+    <ToTop
+      :target="'.write-circle'"
+      :bg="'#000'"
+      :opacity="opacity"
+      :show="showToTop"
+      ></ToTop>
   </div>
 </template>
 <script>
 import keys from '@/common'
 import SvgIcon from '@/layouts/SvgIcon'
+import ToTop from '@/layouts/ToTop'
 import NewArticlePreviewList from '@/layouts/NewArticlePreviewList'
 import Pagination from '@/layouts/Pagination'
+import { setTimeout } from 'timers';
 export default {
   name: 'articleList',
   data() {
@@ -90,13 +98,18 @@ export default {
       // 标签选项
       tagOptions: [],
       // 当前页的文章列表
-      currentPageArticleList: []
+      currentPageArticleList: [],
+      // 展示to顶端按钮
+      showToTop: false,
+      // 按钮透明度
+      opacity: 0
     }
   },
   components: {
     NewArticlePreviewList,
     SvgIcon,
-    Pagination
+    Pagination,
+    ToTop
   },
   methods: {
     // 跳转到文章编辑页面
@@ -111,8 +124,6 @@ export default {
         return
       }
       const target = this.selectValue
-      console.log('target', target)
-      console.log(this.articleList)
       this.showArticleList = this.articleList.filter(item => {
         return item.tags&&item.tags.indexOf(target) !== -1
       })
@@ -155,7 +166,6 @@ export default {
         }
       })
       this.tagOptions = tagOptions
-      // console.log(this.articleList)
     },
     // 获取所有文章
     async getUserArticle() {
@@ -173,17 +183,14 @@ export default {
     
     // 页面变化
     pageChange(newPage) {
-      console.log('page change')
       this.currentPage = newPage
       // window.scrollTo(0,0)
     },
     // 计算显示的页面
     getCurrentArts() {
-      console.log('filter')
       const begin = (this.currentPage-1)*this.pageSize
       const end = this.currentPage*this.pageSize
       this.currentPageArticleList = this.showArticleList.slice(begin, end)
-      console.log(this.currentPageArticleList)
     }
   },
   computed: {
@@ -221,6 +228,22 @@ export default {
     }
   },
   mounted() {
+    // 监听页面高度是否需要显示 回到顶部按钮
+    const vuecom = this
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > $('.write-circle')[0].offsetTop) {
+        vuecom.showToTop = true
+        vuecom.opacity = (window.pageYOffset - $('.write-circle')[0].offsetTop) / $('.write-circle')[0].clientHeight
+      } else {
+        vuecom.showToTop = false
+      }
+    })
+    // setTimeout(() => {
+    //   window.scrollTo({
+    //     top: $('.write-circle')[0].offsetTop,
+    //     behavior: "smooth"
+    //   })
+    // }, 3000)
     // 数组原型链新增去重方法unique
     Array.prototype.unique = function(){
       var a = {};

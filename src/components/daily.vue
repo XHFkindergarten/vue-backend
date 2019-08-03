@@ -176,6 +176,7 @@
           :xs={span:24}
           >
           <div
+            id="left_items"
             class="daily-item"
             :style="isBigScreen?'margin-right:20px;':''"
             v-for="item in isBigScreen ? leftDaily : pastDaily"
@@ -192,6 +193,7 @@
           :xs={span:24}
           >
           <div
+            id="right_items"
             class="daily-item"
             style="margin-left:20px;"
             v-for="item in rightDaily"
@@ -203,6 +205,12 @@
       <infiniteLoading ref="infinite" @infinite="infiniteHandler" spinner="default">
         <div class="loading" slot="no-more">mo有了哦⁽⁽◞(0ᴗ̵̍0=͟͟͞͞ 0ᴗ̍0)◟⁾⁾</div>
       </infiniteLoading>
+      <ToTop
+        :target="'.write-circle'"
+        :bg="'red'"
+        :opacity="opacity"
+        :show="showToTop"
+        ></ToTop>
     </div>
   </div>
 </template>
@@ -215,6 +223,7 @@ import DailyItem from '@/layouts/DailyItem'
 import keys from '@/common'
 import infiniteLoading from 'vue-infinite-loading'
 import { setTimeout } from 'timers';
+import ToTop from '@/layouts/ToTop'
 // import exif from '@/exif'
 export default {
   data() {
@@ -243,14 +252,19 @@ export default {
       loadMoreDisable: false,
       toEnd: false,
       // 是在看所有人的动态吗
-      showAll: true
+      showAll: true,
+      // 展示to顶端按钮
+      showToTop: false,
+      // 按钮透明度
+      opacity: 0
     }
   },
   components: {
     SvgIcon,
     showPic,
     DailyItem,
-    infiniteLoading
+    infiniteLoading,
+    ToTop
   },
   watch: {
     showAll(newValue, oldValue) {
@@ -383,7 +397,6 @@ export default {
         })
         this.cancelEdit()
         this.index = 0
-        console.log('reset1')
         this.pastDaily = []
         this.$refs.infinite.$emit('$InfiniteLoading:reset')
         // this.getDaily()
@@ -481,6 +494,16 @@ export default {
     }
   },
   mounted() {
+    // 监听页面高度是否需要显示 回到顶部按钮
+    const vuecom = this
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > $('.write-circle')[0].offsetTop) {
+        vuecom.showToTop = true
+        vuecom.opacity = (window.pageYOffset - $('.write-circle')[0].offsetTop) / $('.write-circle')[0].clientHeight
+      } else {
+        vuecom.showToTop = false
+      }
+    })
     http.getQnToken().then(res => {
       this.qiniuToken = res
     })
