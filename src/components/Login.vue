@@ -24,7 +24,7 @@
             <el-form-item prop="password">
                 <el-input type="password" autocomplete="off" v-model="loginForm.password" placeholder="请输入密码"></el-input>
             </el-form-item>
-            <button class="login-button" @keyup.enter.native="login" @click="login">L o g i n</button>
+            <button type="button" class="login-button" @keyup.enter.native="login" @click="login">L o g i n</button>
         </el-form>
         </div>
       </el-col>
@@ -106,10 +106,8 @@ export default {
                 .then (res => {
                   if (res.status==200&&res.data.success) {
                     Cookies.set('login-token', res.data.token, { expires: 1 })
-                    console.log(res.data.token === Cookies.get('login-token'))
                     this.$router.push('/')
                   } else {
-                    console.log(res.data)
                     this.$message.error(res.data.msg)
                   }
                 })

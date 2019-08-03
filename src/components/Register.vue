@@ -24,6 +24,7 @@
             </el-form-item>
             <div style="margin-top:40px">
               <button
+                type="button"
                 class="send-email-btn"
                 @click="sendMail"
                 :disabled="hasSend"
@@ -108,9 +109,9 @@
               ></el-input>
             </el-form-item>
             <button
+              type="button"
               class="send-email-btn"
               @click="register"
-              type="primary"
               size="medium"
             >C o m f i r m</button>
           </el-form>

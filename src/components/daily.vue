@@ -383,7 +383,8 @@ export default {
         })
         this.cancelEdit()
         this.index = 0
-        console.log('reset')
+        console.log('reset1')
+        this.pastDaily = []
         this.$refs.infinite.$emit('$InfiniteLoading:reset')
         // this.getDaily()
       }

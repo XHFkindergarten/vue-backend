@@ -2,7 +2,7 @@
   <div class="header-padding">
     <div class="img-container">
       <img class="avatar-bg" :src="userInfo.avatar" alt="用户头像">
-      <img class="avatar-img" :src="userInfo.avatar" alt="用户头像">
+      <img @click="editAvatar" class="avatar-img" :src="userInfo.avatar" alt="用户头像">
       <div @click="editusername" class="username">{{userInfo.username}}</div>
       <!-- <div class="email">{{userInfo.email}}</div> -->
       <el-popover
@@ -45,6 +45,13 @@
         ></Pagination>
     </div>
     <NewArticlePreviewList :articleList="showArticleList"></NewArticlePreviewList>
+    <el-dialog
+      :width="isBigScreen?'700px':'80%'"
+      :center="false"
+      :visible.sync="editAvatarDialog"
+      title="修改头像">
+      <EditAvatar @editavatarsuccess="editAvatarSuccess" :avatarUrl="userInfo.avatar"></EditAvatar>
+    </el-dialog>
     <!-- <el-row
       style="margin-top:50px;">
       <el-col
