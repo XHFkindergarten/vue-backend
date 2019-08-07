@@ -24,7 +24,7 @@
             <el-form-item prop="password">
                 <el-input type="password" autocomplete="off" v-model="loginForm.password" placeholder="请输入密码"></el-input>
             </el-form-item>
-            <button type="button" class="login-button" @keyup.enter.native="login" @click="login">L o g i n</button>
+            <button v-loading="isLogining" type="button" class="login-button" @keyup.enter.native="login" @click="login">L o g i n</button>
         </el-form>
         </div>
       </el-col>
@@ -90,7 +90,8 @@ export default {
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur'}
                 ]
-            }
+            },
+            isLogining: false
         }
     },
     methods: {
@@ -99,6 +100,7 @@ export default {
           const app = this
           this.$refs['loginForm'].validate(valid => {
             if(valid) {
+              this.isLogining = true
               app.$store.dispatch('loginAction', {
                 email: this.loginForm.email,
                 password: this.loginForm.password
@@ -110,6 +112,7 @@ export default {
                   } else {
                     this.$message.error(res.data.msg)
                   }
+                  this.isLogining = false
                 })
                 .catch (err => {
                   console.log(err)
@@ -119,6 +122,7 @@ export default {
                   } else {
                     this.loginForm.password = ''
                   }
+                  this.isLogining = false
                 })
             }else {
               // TODO 未通过校验
