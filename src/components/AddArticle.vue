@@ -372,6 +372,7 @@ export default {
     let that = this
     let code1 = 0
     document.onkeydown = function (e) {
+      console.log('keydown')
       let evn = e || event
       let key = evn.keyCode || evn.which || evn.charCode;
       // shift 16
