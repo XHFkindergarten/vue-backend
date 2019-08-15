@@ -1,5 +1,5 @@
 <template>
-  <div :class="HeaderClass">
+  <div id="nav" :class="HeaderClass">
     <el-row>
       <el-col
         :lg={span:4,offset:2}
@@ -127,7 +127,7 @@
       :class="isCollapse?'noOpacity':'showOpacity'"
       class="openCollapse"
       round>
-      <svg class="icon" aria-hidden="true">
+      <svg id="showNav" class="icon" aria-hidden="true">
         <use xlink:href="#icon-menu-white"></use>
       </svg>
     </el-button>
@@ -182,6 +182,11 @@ export default {
       this.$router.push()
     }
   },
+  watch: {
+    isCollapse(newValue) {
+      console.log(newValue)
+    }
+  },
   computed: {
     hasLogin() {
       return this.$store.state.status
@@ -203,7 +208,21 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.path)
+    var that = this
+    // TODO: 点击非侧边栏区域使侧边栏收缩
+    // $(document).on("click", ":not(#nav)", function(e) {
+    //   e.stopPropagation()
+    //   e.preventDefault()
+    //   console.log($(e.target))
+    //   if (that.isCollapse && $(e.target).closest('#showNav').length == 0) {
+    //     // console.log(that.isCollapse)
+    //     that.isCollapse = false
+    //   }
+    //   // console.log($(e.target).closest('#nav').length == 0 && that.isCollapse)
+    //   // if ($(e.target).closest('#nav').length == 0 && that.isCollapse) {
+    //   //   that.isCollapse = false
+    //   // }
+    // })
   }
 }
 </script>

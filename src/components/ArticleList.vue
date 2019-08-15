@@ -2,8 +2,7 @@
   <div class="header-padding" style="position:relative;">
     <!-- <img class="bg" src="https://img.xhfkindergarten.cn/desk.jpeg" alt="background"> -->
     <div class="banner">
-      <div class="banner-word">Programming is like sex,</div>
-      <div class="banner-word">One mistake and you have to support it for the rest of your life.</div>
+      <div class="banner-word">Calm and Collected</div>
       <div v-if="hasStatus" @click="addArticle" class="write-circle">
         <SvgIcon icon="add-white"></SvgIcon>
       </div>
@@ -231,6 +230,9 @@ export default {
     // 监听页面高度是否需要显示 回到顶部按钮
     const vuecom = this
     window.addEventListener('scroll', function() {
+      if ($('.write-circle').length==0) {
+        return
+      }
       if (window.pageYOffset > $('.write-circle')[0].offsetTop) {
         vuecom.showToTop = true
         vuecom.opacity = (window.pageYOffset - $('.write-circle')[0].offsetTop) / $('.write-circle')[0].clientHeight
@@ -306,6 +308,9 @@ export default {
       color: #FFF;
     }
   }
+  #search {
+    width: 80%;
+  }
 }
 @media screen and (max-width: 992px) {
   .header-padding {
@@ -345,6 +350,9 @@ export default {
       color: #FFF;
     }
   }
+  #search {
+    width: 87%;
+  }
 }
 
 .form {
@@ -374,7 +382,6 @@ p{
   float: right;
   font-size: 15px;
   outline: none;
-  width: 80%;
   background: #EEE;
   border: none;
   height: 40px;

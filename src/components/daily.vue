@@ -497,6 +497,9 @@ export default {
     // 监听页面高度是否需要显示 回到顶部按钮
     const vuecom = this
     window.addEventListener('scroll', function() {
+      if ($('.write-circle').length ==0) {
+        return
+      }
       if (window.pageYOffset > $('.write-circle')[0].offsetTop) {
         vuecom.showToTop = true
         vuecom.opacity = (window.pageYOffset - $('.write-circle')[0].offsetTop) / $('.write-circle')[0].clientHeight

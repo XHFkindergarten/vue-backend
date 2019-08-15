@@ -256,12 +256,12 @@ export default {
     async initPage() {
       this.isLoading = true
       await this.getArticle()
+      this.isLoading = false
       await this.getLikeList()
       await this.getComment()
       await this.getReply()
       await this.viewArticle()
       this.formatData()
-      this.isLoading = false
     }
   },
   // 获取文章内所有的回复
