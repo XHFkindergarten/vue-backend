@@ -26,7 +26,7 @@
         @saveArticle="saveArticle"
         @openArticle="openArticle"
         @addArticle="addArticle"
-        :articleList="articleList"></ArticleListAside>
+        :articleList="FilterArticleList"></ArticleListAside>
       <el-main class="main" v-if="isBigScreen || (!isBigScreen&&isEditing)">
         <div v-if="!activeArt && activeArt!==0" class="blank">
           <Favicon style="margin-top:50px;" title="Article"></Favicon>
@@ -233,8 +233,10 @@ export default {
 
     // 获取文章列表(根据分组id)
     async getArticleList() {
+      const userId = this.$store.state.userInfo.id
       const res = await this.$store.dispatch('getArticleList', {
-        groupId: this.currentGroupId
+        groupId: this.currentGroupId,
+        userId
       }).catch(err => {
         this.$message.error(err)
       })
@@ -275,9 +277,9 @@ export default {
       await this.getArticleList()
     },
     // 点击打开某一篇文章
-    openArticle(option) {
+    async openArticle(option) {
       this.activeArt = option
-      this.editArticle = this.articleList[option]
+      this.editArticle = await this.getArticle(this.articleList[option].id)
       this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
         if (this.editArticle.tags==='') {
@@ -289,6 +291,10 @@ export default {
       if (!this.isBigScreen) {
         this.isEditing = true
       }
+    },
+    async getArticle(articleId) {
+      const res = await this.$store.dispatch('getOneArticleAction', articleId)
+      return res.data.article
     },
     // 保存当前编辑的文章
     async saveArticle() {
@@ -347,6 +353,11 @@ export default {
     }
   },
   computed: {
+    FilterArticleList() {
+      return this.articleList.filter(item => {
+        return item.groupId == this.currentGroupId
+      })
+    },
     currentGroupId() {
       return this.groupList[parseInt(this.activeGroupIndex)].id
     },
@@ -372,7 +383,6 @@ export default {
     let that = this
     let code1 = 0
     document.onkeydown = function (e) {
-      console.log('keydown')
       let evn = e || event
       let key = evn.keyCode || evn.which || evn.charCode;
       // shift 16
