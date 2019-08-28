@@ -410,13 +410,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.v-note-op {
-  position:absolute;
-  top: 0;
-}
-.v-note-panel {
-  margin-top: 130px;
-}
+
 .el-tag{
   margin-left: 10px;
 }
@@ -442,9 +436,9 @@ export default {
 #article-name{
   border: none;
   outline: none;
-  width: 100%;
+  width: 90%;
   height: 40px;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 0px 10px 20px;
   font-size: 18px;
 }
 .tag-bar{
