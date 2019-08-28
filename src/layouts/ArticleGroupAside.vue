@@ -1,6 +1,6 @@
 <template>
-  <div style="min-height:100vh;">
-    <el-aside class="aside" :width="isBigScreen?'200px':'50vw'">
+  <div>
+    <el-aside style="overflow-x:auto;height:100vh;" class="aside" :width="isBigScreen?'200px':'50vw'">
       <div class="back-container">
         <el-button @click="backto" class="back-button" round>
           <div class="svg-container">

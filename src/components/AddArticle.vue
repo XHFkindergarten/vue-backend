@@ -64,12 +64,8 @@
               v-if="inputVisible"
               class="input-new-tag"></el-input>
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-            
           </div>
-          <!-- <RichText
-            :content="editArticle.content"
-            ref="richtext"></RichText> -->
-          <Markdown :content="editArticle.content" ref="richtext"></Markdown>
+          <Markdown style="height:100vh;overflow-x:auto;" :content="editArticle.content" ref="richtext"></Markdown>
         </div>
       </el-main>
     </el-container>
@@ -414,6 +410,13 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.v-note-op {
+  position:absolute;
+  top: 0;
+}
+.v-note-panel {
+  margin-top: 130px;
+}
 .el-tag{
   margin-left: 10px;
 }
@@ -433,6 +436,7 @@ export default {
   vertical-align: bottom;
 }
 .main{
+  height: 100vh;
   padding: 0;
 }
 #article-name{

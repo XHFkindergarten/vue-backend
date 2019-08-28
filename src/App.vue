@@ -59,4 +59,22 @@ body{
   fill: currentColor;
   overflow: hidden;
 }
+.v-note-wrapper {
+  height: 100vh !important;
+}
+.v-note-op {
+  position:absolute;
+  top: 0;
+}
+@media screen and (min-width:992px) {
+  .v-note-panel {
+    margin-top: 80px;
+  }
+}
+@media screen and (max-width:992px) {
+  .v-note-panel {
+    margin-top: 120px;
+  }
+}
+
 </style>

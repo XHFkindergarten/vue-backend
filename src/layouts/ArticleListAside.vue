@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-aside class="aside2" :width="isBigScreen?'240px':'50vw'">
+    <el-aside class="aside2 entire-container" :width="isBigScreen?'240px':'50vw'">
       <div class="addArt-container" @click="addArticle">
         <SvgIcon style="margin:5px;" size="mini" icon="add6"></SvgIcon>
         <span>添加文章</span>
@@ -86,9 +86,13 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.entire-container {
+  height: 100vh;
+  overflow-x: auto;
+}
 .aside2{
   background: #2E2E2E;
-  height: 100%;
+  // height: 100%;
   .empty-tip{
     font-size: 14px;
     height: 100px;
@@ -111,19 +115,23 @@ export default {
     cursor: pointer;
   }
   .art-container{
-    padding: 20px 0;
-    min-height: 90px;
+    padding: 5px 0;
+    min-height: 60px;
     border-left: 3px #2e2e2e solid;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     .art-title{
-      float:left;
+      // float:left;
       min-height: 90px;
-      width: 120px;
+      width: 140px;
       float: left;
       display: flex;
       align-items: center;
+      flex: 1;
       span{
       text-align: left;
-        font-size: 20px;
+        font-size: 16px;
         color: #b3b3b3;
       }
     }
@@ -133,7 +141,7 @@ export default {
       float: left;
       align-items: center;
       justify-content: center;
-      width: 60px;
+      width: 50px;
       min-height: 90px;
       float: left;
       .font-num{
@@ -148,19 +156,23 @@ export default {
     }
   }
   .active-art-container{
-    padding: 20px 0;
+    padding: 5px 0;
     border-left: 3px #0A86AF solid;
     min-height: 90px;
+    display: flex;
+    // justify-content: center;
+    align-items: center;
     .art-title{
-      float:left;
+      // float:left;
+      flex: 1;
       min-height: 90px;
-      width: 120px;
+      width: 140px;
       float: left;
       display: flex;
       align-items: center;
       span{
       text-align: left;
-        font-size: 20px;
+        font-size: 16px;
         color: #b3b3b3;
       }
     }
@@ -170,7 +182,7 @@ export default {
       // position:relative;
       align-items: center;
       justify-content: center;
-      width: 60px;
+      width: 50px;
       min-height: 90px;
       float: left;
       .font-num{
@@ -188,11 +200,12 @@ export default {
     background: #404040;
     min-height: 90px;
     .delete-svg-container{
-      float: left;
+      // float: left;
       display:flex;
       align-items: center;
       min-height: 90px;
       color: #b3b3b3;
+      padding: 0 10px;
     }
   }
   .art-container:hover {
