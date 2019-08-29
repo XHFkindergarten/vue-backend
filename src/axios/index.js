@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/vuex'
 import keys from '@/common'
+import Router from '../router'
 
 const service = axios.create({
   baseURL: keys.host,
@@ -11,11 +12,11 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // Do Something before request is sent
-  if (store.state.token) {
-    // 如果store中有用户token的话
-    // 为每一个请求的Authorization设置token
-    config.headers['Authorization'] = store.state.token
-  }
+  // if (store.state.token) {
+  //   // 如果store中有用户token的话
+  //   // 为每一个请求的Authorization设置token
+  //   config.headers['Authorization'] = store.state.token
+  // }
   return config
 }, error => {
   // Do something with request error
@@ -55,12 +56,13 @@ service.interceptors.response.use(
     //       return response.data;
     //     }
   error => {
-    if (error.message.indexOf('401')<0) {
+    if (error.message.indexOf('401')>=0) {
       Message({
-        message: error.message,
+        message: '用户身份已过期,请重新登录',
         type: 'error',
         duration: 5*1000
       })
+      Router.push('/login')
     }
     return Promise.reject(error)
 })
