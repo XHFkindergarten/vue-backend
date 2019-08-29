@@ -12,11 +12,11 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // Do Something before request is sent
-  // if (store.state.token) {
-  //   // 如果store中有用户token的话
-  //   // 为每一个请求的Authorization设置token
-  //   config.headers['Authorization'] = store.state.token
-  // }
+  if (store.state.token) {
+    // 如果store中有用户token的话
+    // 为每一个请求的Authorization设置token
+    config.headers['Authorization'] = store.state.token
+  }
   return config
 }, error => {
   // Do something with request error
