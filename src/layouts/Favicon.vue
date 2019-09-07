@@ -9,7 +9,7 @@ import keys from '@/common'
 export default {
   computed: {
     srcUrl() {
-      return `http://img.xhfkindergarten.cn/${this.birdOptions[this.bird]}`
+      return `https://img.xhfkindergarten.cn/${this.birdOptions[this.bird]}`
     }
   },
   data() {

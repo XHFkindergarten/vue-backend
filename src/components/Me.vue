@@ -398,6 +398,7 @@ export default {
   bottom: 40px;
 }
 .img-container {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -432,7 +433,7 @@ export default {
   .avatar-bg {
     width: 100vw;
     object-fit: cover;
-    filter: blur(16px);
+    filter: blur(10px);
     max-height: 100vh;
     position: absolute;
     top: 0;

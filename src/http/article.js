@@ -69,12 +69,6 @@ const getArticleList = async params => {
   if (!params) {
     throw new Error('请输入参数')
   }
-  // const keys = Object.keys(params) 
-  // let sql = ''
-  // keys.forEach(key => {
-  //   sql += `${key}=${params[key]}&`
-  // })
-  // sql = sql.substring(0, sql.length-1)
 
   const res = await axios.get(`article/getArticleList?groupId=${params.groupId}&userId=${params.userId}`)
     .catch(err => {
