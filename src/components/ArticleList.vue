@@ -321,7 +321,8 @@ export default {
     height: 800px;
     max-height: 60vh;
     background: url('https://img.xhfkindergarten.cn/B60BDCD2-1876-4FD1-B6F2-2F7858C81240.jpeg') no-repeat;
-    background-size: 100%;
+
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;

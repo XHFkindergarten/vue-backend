@@ -124,7 +124,7 @@ export default {
     .art-title{
       // float:left;
       min-height: 90px;
-      width: 140px;
+      width: 80%;
       float: left;
       display: flex;
       align-items: center;
@@ -141,7 +141,7 @@ export default {
       float: left;
       align-items: center;
       justify-content: center;
-      width: 50px;
+      width: 20%;
       min-height: 90px;
       float: left;
       .font-num{
@@ -166,7 +166,7 @@ export default {
       // float:left;
       flex: 1;
       min-height: 90px;
-      width: 140px;
+      width: 80%;
       float: left;
       display: flex;
       align-items: center;
@@ -182,7 +182,7 @@ export default {
       // position:relative;
       align-items: center;
       justify-content: center;
-      width: 50px;
+      width: 20%;
       min-height: 90px;
       float: left;
       .font-num{
