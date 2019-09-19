@@ -95,7 +95,7 @@
       </el-col>
 
     </el-row>
-    <div :class="isCollapse?'show-bar':'none-bar'" class="nav-bar">
+    <div id="nav-bar" :class="isCollapse?'show-bar':'none-bar'" class="nav-bar">
       <div
         v-if="hasLogin"
         @click="CollapseRouteChange('/me')"
@@ -122,8 +122,9 @@
       <div @click="CollapseRouteChange('/register')" :class="isCollapse?'show-words':'none-words'" class="nav-words" v-if="!hasLogin" style="animation-delay: 85ms;">Sign up</div>
     </div>
     <el-button
+      id="showCollapse"
       v-if="!isCollapse"
-      @click="isCollapse=true"
+      @click="showCollapse"
       :class="isCollapse?'noOpacity':'showOpacity'"
       class="openCollapse"
       round>
@@ -133,7 +134,7 @@
     </el-button>
     <el-button
       v-if="isCollapse"
-      @click="isCollapse=false"
+      @click="hideCollapse"
       :class="isCollapse?'showOpacity':'noOpacity'"
       class="openCollapse"
       round>
@@ -157,6 +158,12 @@ export default {
     MeItems
   },
   methods: {
+    showCollapse() {
+      this.isCollapse = true
+    },
+    hideCollapse() {
+      this.isCollapse = false
+    },
     // 点击侧边栏路由跳转
     CollapseRouteChange(path) {
       this.isCollapse = false
@@ -209,20 +216,16 @@ export default {
   },
   mounted() {
     var that = this
-    // TODO: 点击非侧边栏区域使侧边栏收缩
-    // $(document).on("click", ":not(#nav)", function(e) {
-    //   e.stopPropagation()
-    //   e.preventDefault()
-    //   console.log($(e.target))
-    //   if (that.isCollapse && $(e.target).closest('#showNav').length == 0) {
-    //     // console.log(that.isCollapse)
-    //     that.isCollapse = false
-    //   }
-    //   // console.log($(e.target).closest('#nav').length == 0 && that.isCollapse)
-    //   // if ($(e.target).closest('#nav').length == 0 && that.isCollapse) {
-    //   //   that.isCollapse = false
-    //   // }
-    // })
+    $('#nav-bar').bind('click', (event) => {
+        event.stopPropagation()
+    })
+    $('#showCollapse').bind('click', (event) => {
+        event.stopPropagation()
+    })
+    $(document).bind('click', (event) => {
+      console.log('click document')
+      that.isCollapse = false;
+    })
   }
 }
 </script>

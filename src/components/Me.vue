@@ -398,7 +398,6 @@ export default {
   bottom: 40px;
 }
 .img-container {
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
