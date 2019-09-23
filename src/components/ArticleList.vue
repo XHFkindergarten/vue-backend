@@ -3,7 +3,7 @@
     <!-- <img class="bg" src="https://img.xhfkindergarten.cn/desk.jpeg" alt="background"> -->
     <div class="banner">
       <div class="banner-word">Calm and Collected</div>
-      <div v-if="hasStatus" @click="addArticle" class="write-circle">
+      <div @click="addArticle" :class="['write-circle',{'visibility':!hasStatus}]">
         <SvgIcon icon="add-white"></SvgIcon>
       </div>
     </div>
@@ -137,9 +137,9 @@ export default {
         return
       }
       this.currentPage = 1
-      const Reg = new RegExp(this.filterValue, 'g')
+      const Reg = new RegExp(this.filterValue, 'gi')
       this.showArticleList = this.articleList.filter((item) => {
-        return Reg.test(item.title) || Reg.test(item.content)
+        return Reg.test(item.title) || Reg.test(item.summary)
       })
       this.getCurrentArts()
     },
@@ -240,12 +240,6 @@ export default {
         vuecom.showToTop = false
       }
     })
-    // setTimeout(() => {
-    //   window.scrollTo({
-    //     top: $('.write-circle')[0].offsetTop,
-    //     behavior: "smooth"
-    //   })
-    // }, 3000)
     // 数组原型链新增去重方法unique
     Array.prototype.unique = function(){
       var a = {};
@@ -273,7 +267,7 @@ export default {
 @small-circle: 60px;
 @media screen and (min-width: 992px) {
   .header-padding {
-    padding-top: @big-header-height;
+    padding-top: 0;
   }
   .banner {
     width: 100vw;
@@ -355,7 +349,9 @@ export default {
     width: 87%;
   }
 }
-
+.visibility {
+  visibility: hidden;
+}
 .form {
   margin: 4rem 0;
   .label {

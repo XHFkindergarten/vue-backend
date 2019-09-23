@@ -57,6 +57,7 @@
     <div @click="replyTo(item)" class="commentrows" v-for="item in commentList" :key="item.id">
       <strong>{{item.userInfo.name}}</strong> {{item.replyTo?'回复'+item.reply.name:'评论'}}: {{item.content}}
       <el-popover
+        v-if="userId==item.userId"
         v-model="isDelete"
         placement="bottom"
         width="160"
@@ -210,6 +211,9 @@ export default {
     'dailyInfo'
   ],
   computed: {
+    userId() {
+      return this.$store.state.userInfo.id
+    },
     isMyDaily() {
       return this.dailyInfo.userId === this.$store.state.userInfo.id
     },
@@ -253,6 +257,7 @@ export default {
   padding: 0 20px 0 10px;
   position: relative;
   .deletecomment {
+    cursor: pointer;
     position: absolute;
     right: 0;
     top: 50%;
