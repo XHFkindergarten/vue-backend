@@ -270,6 +270,7 @@ export default {
     border: 1px solid #EEE;
     outline: none;
     padding: 0 15px;
+    -webkit-appearance:none;
   }
 }
 .itemrow {
