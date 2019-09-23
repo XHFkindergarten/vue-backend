@@ -57,13 +57,14 @@
     <div @click="replyTo(item)" class="commentrows" v-for="item in commentList" :key="item.id">
       <strong>{{item.userInfo.name}}</strong> {{item.replyTo?'回复'+item.reply.name:'评论'}}: {{item.content}}
       <el-popover
+        v-model="isDelete"
         placement="bottom"
         width="160"
-        trigger="hover"
+        trigger="click"
         >
         <p>确认删除评论吗</p>
         <div style="text-align: right; margin: 0">
-          <el-button size="mini" type="text">取消</el-button>
+          <el-button @click="isDelete=false" size="mini" type="text">取消</el-button>
           <el-button type="primary" size="mini" @click="deleteComment(item.id)">确定</el-button>
         </div>
         <div slot="reference" @click="cancelPropagation" class="deletecomment">×</div>
@@ -96,7 +97,8 @@ export default {
       commentList: [],
       // placeholder
       placeholder: '请输入回复内容',
-      isReplyTo: ''
+      isReplyTo: '',
+      isDelete: false
     }
   },
   methods: {
@@ -240,7 +242,7 @@ export default {
 <style lang="less" scoped>
 .commentrows {
   margin: 3px 0;
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
   padding: 0 20px 0 10px;
   position: relative;
@@ -248,7 +250,7 @@ export default {
     position: absolute;
     right: 0;
     top: 50%;
-    margin-top: -6px;
+    margin-top: -7px;
   }
 }
 .commentrow {
