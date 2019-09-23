@@ -24,11 +24,6 @@ export default {
   },
   mounted() {
     this.judgeScreen()
-    // this.$message({
-    //   type: 'warning',
-    //   message: '服务器又被攻击了,请重新注册!'
-    // })
-    // console.log(window.innerHeight)
   }
 }
 </script>

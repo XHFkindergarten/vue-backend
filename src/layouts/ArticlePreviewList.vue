@@ -2,7 +2,7 @@
   <div style="min-height:200px;">
     <el-card
       class="card"
-      v-for="(item, index) in artList"
+      v-for="item in artList"
       :key="item.id"
       shadow="hover"
       :body-style="{
@@ -11,7 +11,7 @@
       style="border-radius:10px;margin:40px 0;"
       >
       <el-row>
-        <el-col
+        <!-- <el-col
           :lg="{span:12}"
           :md="{span:24}"
           :sm="{span:24}"
@@ -21,7 +21,7 @@
             <SvgIcon v-if="isMe" class="edit-pic" size="mid" icon="edit"></SvgIcon>
             <img :src="item.labelImg">
           </div>
-        </el-col>
+        </el-col> -->
         <el-col
           :lg="{span:12}"
           :md="{span:24}"
@@ -185,6 +185,7 @@ export default {
   }
 }
 .art-container{
+  padding: 30px 0;
   // float: left;
   width: 100%;
   .title{

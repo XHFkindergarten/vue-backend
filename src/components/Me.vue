@@ -430,13 +430,13 @@ export default {
     border-radius: @avatar-size/2;
   }
   .avatar-bg {
-    width: 100vw;
+    width: 110vw;
     object-fit: cover;
     filter: blur(10px);
     max-height: 100vh;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -5vw;
     right: 0;
     z-index: -1;
   }

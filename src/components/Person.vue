@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top:80px;">
     <el-row
       style="margin-top:50px;">
       <el-col

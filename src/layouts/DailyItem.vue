@@ -45,7 +45,35 @@
         </el-col>
       </el-row>
     </div>
+    <div class="itemrow">
+      <div @click="like">
+        <SvgIcon class="icon" :icon="isLiked?'like3-active':'like3'" size="mini"></SvgIcon>
+      </div>
+      <div @click="comment">
+        <SvgIcon class="icon" icon="comment1" size="mini"></SvgIcon>
+      </div>
+    </div>
     
+    <div @click="replyTo(item)" class="commentrows" v-for="item in commentList" :key="item.id">
+      <strong>{{item.userInfo.name}}</strong> {{item.replyTo?'回复'+item.reply.name:'评论'}}: {{item.content}}
+      <el-popover
+        placement="bottom"
+        width="160"
+        trigger="hover"
+        >
+        <p>确认删除评论吗</p>
+        <div style="text-align: right; margin: 0">
+          <el-button size="mini" type="text">取消</el-button>
+          <el-button type="primary" size="mini" @click="deleteComment(item.id)">确定</el-button>
+        </div>
+        <div slot="reference" @click="cancelPropagation" class="deletecomment">×</div>
+      </el-popover>
+    </div>
+    <div v-if="isCommenting" class="commentrow">
+      <input id="comment" v-model="commentInput" :placeholder="placeholder" type="text">
+      <el-button @click="commitComment" type="text">确认</el-button>
+      <el-button @click="cancleComment" type="text">取消</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -58,10 +86,84 @@ export default {
       // 打开删除弹框
       openDelete: false,
       // 确认删除弹框
-      comfirmDelete: false
+      comfirmDelete: false,
+      isLiked: false,
+      // 是否正在评论
+      isCommenting: false,
+      // 评论内容
+      commentInput: "",
+      // 评论列表
+      commentList: [],
+      // placeholder
+      placeholder: '请输入回复内容',
+      isReplyTo: ''
     }
   },
   methods: {
+    async deleteComment(id) {
+      const res = await this.$axios.get(`${keys.host}/daily/deleteComment?id=${id}`)
+      console.log(res)
+      var that = this
+      setTimeout(() => {
+        that.getComment()
+      },1000)
+    },
+    cancelPropagation(e) {
+      e.stopPropagation()
+    },
+    // 回复别人的评论
+    replyTo(item) {
+      this.placeholder = '回复'+item.userInfo.name
+      this.isReplyTo = item.userId
+      this.isCommenting = true
+    },
+    // 获取这条评论的所有评论
+    async getComment() {
+      const res = await this.$axios.get(`${keys.host}/daily/getComment?id=${this.dailyInfo.id}`)
+      if (res.data.success) {
+        console.log(res.data.comments)
+        this.commentList = res.data.comments
+      } else {
+        this.commentList = []
+      }
+    },
+    // 发表评论
+    commitComment() {
+      if (!this.commentInput) return
+      const userId = this.$store.state.userInfo.id
+      const res = this.$axios.post('daily/comment', {
+        content: this.commentInput,
+        dailyId: this.dailyInfo.id,
+        userId,
+        replyTo: this.isReplyTo
+      }).then(res => {
+        if (res.data.success) {
+          setTimeout(() => {
+            this.getComment()
+          },1000)
+        }
+      })
+      this.commentInput = ""
+      this.cancleComment()
+    },
+    // 取消评论
+    cancleComment() {
+      this.isCommenting = false
+      this.placeholder = "请输入回复内容"
+      this.isReplyTo = ''
+    },
+    // 点击评论
+    comment() {
+      if (!this.$store.state.status) return
+      this.isCommenting = !this.isCommenting
+      this.placeholder = "请输入回复内容"
+      this.isReplyTo = ''
+    },  
+    // 点击喜欢
+    like() {
+      if (!this.$store.state.status) return
+      this.isLiked = !this.isLiked
+    },
     // 跳转作者页面
     toAuthor() {
       this.$router.push({ path: 'Person', query: {id: this.dailyInfo.userId}})
@@ -90,6 +192,7 @@ export default {
     this.$nextTick(() => {
       this.adjustSquare()
     })
+    this.getComment()
   },
   components: {
     showPic,
@@ -135,6 +238,50 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.commentrows {
+  margin: 3px 0;
+  font-size: 12px;
+  text-align: left;
+  padding: 0 20px 0 10px;
+  position: relative;
+  .deletecomment {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -6px;
+  }
+}
+.commentrow {
+  margin: 10px 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .el-button {
+    margin: 0 5px;
+    padding: 0;
+  }
+  #comment {
+    flex: 1;
+    @commentInputHeight: 30px;
+    width: 100%;
+    height: @commentInputHeight;
+    border-radius: @commentInputHeight/2;
+    border: 1px solid #EEE;
+    outline: none;
+    padding: 0 15px;
+  }
+}
+.itemrow {
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .icon {
+    margin: 0 10px;
+  }
+}
 .delete-container{
   width: 100%;
   display: flex;

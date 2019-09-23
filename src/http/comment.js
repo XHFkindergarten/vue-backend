@@ -12,6 +12,18 @@ const addComment = async params => {
   return res
 } 
 
+// 对daily发起评论
+const commitDailyComment = async params => {
+  if (!params) {
+    throw new Error('请输入参数')
+  }
+  const res = await axios.post('daily/comment', params)
+    .catch(err => {
+      throw err
+    })
+  return res
+}
+
 // 获取文章评论
 const getComment = async articleId => {
   if (!articleId) {
@@ -47,7 +59,6 @@ const getReply = async articleId => {
     })
   return res
 }
-
 const deleteComment = async params => {
   if (!params) {
     throw new Error('请输入参数')
@@ -58,6 +69,7 @@ const deleteComment = async params => {
     })
   return res
 }
+
 
 const comment = {
   addComment,

@@ -28,7 +28,10 @@
         :xs={span:8,offset:8}
         @click.native="RoutePush('/daily')"
         >
-        <div class="header-item">Daily</div>
+        <div class="header-item">
+          Daily
+        </div>
+        
       </el-col>
       <el-col
         class="hidden-md-and-down"
@@ -115,7 +118,7 @@
       </div>
       <div @click="CollapseRouteChange('/')" :class="isCollapse?'show-words':'none-words'" class="nav-words" style="animation-delay: 0ms;">Home</div>
       <div @click="CollapseRouteChange('/articleList')" :class="isCollapse?'show-words':'none-words'" class="nav-words" style="animation-delay: 17ms;">Article</div>
-      <div @click="CollapseRouteChange('/daily')" :class="isCollapse?'show-words':'none-words'" class="nav-words" style="animation-delay: 34ms;">Daily</div>
+      <div @click="CollapseRouteChange('/daily')" :class="isCollapse?'show-words':'none-words'" class="nav-words" style="animation-delay: 34ms;"><span style="position:relative;">Daily <div v-if="notice!=0" class="side-num">{{notice}}</div></span></div>
       <div @click="CollapseRouteChange('/readFile')" :class="isCollapse?'show-words':'none-words'" class="nav-words" style="animation-delay: 51ms;">Read</div>
       <div :class="isCollapse?'show-words':'none-words'" class="divider"></div>
       <div @click="CollapseRouteChange('/login')" :class="isCollapse?'show-words':'none-words'" class="nav-words" v-if="!hasLogin" style="animation-delay: 68ms;">Sign in</div>
@@ -147,6 +150,7 @@
 <script>
 import MeItems from '@/components/MeItems'
 import Cookies from 'js-cookie'
+import keys from '../common/index'
 // import FavIcon from '@/layouts/FavIcon'
 export default {
   data() {
@@ -166,6 +170,11 @@ export default {
     },
     // 点击侧边栏路由跳转
     CollapseRouteChange(path) {
+      if (path == '/daily' && this.notice!=0) {
+        const id = this.$store.state.userInfo.id
+        this.$store.state.userInfo.notice = 0
+        const res = this.$axios.get(`${keys.host}/users/clearNotice?id=${id}`)
+      }
       this.isCollapse = false
       this.$router.push(path)
     },
@@ -195,6 +204,14 @@ export default {
     }
   },
   computed: {
+    notice() {
+      const notice = this.$store.state.userInfo.notice
+      if (notice && notice!=0) {
+        return notice
+      } else {
+        return 0
+      }
+    },
     hasLogin() {
       return this.$store.state.status
     },
@@ -223,7 +240,6 @@ export default {
         event.stopPropagation()
     })
     $(document).bind('click', (event) => {
-      console.log('click document')
       that.isCollapse = false;
     })
   }
@@ -232,6 +248,19 @@ export default {
 <style lang="less" scoped>
 @big-header-height: 80px;
 @small-header-height: 60px;
+.side-num{
+  position: absolute;
+  left: 90%;
+  line-height: 1;
+  top: 4px;
+  background: red;
+  transform-origin: left top;
+  font-size: 1rem;
+  transform: scale(0.75);
+  border-radius: .7rem;
+  color: #FFF;
+  padding: .2rem .6rem;
+}
 .noOpacity {
   display: none;
   opacity: 0;
