@@ -105,6 +105,7 @@ export default {
   .title {
     font-size: 40px;
     max-width: 80vw;
+    word-break: break-all;
   }
   .info-container {
     width: 80vw;

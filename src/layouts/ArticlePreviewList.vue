@@ -23,7 +23,7 @@
           </div>
         </el-col> -->
         <el-col
-          :lg="{span:12}"
+          :lg="{span:24}"
           :md="{span:24}"
           :sm="{span:24}"
           :xs="{span:24}"
@@ -207,10 +207,10 @@ export default {
     }
   }
   .min-title{
-    min-height: 70px;
+    min-height: 50px;
   }
   .min-summary{
-    min-height: 106px;
+    min-height: 70px;
   }
   .summary{
     margin: 0 30px;

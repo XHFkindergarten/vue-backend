@@ -1,10 +1,9 @@
 <template>
   <div class="header-padding">
-    <div class="img-container">
+    <!-- <div class="img-container">
       <img class="avatar-bg" :src="userInfo.avatar" alt="用户头像">
       <img @click="editAvatar" class="avatar-img" :src="userInfo.avatar" alt="用户头像">
       <div @click="editusername" class="username">{{userInfo.username}}</div>
-      <!-- <div class="email">{{userInfo.email}}</div> -->
       <el-popover
         v-model="editMoodDialog"
         placement="bottom"
@@ -58,11 +57,13 @@
       :bg="'#000'"
       :opacity="opacity"
       :show="showToTop"
-      ></ToTop>
-    <!-- <el-row
+      ></ToTop> -->
+
+
+    <el-row
       style="margin-top:50px;">
       <el-col
-        :lg={span:5,offset:4}
+        :lg={span:5,offset:5}
         :md={span:8,offset:8}
         :sm={span:10,offset:7}
         :xs={span:24}
@@ -147,45 +148,40 @@
         
       </el-col>
       <el-col
-        :lg={span:10,offset:1}
+        :lg={span:8,offset:1}
         :md={span:12,offset:6}
         :sm={span:14,offset:5}
         :xs={span:20,offset:2}
-        v-loading="isLoading"
         >
-        <div class="big-title">My Article</div>
+        <div class="big-title">Articles</div>
         <div class="hr"></div>
-        <div v-if="articleList.length==0" style="font-size:18px">暂无文章</div>
         <ArticlePreviewList
-          v-if="articleList.length>0"
-          @uploadLabelImg="getUserArticle"
+          v-loading="isLoading"
           :articleList="showArticleList"></ArticlePreviewList>
       </el-col>
-    </el-row>
-    <el-row>
       <el-col
-        :lg={span:20,offset:2}
-        :md={span:24}
-        :sm={span:24}
+        :lg={span:8,offset:8}
+        :md={span:8,offset:8}
+        :sm={span:8,offset:8}
         :xs={span:24}
         >
         <el-pagination
-          v-if="articleList.length>0"
           :total="articleNum"
           :page-size="pageSize"
           :current-page="currentPage"
           @current-change="pageChange"
           background
           layout="prev, pager, next"
+          style="margin-bottom:60px;overflow:auto;"
           >
         </el-pagination>
       </el-col>
-    </el-row> -->
+    </el-row>
   </div>
 </template>
 <script>
 import keys from '@/common'
-import NewArticlePreviewList from '@/layouts/NewArticlePreviewList'
+import ArticlePreviewList from '@/layouts/ArticlePreviewList'
 import SvgIcon from '@/layouts/SvgIcon'
 import EditAvatar from '@/components/editAvatar'
 import Pagination from '@/layouts/Pagination'
@@ -224,7 +220,7 @@ export default {
     }
   },
   components: {
-    NewArticlePreviewList,
+    ArticlePreviewList,
     EditAvatar,
     SvgIcon,
     Pagination,
@@ -248,15 +244,15 @@ export default {
   },
   mounted() {
     // 监听页面高度是否需要显示 回到顶部按钮
-    const vuecom = this
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > $('#target')[0].offsetTop) {
-        vuecom.showToTop = true
-        vuecom.opacity = (window.pageYOffset - $('#target')[0].offsetTop) / $('#target')[0].clientHeight
-      } else {
-        vuecom.showToTop = false
-      }
-    })
+    // const vuecom = this
+    // window.addEventListener('scroll', function() {
+    //   if (window.pageYOffset > $('#target')[0].offsetTop) {
+    //     vuecom.showToTop = true
+    //     vuecom.opacity = (window.pageYOffset - $('#target')[0].offsetTop) / $('#target')[0].clientHeight
+    //   } else {
+    //     vuecom.showToTop = false
+    //   }
+    // })
     // this.judgeScreen()
     this.mood = this.userInfo.mood
     this.sign = this.userInfo.sign
@@ -385,7 +381,7 @@ export default {
 @small-header-height: 60px;
 @media screen and (min-width: 992px) {
   .header-padding {
-    padding-top: 0;
+    padding-top: @big-header-height;
   }
 }
 @media screen and (max-width: 992px) {
@@ -397,50 +393,76 @@ export default {
   position: absolute;
   bottom: 40px;
 }
-.img-container {
+.status-container{
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  @avatar-size: 200px;
-  min-height: 100vh;
-  .status-container{
-    margin: 0 auto;
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: left;
-    position: relative;
-    .edit-icon{
-      display: none;
-    }
-  }
-  .username {
-    font-size: 50px;
-    margin: 10px;
-  }
-  .email {
-    font-size: 20px;
-    font-family: Circular_book;
-  }
-  .avatar-img {
-    width: @avatar-size;
-    height: @avatar-size;
-    border-radius: @avatar-size/2;
-  }
-  .avatar-bg {
-    width: 110vw;
-    object-fit: cover;
-    filter: blur(10px);
-    max-height: 100vh;
-    position: absolute;
-    top: 0;
-    left: -5vw;
-    right: 0;
-    z-index: -1;
+  height: 40px;
+  width: 240px;
+  border-bottom: 1px #e1e4e8 solid;
+  border-left: 1px #e1e4e8 solid;
+  border-right: 1px #e1e4e8 solid;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  text-align: left;
+  line-height: 40px;
+  position: relative;
+  .edit-icon{
+    display: none;
   }
 }
+.status-container:hover{
+  .edit-icon{
+    display: block;
+    position: absolute;
+    right: 10px;
+  }
+}
+// .img-container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   @avatar-size: 200px;
+//   min-height: 100vh;
+//   .status-container{
+//     margin: 0 auto;
+//     cursor: pointer;
+//     display: flex;
+//     justify-content: flex-start;
+//     align-items: center;
+//     text-align: left;
+//     position: relative;
+//     .edit-icon{
+//       display: none;
+//     }
+//   }
+//   .username {
+//     font-size: 50px;
+//     margin: 10px;
+//   }
+//   .email {
+//     font-size: 20px;
+//     font-family: Circular_book;
+//   }
+//   .avatar-img {
+//     width: @avatar-size;
+//     height: @avatar-size;
+//     border-radius: @avatar-size/2;
+//   }
+//   .avatar-bg {
+//     width: 110vw;
+//     object-fit: cover;
+//     filter: blur(10px);
+//     max-height: 100vh;
+//     position: absolute;
+//     top: 0;
+//     left: -5vw;
+//     right: 0;
+//     z-index: -1;
+//   }
+// }
 
 
 // ============原有style===========
@@ -451,6 +473,7 @@ export default {
   font-size: 40px;
   text-align: left;
   font-weight: bolder;
+  font-family: Circular_black;
 }
 .hr{
   width: 100%;
