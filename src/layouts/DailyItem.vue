@@ -46,10 +46,10 @@
       </el-row>
     </div>
     <div class="itemrow">
-      <div @click="like">
+      <div @click="like" style="cursor:pointer;">
         <SvgIcon class="icon" :icon="isLiked?'like3-active':'like3'" size="mini"></SvgIcon>
       </div>
-      <div @click="comment">
+      <div @click="comment" style="cursor:pointer;">
         <SvgIcon class="icon" icon="comment1" size="mini"></SvgIcon>
       </div>
     </div>
@@ -70,7 +70,7 @@
       </el-popover>
     </div>
     <div v-if="isCommenting" class="commentrow">
-      <input id="comment" v-model="commentInput" :placeholder="placeholder" type="text">
+      <input id="comment" v-model="commentInput" :placeholder="placeholder" autocomplete="off" type="text">
       <el-button @click="commitComment" type="text">确认</el-button>
       <el-button @click="cancleComment" type="text">取消</el-button>
     </div>
