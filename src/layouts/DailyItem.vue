@@ -156,7 +156,13 @@ export default {
     },
     // 点击评论
     comment() {
-      if (!this.$store.state.status) return
+      if (!this.$store.state.status) {
+        this.$message.warning({
+          message: '请登录后再试',
+          duration: 2000
+        })
+        return
+      }
       this.isCommenting = !this.isCommenting
       this.placeholder = "请输入回复内容"
       this.isReplyTo = ''
@@ -265,7 +271,7 @@ export default {
   }
   #comment {
     flex: 1;
-    @commentInputHeight: 30px;
+    @commentInputHeight: 40px;
     width: 100%;
     height: @commentInputHeight;
     border-radius: @commentInputHeight/2;
