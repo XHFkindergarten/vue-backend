@@ -15,10 +15,10 @@
         </div>
         <span></span>
       </div>
-      <div :class="item.index==activeArt?'active-art-container':'art-container'" @click="openArticle(item)" v-for="item in articleList" :key="item.index">
+      <div :class="index==activeArt?'active-art-container':'art-container'" @click="openArticle(index)" v-for="(item, index) in articleList" :key="index+''">
         <div class="art-svg-container">
-          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="item.index==activeArt" icon="save" size="mid"></SvgIcon>
-          <SvgIcon v-else icon="smile" size="mid" style="color:#b3b3b3"></SvgIcon>
+          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="index==activeArt" size="mid" icon="save"></SvgIcon>
+          <SvgIcon v-else icon="code2" size="mid" style="color:#FFF"></SvgIcon>
         </div>
         <div class="art-title">
           <span>{{item.title}}</span>
@@ -54,9 +54,9 @@ export default {
       this.$emit('addArticle')
     },
     // 点击打开文章
-    openArticle(item) {
-      this.activeArt = parseInt(item.index)
-      this.$emit('openArticle', parseInt(item.index))
+    openArticle(index) {
+      this.activeArt = index
+      this.$emit('openArticle', index)
     },
     // 点击保存文章
     saveArticle() {
@@ -86,6 +86,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@block-height: 70px;
 .entire-container {
   height: 100vh;
   overflow-x: auto;
@@ -108,7 +109,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     color: #b3b3b3;
-    font-size: 16px;
+    font-size: 14px;
   }
   .addArt-container:hover{
     color: #0A86AF;
@@ -116,23 +117,24 @@ export default {
   }
   .art-container{
     padding: 5px 0;
-    min-height: 60px;
+    min-height: @block-height;
     border-left: 3px #2e2e2e solid;
     // display: flex;
     // justify-content: center;
     // align-items: center;
     .art-title{
       // float:left;
-      min-height: 90px;
-      width: 80%;
+      min-height: @block-height;
+      width: 65%;
       float: left;
       display: flex;
       align-items: center;
       flex: 1;
+      word-break: break-all;
       span{
       text-align: left;
-        font-size: 16px;
-        color: #b3b3b3;
+        font-size: 14px;
+        color: #FFF;
       }
     }
     .art-svg-container{
@@ -142,7 +144,7 @@ export default {
       align-items: center;
       justify-content: center;
       width: 20%;
-      min-height: 90px;
+      min-height: @block-height;
       float: left;
       .font-num{
         position: absolute;
@@ -158,22 +160,23 @@ export default {
   .active-art-container{
     padding: 5px 0;
     border-left: 3px #0A86AF solid;
-    min-height: 90px;
+    min-height: @block-height;
     display: flex;
     // justify-content: center;
     align-items: center;
     .art-title{
+      word-break: break-all;
       // float:left;
       flex: 1;
-      min-height: 90px;
-      width: 80%;
+      min-height: @block-height;
+      width: 65%;
       float: left;
       display: flex;
       align-items: center;
       span{
       text-align: left;
-        font-size: 16px;
-        color: #b3b3b3;
+        font-size: 14px;
+        color: #FFF;
       }
     }
     .art-svg-container{
@@ -183,7 +186,7 @@ export default {
       align-items: center;
       justify-content: center;
       width: 20%;
-      min-height: 90px;
+      min-height: @block-height;
       float: left;
       .font-num{
         position: absolute;
@@ -198,14 +201,16 @@ export default {
   }
   .active-art-container:hover {
     background: #404040;
-    min-height: 90px;
+    min-height: @block-height;
     .delete-svg-container{
       // float: left;
+      width: 15%;
+      justify-content: center;
       display:flex;
       align-items: center;
-      min-height: 90px;
+      min-height: @block-height;
       color: #b3b3b3;
-      padding: 0 10px;
+      margin: 0 10px;
     }
   }
   .art-container:hover {
@@ -219,7 +224,7 @@ export default {
 
 #save-icon{
   cursor: pointer;
-  color: #b3b3b3;
+  color: #FFF;
 }
 #save-icon:hover{
   color: #0A86AF;

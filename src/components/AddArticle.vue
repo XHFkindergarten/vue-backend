@@ -207,14 +207,14 @@ export default {
     // 洗分组数据
     formatGroupList(list) {
       list.forEach((l, index) => {
-        l.index = ''+index,
+        // l.index = ''+index,
         l.edit = false
       })
     },
     // 洗文章列表数据
     formatArticleList(list) {
       list.forEach((l, index) => {
-        l.index = '' + index
+        l.index = index
       })
     },
     // 获取分组列表

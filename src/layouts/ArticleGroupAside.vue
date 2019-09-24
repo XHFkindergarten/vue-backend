@@ -26,7 +26,7 @@
         @select="selectTab"
         :default-active="activeTab"
         style="border-right:none;">
-        <el-menu-item v-for="item in groupList" :key="item.index" :index="item.index">
+        <el-menu-item v-for="(item, index) in groupList" :key="item.index" :index="index+''">
           <template slot="title">
             <div class="menu-item-container">
               <SvgIcon @click.native="editGroup(item)" class="edit-icon" size="mini" icon="bianji"></SvgIcon>

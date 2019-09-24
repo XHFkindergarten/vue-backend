@@ -142,18 +142,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.status-container{
-    margin: 0 auto;
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: left;
-    position: relative;
-    .edit-icon{
-      display: none;
-    }
-  }
 .big-title{
   margin-top: 30px;
   font-size: 40px;
