@@ -275,6 +275,7 @@ export default {
     padding: 0;
   }
   #comment {
+    font-size: 14px;
     flex: 1;
     @commentInputHeight: 40px;
     width: 100%;
