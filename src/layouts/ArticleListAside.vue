@@ -17,7 +17,7 @@
       </div>
       <div :class="index==activeArt?'active-art-container':'art-container'" @click="openArticle(index)" v-for="(item, index) in articleList" :key="index+''">
         <div class="art-svg-container">
-          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="index==activeArt" size="mid" icon="save"></SvgIcon>
+          <SvgIcon id="save-icon" @click.native="saveArticle" v-if="index==activeArt" size="mid" icon="refresh"></SvgIcon>
           <SvgIcon v-else icon="code2" size="mid" style="color:#FFF"></SvgIcon>
         </div>
         <div class="art-title">
@@ -230,6 +230,7 @@ export default {
   color: #0A86AF;
 }
 #delete-icon{
+  color: #FFF;
   cursor: pointer;
 }
 
