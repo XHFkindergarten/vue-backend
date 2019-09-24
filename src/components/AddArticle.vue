@@ -273,9 +273,9 @@ export default {
       await this.getArticleList()
     },
     // 点击打开某一篇文章
-    async openArticle(option) {
-      this.activeArt = option
-      this.editArticle = await this.getArticle(this.articleList[option].id)
+    async openArticle(index) {
+      this.activeArt = index
+      this.editArticle = await this.getArticle(this.FilterArticleList[index].id)
       this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
         if (this.editArticle.tags==='') {
@@ -289,6 +289,7 @@ export default {
       }
     },
     async getArticle(articleId) {
+      console.log(articleId)
       const res = await this.$store.dispatch('getOneArticleAction', articleId)
       return res.data.article
     },
