@@ -46,10 +46,10 @@
       </el-row>
     </div>
     <div class="itemrow">
-      <div @click="like" style="cursor:pointer;">
+      <div @click="like" style="cursor:pointer;outline:none;">
         <SvgIcon class="icon" :icon="isLiked?'like3-active':'like3'" size="mini"></SvgIcon>
       </div>
-      <div @click="comment" style="cursor:pointer;">
+      <div @click="comment" style="cursor:pointer;outline:none;">
         <SvgIcon class="icon" icon="comment1" size="mini"></SvgIcon>
       </div>
     </div>
@@ -58,14 +58,13 @@
       <strong>{{item.userInfo.name}}</strong> {{item.replyTo?'回复'+item.reply.name:'评论'}}: {{item.content}}
       <el-popover
         v-if="userId==item.userId"
-        v-model="isDelete"
         placement="bottom"
         width="160"
-        trigger="click"
+        trigger="hover"
         >
         <p>确认删除评论吗</p>
         <div style="text-align: right; margin: 0">
-          <el-button @click="isDelete=false" size="mini" type="text">取消</el-button>
+          <!-- <el-button size="mini" type="text">取消</el-button> -->
           <el-button type="primary" size="mini" @click="deleteComment(item.id)">确定</el-button>
         </div>
         <div slot="reference" @click="cancelPropagation" class="deletecomment">×</div>
@@ -257,6 +256,7 @@ export default {
   padding: 0 20px 0 10px;
   position: relative;
   .deletecomment {
+    outline: none;
     cursor: pointer;
     position: absolute;
     right: 0;
