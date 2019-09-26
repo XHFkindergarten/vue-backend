@@ -128,6 +128,8 @@ export default {
   .summary {
     margin: 20px;
     width: 500px;
+    text-align: left;
+    word-break: break-all;
   }
   .tags {
     font-weight: 700;

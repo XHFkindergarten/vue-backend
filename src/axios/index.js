@@ -60,7 +60,7 @@ service.interceptors.response.use(
       Message({
         message: '用户身份已过期,请重新登录',
         type: 'error',
-        duration: 5*1000
+        duration: 3*1000
       })
       Router.push('/login')
     }

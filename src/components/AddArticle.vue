@@ -311,7 +311,8 @@ export default {
       if (res.data.success) {
         this.$message({
           type: 'success',
-          message: '保存成功'
+          message: '保存成功',
+          duration: 500
         })
         this.getArticleList()
         if (this.isBigScreen) {
@@ -435,6 +436,7 @@ export default {
   padding: 0;
 }
 #article-name{
+  font-weight: bold;
   border: none;
   outline: none;
   width: 90%;
