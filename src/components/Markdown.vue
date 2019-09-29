@@ -101,7 +101,7 @@ export default {
   },
   mounted() {
     if (!this.isBigScreen) {
-      console.log('toggle')
+      // console.log('toggle')
       this.$refs.markdown.subfield = false
     }
     

@@ -137,7 +137,7 @@ export default {
     //   }
     // },
     timeUpdate (res) {
-      console.log(res.target)
+      // console.log(res.target)
     },
     // reload () {
     //   const audio = this.$refs.audio
@@ -166,7 +166,7 @@ export default {
         this.fileList = []
         this.index = 0
         this.audioList = res.data.audio
-        console.log(this.audioList)
+        // console.log(this.audioList)
         // this.audioSrc = this.audioList[this.index]
       } else {
         this.$message({
@@ -189,7 +189,7 @@ export default {
         this.fileList.shift()
         this.index = 0
         this.audioList = res.data.audio
-        console.log(this.audioList)
+        // console.log(this.audioList)
         // this.audioSrc = this.audioList[this.index]
       } else {
         this.$message({
@@ -201,8 +201,8 @@ export default {
     },
     // 上传列表改变
     onChange(file, fileList) {
-      console.log(file.raw.type)
-      console.log(fileList)
+      // console.log(file.raw.type)
+      // console.log(fileList)
       if (file.raw.type!=='application/vnd.openxmlformats-officedocument.wordprocessingml.document'&&file.raw.type!=='application/pdf') {
         this.$message.warning('请输入docx和pdf格式的文件')
         this.fileList.shift()

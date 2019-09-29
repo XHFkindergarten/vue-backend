@@ -67,7 +67,7 @@ export default {
     })
   },
   deactivated() {
-    console.log('deactivetd')
+    // console.log('deactivetd')
   },
   data() {
     return {
@@ -90,7 +90,7 @@ export default {
   },
   watch: {
     picUrl(newValue, oldValue) {
-      console.log('change')
+      // console.log('change')
       this.initCropper()
     }
   },
@@ -151,7 +151,7 @@ export default {
     },
     // 文件变化钩子函数
     handleChange(file, fileList) {
-      console.log(fileList)
+      // console.log(fileList)
       let that = this
       if (fileList.length>1) {
         fileList.shift()
@@ -176,7 +176,7 @@ export default {
       this.$message.error('上传失败,请检查网络连接')
     },
     onPreview(file) {
-      console.log(file)
+      // console.log(file)
     }
   },
   created() {

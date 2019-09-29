@@ -62,7 +62,7 @@ export default {
   },
   mounted() {
     // tinymce.init({})
-    console.log(window.outerHeight)    
+    // console.log(window.outerHeight)    
     // 获取七牛云上传token
     http.getQnToken().then(res => {
       this.qiniuToken = res

@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     swipeLeft() {
-      console.log('swipe left')
+      // console.log('swipe left')
     },
     fullScreen() {
       this.isFullScreen = true

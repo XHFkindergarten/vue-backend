@@ -60,6 +60,9 @@ export default {
     register() {
       this.$router.push('/register')
     }
+  },
+  watch: {
+    
   }
 }
 </script>

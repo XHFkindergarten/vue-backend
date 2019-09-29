@@ -54,13 +54,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.comment.userId)
-    console.log(this.$store.state.userInfo.id)
+    // console.log(this.comment.userId)
+    // console.log(this.$store.state.userInfo.id)
   },
   watch: {
     comment: {
       handler(newValue) {
-        console.log('change')
+        // console.log('change')
       },
       deep: true
     }
@@ -74,12 +74,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        console.log(that.comment.id, that.comment.articleId)
+        // console.log(that.comment.id, that.comment.articleId)
         const res = await http.deleteComment({
           id: that.comment.id,
           articleId: that.comment.articleId
         })
-        console.log(res)
+        // console.log(res)
         if (res.data.success) {
           this.$emit('deleteComment')
           this.$message.success('删除成功')
@@ -122,11 +122,11 @@ export default {
     // 获取回复列表
     async getReply() {
       const res = await this.$store.dispatch('getReplyAction', this.comment.articleId)
-      console.log(res.data.reply)
+      // console.log(res.data.reply)
       this.replyList = res.data.reply.filter((item) => {
         return item.commentId==this.comment.id
       })
-      console.log(this.replyList)
+      // console.log(this.replyList)
     },
     
   },

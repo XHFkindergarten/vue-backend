@@ -190,7 +190,7 @@ export default {
     },
     // 点击返回按钮
     backRoute() {
-      console.log('back')
+      // console.log('back')
       this.$router.back()
     }
   },

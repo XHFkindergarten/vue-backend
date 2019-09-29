@@ -104,7 +104,7 @@ export default {
   methods: {
     async deleteComment(id) {
       const res = await this.$axios.get(`${keys.host}/daily/deleteComment?id=${id}`)
-      console.log(res)
+      // console.log(res)
       var that = this
       setTimeout(() => {
         that.getComment()
@@ -123,7 +123,7 @@ export default {
     async getComment() {
       const res = await this.$axios.get(`${keys.host}/daily/getComment?id=${this.dailyInfo.id}`)
       if (res.data.success) {
-        console.log(res.data.comments)
+        // console.log(res.data.comments)
         this.commentList = res.data.comments
       } else {
         this.commentList = []

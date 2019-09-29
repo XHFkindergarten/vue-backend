@@ -14,6 +14,11 @@ export default {
 
     }
   },
+  // watch: {
+  //   $route(to, from) {
+  //     console.log('$route change')
+  //   }
+  // },
   methods: {
     // 判断屏幕大小
     judgeScreen() {

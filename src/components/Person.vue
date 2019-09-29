@@ -129,7 +129,7 @@ export default {
         isPublic: 1
       })
       this.isLoading = false
-      console.log(res)
+      // console.log(res)
       this.articleList = res.data.article
     },
     pageChange(index) {

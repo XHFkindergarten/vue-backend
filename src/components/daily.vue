@@ -288,7 +288,7 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
-      console.log('infinite')
+      // console.log('infinite')
       const offset = this.index || 0
       let res
       if (this.showAll) {
@@ -338,7 +338,7 @@ export default {
     // },
     // 加载更多
     loadMore() {
-      console.log('loadmore')
+      // console.log('loadmore')
       this.loadMoreDisable = true
       setTimeout(() => {
         this.getDaily()

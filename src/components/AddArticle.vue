@@ -289,7 +289,6 @@ export default {
       }
     },
     async getArticle(articleId) {
-      console.log(articleId)
       const res = await this.$store.dispatch('getOneArticleAction', articleId)
       return res.data.article
     },

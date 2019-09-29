@@ -30,13 +30,13 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data)
+      // console.log(data)
     },
     handleCheckChange(data, checked, indeterminate) {
-      console.log(data, checked, indeterminate)
+      // console.log(data, checked, indeterminate)
     },
     nodeFilter(value, data) {
-      console.log(value)
+      // console.log(value)
       return true
     }
   },
