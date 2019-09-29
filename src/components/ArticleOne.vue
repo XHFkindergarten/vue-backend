@@ -132,6 +132,12 @@ export default {
       }
     }
   },
+  beforeRouteUpdate(to, from , next) {
+  console.log('$route update')
+  console.log(to)
+  // 不加next()路由就不跳啦！
+  next()
+},
   components: {
     SvgIcon,
     CommentInput,

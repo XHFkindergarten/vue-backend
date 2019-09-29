@@ -41,6 +41,7 @@ export const constantRouterMap =  [
       {
         path: 'articleList',
         alias: '/articleList',
+        meta: {keepAlive: true},
         hidden: true,
         redirect: '/noheader/list'
       },

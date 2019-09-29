@@ -28,7 +28,7 @@ router.beforeEach( async (to, from, next) => {
     store.commit('setToken', Cookies.get('login-token'))
     try {
       const current = await store.dispatch('currentAction')
-      console.log(current.data)
+      // console.log(current.data)
       store.commit('setUserInfo', current.data)
       if(!store.state.status){
         store.commit('altStatus')
