@@ -168,6 +168,20 @@ export default {
     hideCollapse() {
       this.isCollapse = false
     },
+// 禁止滚动滚动
+stop() {
+  document.body.style.overflow = 'hidden'
+  // 其实下面这个取消滑动的默认事件不写也没关系
+  // 但是我的猜测可能是基于有绑定事件来考虑的
+  var mo = function(event){event.preventDefault()}
+  document.addEventListener('touchmove', mo, false)
+},
+// 允许滚动条滚动
+scroll() {
+  document.body.style.overflow = 'auto'
+  var mo = function(event){event.preventDefault()}
+  document.removeEventListener('touchmove', mo, false)
+},
     // 点击侧边栏路由跳转
     CollapseRouteChange(path) {
       if (path == '/daily' && this.notice!=0) {
@@ -200,7 +214,11 @@ export default {
   },
   watch: {
     isCollapse(newValue) {
-      console.log(newValue)
+      if (newValue) {
+        this.stop()
+      } else {
+        this.scroll()
+      }
     }
   },
   computed: {

@@ -378,6 +378,7 @@ export default {
     //   console.log('??')
     //   console.log(this.currentArticleContent)
     // }
+
     let that = this
     let code1 = 0
     document.onkeydown = function (e) {
@@ -395,19 +396,15 @@ export default {
         that.saveArticle()
         e.preventDefault()
       }
-      // if (code1 === 1 && code2 === 2) {
-      //   console.log('同时按下了shift和S')
-      //   console.log(this.activeArt)
-      //   if (this.activeArt) {
-      //     console.log('保存文章')
-      //   }
-      // }
     }
-    document.onkeyup = function(e) {
-      if (e.keyCode === 17 || e.keyCode === 91) {
-        code1 = 0
-      }
-    }
+
+
+
+    // document.onkeyup = function(e) {
+    //   if (e.keyCode === 17 || e.keyCode === 91) {
+    //     code1 = 0
+    //   }
+    // }
   },
 }
 </script>

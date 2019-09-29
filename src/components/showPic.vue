@@ -29,9 +29,23 @@ export default {
     },
     fullScreen() {
       this.isFullScreen = true
+      this.stop()
     },
     cancelFullScreen() {
       this.isFullScreen = false
+      this.scroll()
+    },
+    // 禁止滚动滚动
+    stop() {
+      var mo = function(event){event.preventDefault()}
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('scroll', mo, false)
+    },
+    // 允许滚动条滚动
+    scroll() {
+      var mo = function(event){event.preventDefault()}
+      document.body.style.overflow = 'auto'
+      document.removeEventListener('scroll', mo, false)
     }
   },
   props: [
