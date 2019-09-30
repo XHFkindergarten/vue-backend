@@ -74,23 +74,6 @@ export const asyncRouterMap = [
         ]
       },
       {
-        path: 'richtext',
-        label: '文本编辑',
-        icon: 'edit',
-        meta: { role: [ 2, 0] },
-        hidden: false,
-        component: () => import('@/layouts/Empty'),
-        children: [
-          {
-            path: '',
-            label: 'tinymce文本编辑器',
-            alias: '/tinymce',
-            meta: { role: [ 2, 0] },
-            hidden: false,
-            component: () => import('@/components/RichText'),
-          }
-        ]
-      },{
         path: 'markdown',
         icon: 'file-markdown',
         component: () => import('@/layouts/Empty'),

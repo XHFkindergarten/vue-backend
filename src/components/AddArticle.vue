@@ -73,7 +73,6 @@
 </template>
 <script>
 import Favicon from '@/layouts/Favicon'
-import RichText from '@/components/RichText'
 import Markdown from '@/components/Markdown'
 import SvgIcon from '@/layouts/SvgIcon'
 import keys from '@/common'
@@ -83,7 +82,6 @@ export default {
   name: 'ArticleContainer',
   components: {
     SvgIcon,
-    RichText,
     ArticleGroupAside,
     ArticleListAside,
     Favicon,

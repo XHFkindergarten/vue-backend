@@ -105,9 +105,12 @@ module.exports = {
     child_process: 'empty'
   },
   externals: {
-    'axios': 'axios',
     'vue': 'Vue',
-    'element-ui': 'ELEMENT'
+    'axios': 'axios',
+    'element-ui': 'ELEMENT',
+    'jquery': '$',
+    'vue-router': 'VueRouter',
+    'vuex': 'Vuex'
   },
   plugins: [
     new webpack.ProvidePlugin({ 
