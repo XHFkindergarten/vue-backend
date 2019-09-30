@@ -6,6 +6,7 @@ const vueLoaderConfig = require('./vue-loader.conf')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -34,6 +35,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
+    chunkFileName: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? './'+config.build.assetsPublicPath
       : './'+config.dev.assetsPublicPath
@@ -114,5 +116,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')
     }),
+    new HtmlWebpackPlugin({
+      inject: 'body'
+    })
   ]
 }

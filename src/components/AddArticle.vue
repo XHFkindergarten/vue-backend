@@ -408,7 +408,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.pointer {
+  cursor: pointer;
+}
 .el-tag{
   margin-left: 10px;
 }
