@@ -7,7 +7,10 @@
       </el-header>
       <!-- <el-main :style="`background: ${isBigScreen?'#F4F5F5':'#FFF'};`"> -->
       <div class="bg">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
       </div>
       
       <!-- </el-main> -->

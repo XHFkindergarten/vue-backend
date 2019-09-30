@@ -391,7 +391,7 @@ export default {
       }
       if (key === 83 && code1 === 1 && that.activeArt) {
         // 保存文章
-        console.log('保存文章')
+        // console.log('保存文章')
         that.saveArticle()
         e.preventDefault()
       }
@@ -399,11 +399,11 @@ export default {
 
 
 
-    // document.onkeyup = function(e) {
-    //   if (e.keyCode === 17 || e.keyCode === 91) {
-    //     code1 = 0
-    //   }
-    // }
+    document.onkeyup = function(e) {
+      if (e.keyCode === 17 || e.keyCode === 91) {
+        code1 = 0
+      }
+    }
   },
 }
 </script>
