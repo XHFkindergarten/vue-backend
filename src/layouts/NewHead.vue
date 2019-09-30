@@ -1,5 +1,5 @@
 <template>
-  <div id="nav" :class="HeaderClass">
+  <div id="nav" :class="HeaderClass" class="NewHead">
     <el-row>
       <el-col
         :lg={span:4,offset:2}
@@ -91,7 +91,6 @@
               <img v-if="hasLogin" class="avatar" :src="userInfo.avatar" alt="用户头像">
               {{userInfo.username}}
             </div>
-            <!-- <el-button class="username" type="text" slot="reference">{{(userInfo.username==''||userInfo.username==null)?'未登录':userInfo.username}}</el-button> -->
           </el-popover>
         </template>
         
@@ -267,6 +266,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+// @import "element-ui/lib/theme-chalk/index.css";  // 报错，找不到这个依赖
+// @import url("https://unpkg.com/element-ui/lib/theme-chalk/index.css");// 编译成功，但是无效
+@import "https://unpkg.com/element-ui/lib/theme-chalk/display.css";
 @big-header-height: 80px;
 @small-header-height: 60px;
 .side-num{

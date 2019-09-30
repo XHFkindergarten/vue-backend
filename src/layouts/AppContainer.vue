@@ -7,10 +7,10 @@
   </div>
 </template>
 <script>
-import 'element-ui/lib/theme-chalk/display.css';
-import Head from '@/layouts/Head'
+// import 'element-ui/lib/theme-chalk/display.css';
+// import Head from '@/layouts/Head'
 import NewHead from '@/layouts/NewHead'
-import Side from '@/layouts/Sidebar'
+// import Side from '@/layouts/Sidebar'
 
 export default {
   // 默认的通用框架
@@ -26,8 +26,8 @@ export default {
     }
   },
   components: {
-    Head,
-    Side,
+    // Head,
+    // Side,
     NewHead
   },
   methods: {

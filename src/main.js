@@ -7,9 +7,9 @@ import App from './App'
 import router from './router'
 
 // 引入element-ui
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
+// import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css'
+// Vue.use(ElementUI)
 
 // 引入 markdown编辑器 mevon-editor
 import mavonEditor from 'mavon-editor'
@@ -26,11 +26,8 @@ import keys from './common'
 import $ from 'jquery'
 
 // 引入axios
-// import axios from 'axios'
-import qs from 'qs'
 import service from '@/axios'
 Vue.prototype.$axios = service
-Vue.prototype.$qs = qs
 
 
 import hljs from 'highlight.js'

@@ -278,8 +278,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import 'element-ui/lib/theme-chalk/base.css';
-@import 'element-ui/lib/theme-chalk/display.css';
+// @import 'element-ui/lib/theme-chalk/base.css';
+// @import 'element-ui/lib/theme-chalk/display.css';
 @import 'https://cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css';
 @circle: 40px;
 @big-header-height: 80px;

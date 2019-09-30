@@ -148,7 +148,7 @@
   </div>
 </template>
 <script>
-import 'element-ui/lib/theme-chalk/display.css';
+// import 'element-ui/lib/theme-chalk/display.css';
 // import RouteView from '@/layouts/RouteView'
 import MeItems from '@/components/MeItems'
 export default {

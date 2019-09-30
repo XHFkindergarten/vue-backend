@@ -104,6 +104,11 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
+  externals: {
+    'axios': 'axios',
+    'vue': 'Vue',
+    'element-ui': 'ELEMENT'
+  },
   plugins: [
     new webpack.ProvidePlugin({ 
       $: "jquery", 
