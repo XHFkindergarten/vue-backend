@@ -2,6 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+// 开启Vue-del-tool调试
+Vue.config.devtools = true;
 
 // 引入路由实例
 import router from './router'

@@ -55,6 +55,9 @@
               <SvgIcon class="icon" size="mini" icon="eyes"></SvgIcon>
               <div class="side-num">{{article.viewTime}}</div>
             </div>
+            <div v-if="userInfo.id == article.userId" class="circle" @click="editArticle">
+              <SvgIcon class="icon" size="mini" icon="write"></SvgIcon>
+            </div>
           </div>
           <CommentInput
             @submitComment="submitComment"
@@ -133,11 +136,11 @@ export default {
     }
   },
   beforeRouteUpdate(to, from , next) {
-  console.log('$route update')
-  console.log(to)
-  // 不加next()路由就不跳啦！
-  next()
-},
+    console.log('$route update')
+    console.log(to)
+    // 不加next()路由就不跳啦！
+    next()
+  },
   components: {
     SvgIcon,
     CommentInput,
@@ -154,6 +157,11 @@ export default {
     }
   },
   methods: {
+    // 对这篇文章进行编辑
+    editArticle() {
+      const editId = this.id
+      this.$router.push({ path: '/articleManage', query: {editId}})
+    },
     // 重新刷新评论列表
     refreshComment() {
       this.getComment()

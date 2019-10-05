@@ -28,7 +28,7 @@
         @addArticle="addArticle"
         :articleList="FilterArticleList"></ArticleListAside>
       <el-main class="main" v-if="isBigScreen || (!isBigScreen&&isEditing)">
-        <div v-if="!activeArt && activeArt!==0" class="blank">
+        <div v-if="(!activeArt && activeArt!==0) && !$route.query.editId" class="blank">
           <Favicon style="margin-top:50px;" title="Article"></Favicon>
         </div>
         <div v-else>
@@ -115,6 +115,7 @@ export default {
       isPublic: false
     }
   },
+  props: ['editId'],
   methods: {
     // 更改发布状态
     async changePublish(value) {
@@ -271,9 +272,11 @@ export default {
       await this.getArticleList()
     },
     // 点击打开某一篇文章
-    async openArticle(index) {
-      this.activeArt = index
-      this.editArticle = await this.getArticle(this.FilterArticleList[index].id)
+    async openArticle(index, id) {
+      if (index) {
+        this.activeArt = index
+      }
+      this.editArticle = await this.getArticle(index?this.FilterArticleList[index].id:id)
       this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
         if (this.editArticle.tags==='') {
@@ -365,6 +368,10 @@ export default {
     // }
   },
   async mounted() {
+    console.log(this.$route.query.editId)
+    if (this.$route.query.editId) {
+      this.openArticle(null, this.$route.query.editId)
+    }
     // this.judgeScreen()
     await this.getGroupList()
     await this.getArticleList()
