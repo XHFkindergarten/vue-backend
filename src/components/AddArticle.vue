@@ -28,7 +28,7 @@
         @addArticle="addArticle"
         :articleList="FilterArticleList"></ArticleListAside>
       <el-main class="main" v-if="isBigScreen || (!isBigScreen&&isEditing)">
-        <div v-if="(!activeArt && activeArt!==0) && !$route.query.editId" class="blank">
+        <div v-if="showPenguin" class="blank">
           <Favicon style="margin-top:50px;" title="Article"></Favicon>
         </div>
         <div v-else>
@@ -112,7 +112,9 @@ export default {
       // 标签输入框value
       tabInputValue: '',
       // 是否发布
-      isPublic: false
+      isPublic: false,
+      // 是否显示企鹅展位图片
+      showPenguin: true
     }
   },
   props: ['editId'],
@@ -273,10 +275,11 @@ export default {
     },
     // 点击打开某一篇文章
     async openArticle(index, id) {
+      this.showPenguin = false
       if (index) {
         this.activeArt = index
       }
-      this.editArticle = await this.getArticle(index?this.FilterArticleList[index].id:id)
+      this.editArticle = await this.getArticle((index || index == 0)?this.FilterArticleList[index].id:id)
       this.isPublic = (this.editArticle.isPublic === 1)
       if (typeof(this.editArticle.tags) === 'string') {
         if (this.editArticle.tags==='') {
