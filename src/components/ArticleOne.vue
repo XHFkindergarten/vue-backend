@@ -28,6 +28,11 @@
               <div class="side-num">{{article.viewTime}}</div>
             </div>
           </div>
+          <div class="square">
+            <div v-if="userInfo.id == article.userId" class="circle" @click="editArticle">
+              <SvgIcon class="icon" size="mini" icon="write"></SvgIcon>
+            </div>
+          </div>
         </div>
         <div class="padding-aside" style="padding-top:0;padding-bottom:0;">
           <p class="title">{{article.title}}</p>
@@ -327,7 +332,7 @@ export default {
 .aside{
   cursor: pointer;
   z-index:10;
-  height: @circle*4;
+  height: @circle*6;
   width: @circle;
   display: flex;
   flex-direction: column;
