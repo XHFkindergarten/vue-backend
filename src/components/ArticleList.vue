@@ -227,6 +227,7 @@ export default {
     }
   },
   mounted() {
+    window.onresize = this.judgeScreen
     // 监听页面高度是否需要显示 回到顶部按钮
     const vuecom = this
     window.addEventListener('scroll', function() {
@@ -253,11 +254,12 @@ export default {
       return this;
     }
     // this.judgeScreen()
-    this.getUserArticle()
+    var that = this
+    setTimeout(function() {
+        that.getUserArticle()
+    }, 2000)
+    // this.getUserArticle()
   },
-  created() {
-    window.onresize = this.judgeScreen
-  }
 }
 </script>
 <style lang="less" scoped>

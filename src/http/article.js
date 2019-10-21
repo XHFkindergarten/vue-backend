@@ -115,7 +115,7 @@ const deleteArticle = async id => {
 // 根据id获取单篇文章
 const getOneArticle = async id => {
   if (!id) {
-    throw new Error('请输入参数!!')
+    throw new Error('请输入参数')
   }
   const res = await axios.get('article/getOneArticle?id='+id)
     .catch(err => {

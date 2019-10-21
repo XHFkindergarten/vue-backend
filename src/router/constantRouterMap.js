@@ -22,6 +22,7 @@ export const constantRouterMap =  [
       {
         path: '',
         component: Main,
+        meta: {},
         hidden: true
       },
       {
@@ -29,6 +30,7 @@ export const constantRouterMap =  [
         alias: '/login',
         name: '登录',
         component: Login,
+        meta: {},
         hidden: true
       },
       {
@@ -36,12 +38,13 @@ export const constantRouterMap =  [
         alias: '/register',
         name: '注册',
         component: Register,
+        meta: {},
         hidden: true
       },
       {
         path: 'articleList',
         alias: '/articleList',
-        meta: {keepAlive: true},
+        meta: {},
         hidden: true,
         redirect: '/noheader/list'
       },
@@ -49,6 +52,7 @@ export const constantRouterMap =  [
         path: '403',
         alias: '/403',
         name: '没有访问权限',
+        meta: {},
         component: NoPermission,
         hidden: true
       },
@@ -56,6 +60,7 @@ export const constantRouterMap =  [
         path: 'read',
         label: '朗读',
         icon: 'read',
+        meta: {},
         component: () => import('@/layouts/Empty'),
         hidden: true,
         children: [
@@ -64,6 +69,7 @@ export const constantRouterMap =  [
             icon: 'read',
             alias: '/readFile', 
             label: '阅读文档',
+            meta: {},
             component: () => import('@/components/ReadFile'),
             hidden: true
           }
@@ -71,6 +77,7 @@ export const constantRouterMap =  [
       },{
         path: 'daily',
         alias: '/daily',
+        meta: {},
         component: () => import('@/components/daily'),
         hidden: true
       },
@@ -81,6 +88,7 @@ export const constantRouterMap =  [
         icon: 'gift', // 显示的图标
         component:Test,
         hidden: false,
+        meta: {},
         children: [
           {
             path: 'test1-1',
@@ -89,6 +97,7 @@ export const constantRouterMap =  [
             label: '二级路由',
             icon: 'verticalright',
             component: Test2,
+            meta: {},
             children: [
               {
                 path: 'test1-1-1',
@@ -121,29 +130,31 @@ export const constantRouterMap =  [
         path: 'list',
         component: () => import('@/components/ArticleList')
       },
-      // {
-      //   path: 'article',
-      //   alias: '/article',
-      //   component: () => import('@/components/ArticleOne'),
-      //   props: (route) => ({id: route.query.id})
-      // },
+      {
+        path: 'article',
+        alias: '/article',
+        meta: {gray: true},
+        component: () => import('@/components/ArticleOne'),
+        props: (route) => ({id: route.query.id})
+      },
       {
         alias: '/smallscreen',
         path: 'smallscreen',
         component: () => import('@/layouts/SmallScreen')
       }
     ]
-  },{
-    path: '/grayheader',
-    name: 'grayheader',
-    component: GrayContainer,
-    children: [
-      {
-        path: 'article',
-        alias: '/article',
-        component: () => import('@/components/ArticleOne'),
-        props: (route) => ({id: route.query.id})
-      }
-    ]
-  }
+  },
+//   {
+//     path: '/grayheader',
+//     name: 'grayheader',
+//     component: GrayContainer,
+//     children: [
+//       {
+//         path: 'article',
+//         alias: '/article',
+//         component: () => import('@/components/ArticleOne'),
+//         props: (route) => ({id: route.query.id})
+//       }
+//     ]
+//   }
 ]

@@ -5,10 +5,12 @@
         <!-- <Head :userInfo="userInfo"></Head> -->
         <NewHead></NewHead>
       </el-header>
-      <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
+      <div :class="[{'bg': grayBg}]">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </div>
+      <!-- <router-view v-if="!$route.meta.keepAlive"></router-view> -->
     </el-container>
   </div>
 </template>
@@ -19,13 +21,23 @@ export default {
   name: 'HeaderContainer',
   data() {
     return {
-
+      // grayBg: false
     }
   },
+  // watch: {
+  //   $route(newValue, oldValue) {
+  //     if (newValue.meta.gray) {
+  //       this.grayBg = true
+  //     }
+  //   }
+  // },
   computed: {
     userInfo() {
       return this.$store.state.userInfo
     },
+    grayBg() {
+      return this.$route.meta.gray
+    }
     // key() {
     //   return this.$route+new Date()
     // }
@@ -37,5 +49,14 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+@media screen and (min-width:992px) {
+  .bg {
+    background: #F4F5F5;
+  }
+}
+@media screen and (max-width:992px) {
+  .bg {
+    background: #FFF;
+  }
+}
 </style>

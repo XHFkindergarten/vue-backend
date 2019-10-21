@@ -1,9 +1,9 @@
 <template>
   <div>
     <NewHead></NewHead>
-    <!-- <keep-alive> -->
-    <router-view/>
-    <!-- </keep-alive> -->
+    <keep-alive>
+        <router-view/>
+    </keep-alive>
   </div>
 </template>
 <script>
