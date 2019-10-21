@@ -255,9 +255,9 @@ export default {
     }
     // this.judgeScreen()
     var that = this
-    setTimeout(function() {
-        that.getUserArticle()
-    }, 2000)
+    // setTimeout(function() {
+    that.getUserArticle()
+    // }, 2000)
     // this.getUserArticle()
   },
 }
