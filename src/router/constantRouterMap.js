@@ -8,7 +8,6 @@ const Test = () => import('@/components/Test')
 const Test2 = () => import('@/components/Test2')
 const AppContainer = () => import('@/layouts/AppContainer')
 const HeaderContainer = () => import('@/layouts/HeaderContainer')
-const GrayContainer = () => import('@/layouts/GrayContainer')
 const Me = () => import('@/components/Me')
 
 export const constantRouterMap =  [
