@@ -15,26 +15,27 @@ Vue.use(Router)
 
 let router =  new Router({
   routes: constantRouterMap,
-  // 控制滚动条位置
-  scrollBehavior(to, from, savePosition) {
-    // saveProsition只有在history前进或后退时不为null
-    // 如果浏览器没有pushState对象的话就打扰了 ^ ^
-    // 值为上一个/下一个页面上一次滚动条停留的位置
+  // !!使用了组件的keep-alive缓存机制就不需要这个滚动条高度了
+  // // 控制滚动条位置
+  // scrollBehavior(to, from, savePosition) {
+  //   // saveProsition只有在history前进或后退时不为null
+  //   // 如果浏览器没有pushState对象的话就打扰了 ^ ^
+  //   // 值为上一个/下一个页面上一次滚动条停留的位置
 
-    /*
-    * 以下路由的页面高度和内容是异步加载的，所以这里通过Promise异步移动
-    */
-    if (savePosition && ['/daily', '/articleList', '/article'].indexOf(to.path)>=0) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(savePosition)
-        }, 1000)
-      })
-    } else if (savePosition) {
-      // 非异步页面直接滚动
-      return savePosition
-    } else return {x:0, y:0}
-  }
+  //   /*
+  //   * 以下路由的页面高度和内容是异步加载的，所以这里通过Promise异步移动
+  //   */
+  //   if (savePosition && ['/daily', '/articleList', '/article'].indexOf(to.path)>=0) {
+  //     return new Promise((resolve, reject) => {
+  //       setTimeout(() => {
+  //         resolve(savePosition)
+  //       }, 1000)
+  //     })
+  //   } else if (savePosition) {
+  //     // 非异步页面直接滚动
+  //     return savePosition
+  //   } else return {x:0, y:0}
+  // }
 })
 
 import store from '@/vuex'
